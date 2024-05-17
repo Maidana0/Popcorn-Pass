@@ -5,12 +5,12 @@
 ### Frontend
 - Maidana, Franco.
 - Díaz, Bruno.
-- Bruno, Sosa
-- Jesús. García.
+- Sosa, Bruno.
+- García, Jesús.
 
 ### Backend
 * Diván, Guillermo.
 * Masur, Luciana.
 * Frías, David.
 * La Bionda, Facundo.
-* Nordinelli, Franco
+* Nordinelli, Franco.
