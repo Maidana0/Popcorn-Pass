@@ -1,9 +1,7 @@
 "use client"
-
 import { AppBar, IconButton, Toolbar, Typography, Box, Button } from "@mui/material"
 import { useMenuState } from '@/store/ui-store';
 import Link from "next/link";
-
 
 
 const Navbar = () => {
