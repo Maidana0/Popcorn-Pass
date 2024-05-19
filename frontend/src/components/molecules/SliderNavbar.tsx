@@ -1,10 +1,19 @@
-import { Box, Drawer, Divider, ListItemText, List, ListItem, ListItemButton } from "@mui/material"
+"use client"
+import { Box, Drawer, Divider, ListItemText, List, ListItem, ListItemButton, Button } from "@mui/material"
 import { useMenuState } from '@/store/ui-store';
 import { shallow } from "zustand/shallow";
 import Link from "next/link";
 import BoxButtonSvg from "@/components/atoms/BoxButtonSvg";
+import { usePathname } from "next/navigation";
+
+
+
+const paths = ["login", "sign-up"]
 
 const Navbar = () => {
+    const pathName = usePathname()
+    const isActive = paths.findIndex(tab => pathName.endsWith(tab));
+
     const { isSideMenuOpen, openSideMenu, closeSideMenu, layoutBackgroundColor } = useMenuState(state => ({
         isSideMenuOpen: state.isSideMenuOpen,
         openSideMenu: state.openSideMenu,
@@ -16,14 +25,12 @@ const Navbar = () => {
 
 
     return (<>
-
         <BoxButtonSvg
             alt="open-menu"
             handleClick={handleMenuState}
             sizesInPx={{ height: 40, width: 40 }}
             path="/images/header/menu.svg"
         />
-
 
         <Drawer
             open={isSideMenuOpen}
@@ -35,9 +42,7 @@ const Navbar = () => {
                     : 'cubic-bezier(0.77,0,0.18,1)',
                 '& .MuiDrawer-paper': {
                     bgcolor: layoutBackgroundColor,
-                    color: "#fff",
                     width: { xs: "85%", sm: "65%", md: "40%" },
-
                 },
             }}
         >
@@ -50,13 +55,18 @@ const Navbar = () => {
                 path="/images/header/close.svg"
             />
 
-            <Box sx={{ width: '100%', height: "calc(100% - 56px)", display: "flex", marginTop: "auto", flexDirection: "column", justifyContent: "space-between" }} role="navigation" component="nav">
-                <List>
-                    {["iniciar sesión", "registrarme"].map((text) => (
-                        <ListItem key={text} disablePadding>
+            <Box sx={{ width: '100%', height: "100%", display: "flex", marginTop: "auto", flexDirection: "column", justifyContent: "space-between", textAlign: "center" }} role="navigation" component="nav">
+
+                <List sx={{ color: "rgba(255, 255, 255, 0.5)" }}>
+                    {paths.map((text, i) => (
+                        <ListItem key={i} disablePadding onClick={handleMenuState}>
                             <ListItemButton LinkComponent={Link} href={`/${text}`} sx={{ p: 2 }}>
-                                <ListItemText primary={text}
-                                    primaryTypographyProps={{ textTransform: "capitalize", fontSize: "1.33rem", textAlign: 'center' }}
+                                <ListItemText
+                                    primary={text}
+                                    primaryTypographyProps={{
+                                        color: isActive == i ? "#fff" : "inherit",
+                                        textTransform: "capitalize", fontSize: "1.33rem", textAlign: 'center'
+                                    }}
                                 />
                             </ListItemButton>
                         </ListItem>
@@ -66,7 +76,8 @@ const Navbar = () => {
                 <Divider />
 
                 <Box>
-                    <ListItemText sx={{ color: "lightslategray", textAlign: "center", p: 2 }}>
+                    <Button variant="contained" color="error" children="Cerrar sesión" />
+                    <ListItemText sx={{ color: "#fff9", p: 2 }}>
                         Hola programador, estas codeando solo? Enserio? 🥵
                     </ListItemText>
                 </Box>
@@ -74,9 +85,7 @@ const Navbar = () => {
             </Box>
         </Drawer>
 
-
     </>)
 }
 
 export default Navbar
-
