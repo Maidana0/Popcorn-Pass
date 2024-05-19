@@ -1,0 +1,19 @@
+package com.s1511.Ticketcine.application.mapper;
+
+import com.s1511.Ticketcine.application.dto.user.CreateDtoUser;
+import com.s1511.Ticketcine.application.dto.user.ReadDtoUser;
+import com.s1511.Ticketcine.application.dto.user.UpdateDtoUser;
+import com.s1511.Ticketcine.domain.entities.User;
+import org.mapstruct.Mapper;
+
+import java.util.List;
+
+@Mapper(componentModel = "spring")
+public interface UserMapper {
+
+    User createDtoToUser (CreateDtoUser createDtoUser);
+    User updateDtoToUser (UpdateDtoUser updateDtoUser);
+    ReadDtoUser userToReadDto (User user);
+    List<ReadDtoUser> userListToReadDtoList (List<User> UserList);
+
+}
