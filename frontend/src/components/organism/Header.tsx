@@ -1,20 +1,18 @@
 import { AppBar, Toolbar, Typography, Box } from "@mui/material"
-
 import Link from "next/link";
 import dynamic from "next/dynamic";
 
-const Navbar = dynamic(() => import("../molecules/SliderNavbar"), { ssr: false, loading: () => <span style={{ width: "64px" }} /> })
-
+const SliderNavbar = dynamic(() => import("../molecules/SliderNavbar"), { ssr: false })
 const TabNavbar = dynamic(() => import("../molecules/TabNavbar"), { ssr: false })
 
 
 const Header = () => {
 
     return (
-        <AppBar position="static">
+        <AppBar position="static" sx={{bgcolor:"#000"}}>
             <Toolbar>
 
-                {/* <Navbar /> */}
+                <SliderNavbar />
 
                 <Box flexGrow={1}>
                     <Typography variant="h5" component={Link} href="/"  >
@@ -22,7 +20,7 @@ const Header = () => {
                     </Typography>
                 </Box>
 
-                {/* <TabNavbar /> */}
+                <TabNavbar />
 
             </Toolbar>
         </AppBar>

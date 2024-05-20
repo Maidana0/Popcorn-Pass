@@ -1,14 +1,17 @@
 "use client"
-import { Tabs, Tab, Box, Button } from "@mui/material"
+import { Tabs, Tab, useTheme, useMediaQuery, Box, Button } from "@mui/material"
 import { usePathname } from "next/navigation";
 import Link from "next/link";
-
-const paths = ["login", "sign-up"]
+import paths from "@/data/paths";
 
 const TabNavbar = () => {
+    const theme = useTheme()
+    const isMatch = useMediaQuery(theme.breakpoints.down("md"))
     const pathName = usePathname()
     const activeTab = paths.findIndex(tab => pathName.endsWith(tab));
 
+
+    if (isMatch) { return }
     return (
         <>
             <Tabs component={"ul"}
@@ -25,7 +28,7 @@ const TabNavbar = () => {
                     return (
                         <Tab
                             sx={{ fontSize: "1.1rem", }}
-                            value={i }
+                            value={i}
                             tabIndex={i}
                             LinkComponent={Link}
                             href={`/${text}`}
@@ -34,7 +37,8 @@ const TabNavbar = () => {
                 })}
             </Tabs>
             <Box>
-                <Button variant="contained" color="error" children="Cerrar sesión" />
+                <Button variant="contained" color="warning" children="mi perfil"/>
+                {/* <Button variant="contained" color="error" children="Cerrar sesión" /> */}
             </Box>
         </>)
 }

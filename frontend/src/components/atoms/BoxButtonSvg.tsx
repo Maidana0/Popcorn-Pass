@@ -8,13 +8,14 @@ interface IBoxButtonSvgProps {
     path: string,
     sizesInPx: { width: number; height: number },
     alt: string,
-    sxBox?: SxProps<Theme>
+    sxBox?: SxProps<Theme>,
+    sxButton?: SxProps<Theme>,
 }
 
-const BoxButtonSvg: FC<IBoxButtonSvgProps> = ({ handleClick, path, sizesInPx, alt, sxBox }) => {
+const BoxButtonSvg: FC<IBoxButtonSvgProps> = ({ handleClick, path, sizesInPx, alt, sxBox, sxButton }) => {
     return (
-        <Box color="inherit" sx={sxBox}>
-            <Button onClick={handleClick}>
+        <Box color="inherit" sx={sxBox }>
+            <Button onClick={handleClick} sx={sxButton}>
                 <Image src={path}
                     width={sizesInPx.width}
                     height={sizesInPx.height}

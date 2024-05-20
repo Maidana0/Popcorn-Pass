@@ -11,5 +11,5 @@ export const useMenuState = createWithEqualityFn<IUseMenuState>()(set => ({
     isSideMenuOpen: false,
     openSideMenu: () => set({ isSideMenuOpen: true }),
     closeSideMenu: () => set({ isSideMenuOpen: false }),
-    layoutBackgroundColor: "#1976d2"
+    layoutBackgroundColor: "#000"
 }))

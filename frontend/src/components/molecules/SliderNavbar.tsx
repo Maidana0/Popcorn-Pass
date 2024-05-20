@@ -1,16 +1,18 @@
 "use client"
-import { Box, Drawer, Divider, ListItemText, List, ListItem, ListItemButton, Button } from "@mui/material"
+import { Box, Drawer, Divider, ListItemText, List, ListItem, ListItemButton, useTheme, Button, useMediaQuery } from "@mui/material"
 import { useMenuState } from '@/store/ui-store';
 import { shallow } from "zustand/shallow";
 import Link from "next/link";
 import BoxButtonSvg from "@/components/atoms/BoxButtonSvg";
 import { usePathname } from "next/navigation";
+import paths from "@/data/paths";
 
 
-
-const paths = ["login", "sign-up"]
 
 const Navbar = () => {
+    const theme = useTheme()
+    const isMatch = useMediaQuery(theme.breakpoints.down("md"))
+
     const pathName = usePathname()
     const isActive = paths.findIndex(tab => pathName.endsWith(tab));
 
@@ -23,11 +25,15 @@ const Navbar = () => {
 
     const handleMenuState = () => isSideMenuOpen ? closeSideMenu() : openSideMenu()
 
-
+    if (!isMatch) { return }
     return (<>
         <BoxButtonSvg
             alt="open-menu"
             handleClick={handleMenuState}
+            sxBox={{marginRight: "15px",}}
+            sxButton={{
+                minWidth: "auto", p: 0,
+            }}
             sizesInPx={{ height: 40, width: 40 }}
             path="/images/header/menu.svg"
         />
@@ -73,10 +79,11 @@ const Navbar = () => {
                     ))}
                 </List>
 
-                <Divider />
 
                 <Box>
-                    <Button variant="contained" color="error" children="Cerrar sesión" />
+                    
+                    <Button variant="contained" color="warning" children="mi perfil" />
+                    {/* <Button variant="contained" color="error" children="Cerrar sesión" /> */}
                     <ListItemText sx={{ color: "#fff9", p: 2 }}>
                         Hola programador, estas codeando solo? Enserio? 🥵
                     </ListItemText>
