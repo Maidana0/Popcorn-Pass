@@ -8,7 +8,7 @@ public record ReadDtoMovie(
         String cine,
         String description,
         LocalDate releaseDate,
-        String comments,
+        String comment,
         String rate,
         Boolean adult,
         String image

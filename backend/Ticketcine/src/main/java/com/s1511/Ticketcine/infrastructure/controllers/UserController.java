@@ -26,14 +26,16 @@ public class UserController {
                 this.userService.createUser(createUser));
     }
 
-    @GetMapping("/id/{id}")
-    public ResponseEntity<ReadDtoUser>  findUserById(@PathVariable String id){
-        return ResponseEntity.ok(userService.readUserById(id));
+    @GetMapping("/id/{id}/{active}")
+    public ResponseEntity<ReadDtoUser>  findUserById(@PathVariable String id,
+                                                     @PathVariable Boolean active){
+        return ResponseEntity.ok(userService.readUserById(id, active));
     }
 
-    @GetMapping("/email/{email}")
-    public ResponseEntity<ReadDtoUser>  findUserByEmail(@PathVariable String email){
-        return ResponseEntity.ok(userService.readUserByEmail(email));
+    @GetMapping("/email/{email}/{active}")
+    public ResponseEntity<ReadDtoUser>  findUserByEmail(@PathVariable String email,
+                                                        @PathVariable Boolean active){
+        return ResponseEntity.ok(userService.readUserByEmail(email, active));
     }
 
     @PutMapping("/update")

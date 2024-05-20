@@ -29,7 +29,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public ReadDtoUser createUser(CreateDtoUser createDtoUser) {
         var userAlreadyExists = userRepository.findByEmail(createDtoUser.email());
-        if(userAlreadyExists.isPresent()){ throw new EntityExistsException("Este email ya está en uso!"); }
+        if(userAlreadyExists.isPresent()){ throw new EntityExistsException("¡Este email ya está en uso!"); }
 
         User user = this.userMapper.createDtoToUser(createDtoUser);
         user.setPassword(passwordEncoder.encode(createDtoUser.password()));
@@ -40,16 +40,16 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public ReadDtoUser readUserById(String id) {
-        User user = userRepository.findById(id)
+    public ReadDtoUser readUserById(String id, Boolean active) {
+        User user = userRepository.findByIdAndActive(id, active)
                 .orElseThrow(() -> new EntityNotFoundException(id));
 
         return userMapper.userToReadDto(user);
     }
 
     @Override
-    public ReadDtoUser readUserByEmail(String email) {
-        User user = userRepository.findByEmail(email)
+    public ReadDtoUser readUserByEmail(String email, Boolean active) {
+        User user = userRepository.findByEmailAndActive(email, active)
                 .orElseThrow(() -> new EntityNotFoundException(email));
 
         return userMapper.userToReadDto(user);

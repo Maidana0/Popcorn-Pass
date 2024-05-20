@@ -7,8 +7,8 @@ import java.util.List;
 public interface UserService {
 
     ReadDtoUser createUser(CreateDtoUser createDtoUser);
-    ReadDtoUser readUserById(String id);
-    ReadDtoUser readUserByEmail(String email);
+    ReadDtoUser readUserById(String id, Boolean active);
+    ReadDtoUser readUserByEmail(String email, Boolean active);
     List<ReadDtoUser> readAllUsers (Boolean active); //No estoy seguro que lo necesitemos!!
     ReadDtoUser updateUser(UpdateDtoUser updateDtoUser);
     Boolean toggleUser(Long id, String tokenUser);
