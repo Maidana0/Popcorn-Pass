@@ -1,6 +1,7 @@
 package com.s1511.Ticketcine.infrastructure.controllers;
 import com.s1511.Ticketcine.application.dto.user.CreateDtoUser;
 import com.s1511.Ticketcine.application.dto.user.ReadDtoUser;
+import com.s1511.Ticketcine.application.dto.user.UpdateDtoUser;
 import com.s1511.Ticketcine.domain.services.UserService;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.validation.Valid;
@@ -8,10 +9,7 @@ import jakarta.validation.constraints.NotNull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RequestMapping("/user")
 @RestController
@@ -26,5 +24,21 @@ public class UserController {
             @RequestBody @Valid @NotNull CreateDtoUser createUser){
         return ResponseEntity.status(HttpStatus.CREATED).body(
                 this.userService.createUser(createUser));
+    }
+
+    @GetMapping("/id/{id}")
+    public ResponseEntity<ReadDtoUser>  findUserById(@PathVariable String id){
+        return ResponseEntity.ok(userService.readUserById(id));
+    }
+
+    @GetMapping("/email/{email}")
+    public ResponseEntity<ReadDtoUser>  findUserByEmail(@PathVariable String email){
+        return ResponseEntity.ok(userService.readUserByEmail(email));
+    }
+
+    @PutMapping("/update")
+    public ResponseEntity<ReadDtoUser> updateUser(
+            @RequestBody @Valid UpdateDtoUser updateUser){
+        return ResponseEntity.ok(userService.updateUser(updateUser));
     }
 }

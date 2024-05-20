@@ -12,8 +12,7 @@ import java.util.List;
 public interface UserMapper {
 
     User createDtoToUser (CreateDtoUser createDtoUser);
-    User updateDtoToUser (UpdateDtoUser updateDtoUser);
     ReadDtoUser userToReadDto (User user);
-    List<ReadDtoUser> userListToReadDtoList (List<User> UserList);
+    List<ReadDtoUser> userListToReadDtoList (List<User> UserList); //Creo que no lo usaremos.
 
 }

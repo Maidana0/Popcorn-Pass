@@ -4,12 +4,12 @@ import com.s1511.Ticketcine.application.dto.user.CreateDtoUser;
 import com.s1511.Ticketcine.application.dto.user.ReadDtoUser;
 import com.s1511.Ticketcine.application.dto.user.UpdateDtoUser;
 import com.s1511.Ticketcine.application.mapper.UserMapper;
-import com.s1511.Ticketcine.application.security.JwtService;
 import com.s1511.Ticketcine.domain.entities.User;
 import com.s1511.Ticketcine.domain.repository.UserRepository;
 import com.s1511.Ticketcine.domain.services.UserService;
 import com.s1511.Ticketcine.domain.utils.RolesEnum;
 import jakarta.persistence.EntityExistsException;
+import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -39,20 +39,43 @@ public class UserServiceImpl implements UserService {
         return  userMapper.userToReadDto(userAdded);
     }
 
-
     @Override
-    public ReadDtoUser readUser(Long id) {
-        return null;
+    public ReadDtoUser readUserById(String id) {
+        User user = userRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException(id));
+
+        return userMapper.userToReadDto(user);
     }
 
     @Override
+    public ReadDtoUser readUserByEmail(String email) {
+        User user = userRepository.findByEmail(email)
+                .orElseThrow(() -> new EntityNotFoundException(email));
+
+        return userMapper.userToReadDto(user);
+    }
+
+    @Override //No estoy seguro que lo necesitemos!!
     public List<ReadDtoUser> readAllUsers(Boolean active) {
         return List.of();
     }
 
     @Override
     public ReadDtoUser updateUser(UpdateDtoUser updateDtoUser) {
-        return null;
+        User user = userRepository.findById(updateDtoUser.id())
+                .orElseThrow(() -> new EntityNotFoundException(updateDtoUser.id()));
+
+        if (user.getActive()) {
+            if (updateDtoUser.firstName() != null){
+                user.setFirstName(updateDtoUser.firstName());
+            }
+            if (updateDtoUser.lastName() != null){
+                user.setLastName(updateDtoUser.lastName());
+            }
+        } else throw new EntityNotFoundException(updateDtoUser.id());
+
+        this.userRepository.save(user);
+        return userMapper.userToReadDto(user);
     }
 
     @Override
