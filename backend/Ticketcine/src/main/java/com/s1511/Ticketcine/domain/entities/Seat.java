@@ -1,25 +1,23 @@
 package com.s1511.Ticketcine.domain.entities;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDateTime;
+
 @Entity
+@Table(name = "seats")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 public class Seat {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY.IDENTITY)
     private Long id;
 
-    private String rowLetter;
-    private int seatNumber;
+    private String seatNumber;
     private boolean reserved;
-
+    private LocalDateTime reservationTime;
 }
