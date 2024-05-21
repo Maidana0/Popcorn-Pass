@@ -30,7 +30,8 @@ public class SecurityConfig {
 
     private static final String[] FREE_ENDPOINTS = {
            "/user/register",
-            "/login"
+            "/login",
+            "user/toggleUser/"
     };
 
     private static final String[] USER_ENDPOINTS = {
