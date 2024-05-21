@@ -11,5 +11,5 @@ public interface UserService {
     ReadDtoUser readUserByEmail(String email, Boolean active);
     List<ReadDtoUser> readAllUsers (Boolean active); //No estoy seguro que lo necesitemos!!
     ReadDtoUser updateUser(UpdateDtoUser updateDtoUser);
-    Boolean toggleUser(Long id, String tokenUser);
+    Boolean toggleUser(String id);
 }

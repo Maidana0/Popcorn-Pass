@@ -79,7 +79,13 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Boolean toggleUser(Long id, String tokenUser) {
-        return null;
+    public Boolean toggleUser(String id) {
+        System.out.println("En servicio ");
+        User userEntitie = userRepository.findById(id).orElseThrow(() -> new EntityNotFoundException());
+        userEntitie.setActive(false);
+        System.out.println("En servicio 1");
+        userRepository.save(userEntitie);
+        System.out.println("En servicio 2");
+        return false;
     }
 }
