@@ -15,8 +15,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-
 @Service
 @RequiredArgsConstructor
 
@@ -55,33 +53,28 @@ public class UserServiceImpl implements UserService {
         return userMapper.userToReadDto(user);
     }
 
-    @Override //No estoy seguro que lo necesitemos!!
-    public List<ReadDtoUser> readAllUsers(Boolean active) {
-        return List.of();
-    }
-
+    @Transactional
     @Override
     public ReadDtoUser updateUser(UpdateDtoUser updateDtoUser) {
-        User user = userRepository.findById(updateDtoUser.id())
+        User user = userRepository.findByIdAndActive(updateDtoUser.id(), true)
                 .orElseThrow(() -> new EntityNotFoundException(updateDtoUser.id()));
 
-        if (user.getActive()) {
             if (updateDtoUser.firstName() != null){
                 user.setFirstName(updateDtoUser.firstName());
             }
             if (updateDtoUser.lastName() != null){
                 user.setLastName(updateDtoUser.lastName());
             }
-        } else throw new EntityNotFoundException(updateDtoUser.id());
 
         this.userRepository.save(user);
         return userMapper.userToReadDto(user);
     }
 
+    @Transactional
     @Override
     public Boolean toggleUser(String id) {
         User userEntity = userRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException());
+                .orElseThrow(() -> new EntityNotFoundException(id));
         userEntity.setActive(!userEntity.getActive());
         userRepository.save(userEntity);
         return true;

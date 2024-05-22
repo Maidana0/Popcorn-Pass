@@ -11,6 +11,7 @@ import org.hibernate.grammars.hql.HqlParser;
 
 import java.time.LocalDateTime;
 
+@Entity
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -24,5 +25,4 @@ public class Comment {
     private String comment;
     private LocalDateTime date = LocalDateTime.now();
     private Boolean active;
-
 }
