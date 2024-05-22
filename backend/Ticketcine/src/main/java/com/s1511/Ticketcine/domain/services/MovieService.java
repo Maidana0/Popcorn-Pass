@@ -16,8 +16,8 @@ public interface MovieService {
     ReadDtoMovie getMovieById(String id);
     List<ReadDtoMovie> getMovieList();
     ReadDtoMovie getMovieByTitle(String title);
-    List<ReadDtoMovie> getMovieByTime(LocalDateTime time);
-    List<ReadDtoMovie> getMovieByGender(String gender);
+    List<ReadDtoMovie> findByReleaseDate(LocalDateTime time);
+    //List<ReadDtoMovie> getMovieByGender(String gender);
     List<ReadDtoMovie> getMovieByAge(Boolean agePlus18);
     List<ReadDtoMovie> getMovieByThreeD(Boolean threeD);
 }
