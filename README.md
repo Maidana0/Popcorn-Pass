@@ -10,7 +10,7 @@
 
 ### Backend
 * Diván, Guillermo.
-* Masur, Luciana.
+* Mazur, Luciana.
 * Frías, David.
 * La Bionda, Facundo.
 * Nordinelli, Franco.
