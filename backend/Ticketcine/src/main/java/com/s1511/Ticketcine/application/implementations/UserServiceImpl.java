@@ -80,12 +80,10 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public Boolean toggleUser(String id) {
-        System.out.println("En servicio ");
-        User userEntitie = userRepository.findById(id).orElseThrow(() -> new EntityNotFoundException());
-        userEntitie.setActive(false);
-        System.out.println("En servicio 1");
-        userRepository.save(userEntitie);
-        System.out.println("En servicio 2");
-        return false;
+        User userEntity = userRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException());
+        userEntity.setActive(!userEntity.getActive());
+        userRepository.save(userEntity);
+        return true;
     }
 }
