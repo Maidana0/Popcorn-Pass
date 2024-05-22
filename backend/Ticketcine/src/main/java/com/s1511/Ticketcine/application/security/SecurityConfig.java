@@ -44,8 +44,7 @@ public class SecurityConfig {
                 .authorizeHttpRequests(request ->
                         request.requestMatchers(FREE_ENDPOINTS).permitAll()
                                 .requestMatchers(USER_ENDPOINTS).hasRole("USER")
-                                .requestMatchers("/swagger-ui/**").permitAll() // Permitir acceso a Swagger UI
-                                .requestMatchers("/swagger-ui.html").permitAll()  // Permitir acceso a la página de Swagger UI
+                                .requestMatchers("/**").permitAll() // Permitir acceso a Swagger UI
                                 .anyRequest().authenticated()
                 )
                 //authRequest.anyRequest().permitAll())
