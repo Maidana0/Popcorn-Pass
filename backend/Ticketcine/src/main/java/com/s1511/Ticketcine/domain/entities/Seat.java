@@ -16,8 +16,32 @@ public class Seat {
 
     @Id
     private Long id;
-
     private String seatNumber;
-    private boolean reserved;
     private LocalDateTime reservationTime;
+    private boolean reserved;
+
+//    private Cinema cinema;
+//
+//    private Movie movie;
+//
+//    private Hall hall;
+//
+//     private Screening screening;
+//
+//    @ManyToOne
+//    @JoinColumn(name = "current_user_id")
+//    private User currentUser;
+//
+//    @ManyToOne
+//    @JoinColumn(name = "previous_user_id")
+//    private User previousUser;
+
+
+    private Availability availability;
+
+    public enum Availability {
+        AVAILABLE,
+        OCCUPIED,
+        RESERVED
+    }
 }
