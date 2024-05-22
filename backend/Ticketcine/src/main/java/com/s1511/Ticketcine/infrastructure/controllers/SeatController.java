@@ -1,11 +1,16 @@
 package com.s1511.Ticketcine.infrastructure.controllers;
 
 import com.s1511.Ticketcine.application.dto.SeatDTO;
+import com.s1511.Ticketcine.application.dto.SeatReservationDTO;
+import com.s1511.Ticketcine.domain.entities.Seat;
 import com.s1511.Ticketcine.domain.services.SeatService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RequiredArgsConstructor
 @RestController
@@ -24,18 +29,15 @@ public class SeatController {
         return seatService.findSeatById(id);
     }
 
-//    @PutMapping
-//    public SeatDTO updateSeat(@RequestBody SeatDTO seatDTO) {
-//        return seatService.updateSeat(seatDTO);
-//    }
-//
-//    @PostMapping("/{seatId}/reserve/{userId}")
-//    public boolean reserveSeat(@PathVariable Long seatId, @PathVariable Long userId) {
-//        return seatService.reserveSeat(seatId, userId);
-//    }
-//
-//    @DeleteMapping("/reservation/{reservationId}")
-//    public boolean cancelReservation(@PathVariable Long reservationId) {
-//        return seatService.cancelReservation(reservationId);
-//    }
+    @PutMapping("/{id}/reserve")
+    public ResponseEntity<String> reserveSeat(@PathVariable Long id, @RequestBody SeatReservationDTO seatReservationDTO) {
+        Optional<Seat> reservedSeat = seatService.seatReservation(id, seatReservationDTO);
+
+        if (reservedSeat.isPresent()) {
+            return ResponseEntity.ok("Seat reserved successfully.");
+        } else {
+            return ResponseEntity.status(HttpStatus.CONFLICT).body("Seat is already reserved or not found.");
+        }
+    }
+
 }
