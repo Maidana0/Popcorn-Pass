@@ -13,4 +13,5 @@ public interface MovieMapper {
     Movie createDtoToMovie (CreateDtoMovie createDtoMovie);
     ReadDtoMovie movieToReadDto (Movie movie);
     List<ReadDtoMovie> movieListToReadDtoList (List<Movie> movieList);
+
 }
