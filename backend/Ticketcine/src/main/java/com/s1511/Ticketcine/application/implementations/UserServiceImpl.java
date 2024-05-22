@@ -4,6 +4,7 @@ import com.s1511.Ticketcine.application.dto.user.CreateDtoUser;
 import com.s1511.Ticketcine.application.dto.user.ReadDtoUser;
 import com.s1511.Ticketcine.application.dto.user.UpdateDtoUser;
 import com.s1511.Ticketcine.application.mapper.UserMapper;
+import com.s1511.Ticketcine.application.validations.SelfValidation;
 import com.s1511.Ticketcine.domain.entities.User;
 import com.s1511.Ticketcine.domain.repository.UserRepository;
 import com.s1511.Ticketcine.domain.services.UserService;
@@ -22,6 +23,7 @@ public class UserServiceImpl implements UserService {
     public final UserRepository userRepository;
     private final UserMapper userMapper;
     private final PasswordEncoder passwordEncoder;
+    public final SelfValidation selfValidation;
 
     @Transactional
     @Override
@@ -56,6 +58,7 @@ public class UserServiceImpl implements UserService {
     @Transactional
     @Override
     public ReadDtoUser updateUser(UpdateDtoUser updateDtoUser) {
+        selfValidation.checkSelfValidation(updateDtoUser.id());
         User user = userRepository.findByIdAndActive(updateDtoUser.id(), true)
                 .orElseThrow(() -> new EntityNotFoundException(updateDtoUser.id()));
 
@@ -73,6 +76,7 @@ public class UserServiceImpl implements UserService {
     @Transactional
     @Override
     public Boolean toggleUser(String id) {
+        selfValidation.checkSelfValidation(id);
         User userEntity = userRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException(id));
         userEntity.setActive(!userEntity.getActive());

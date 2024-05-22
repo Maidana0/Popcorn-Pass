@@ -58,9 +58,9 @@ public class CommentController {
     }
 
     @Transactional
-    @DeleteMapping("/toggle/{id}")
-    public ResponseEntity<Boolean> toggleComment(@PathVariable String id){
-        return ResponseEntity.ok(commentService.toggleComment(id));
+    @DeleteMapping("/toggle/{id}/{userId}")
+    public ResponseEntity<Boolean> toggleComment(@PathVariable String id, @PathVariable String userId){
+        return ResponseEntity.ok(commentService.toggleComment(id, userId));
     }
 
 }
