@@ -47,7 +47,8 @@ public class SecurityConfig {
             "user/id/{id}/{active}",
             "user/email/{email}/{active}",
             "user/update",
-            "user/toggle"
+            "user/toggle",
+            "/comment/**"
     };
 
     @Bean

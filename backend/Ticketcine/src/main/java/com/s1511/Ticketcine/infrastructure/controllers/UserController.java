@@ -44,10 +44,8 @@ public class UserController {
         return ResponseEntity.ok(userService.updateUser(updateUser));
     }
 
-    //TO DO: ACTUALIZACIóN/PATCH DE CAMPO ACTIVE A FALSE EN BD
     @PutMapping("/toggle/{id}")
     public ResponseEntity<Boolean> toggleUser(@PathVariable String id){
-        System.out.println("En Controller");
         return ResponseEntity.ok(userService.toggleUser(id));
     }
 
