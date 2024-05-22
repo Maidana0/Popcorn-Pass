@@ -29,12 +29,25 @@ public class SecurityConfig {
     private final AuthenticationProvider authProvider;
 
     private static final String[] FREE_ENDPOINTS = {
-           "/user/register",
+            // OPEN API - SWAGGER
+            "/v2/api-docs",
+            "/swagger-resources",
+            "/swagger-resources/**",
+            "/configuration/ui",
+            "/configuration/security",
+            "/swagger-ui.html",
+            "/v3/api-docs/**",
+            "/swagger-ui/**",
+            // USER
+            "/user/register",
             "/login",
-            "user/toggleUser"
     };
 
     private static final String[] USER_ENDPOINTS = {
+            "user/id/{id}/{active}",
+            "user/email/{email}/{active}",
+            "user/update",
+            "user/toggle"
     };
 
     @Bean
@@ -44,10 +57,8 @@ public class SecurityConfig {
                 .authorizeHttpRequests(request ->
                         request.requestMatchers(FREE_ENDPOINTS).permitAll()
                                 .requestMatchers(USER_ENDPOINTS).hasRole("USER")
-                                .requestMatchers("/**").permitAll() // Permitir acceso a Swagger UI
                                 .anyRequest().authenticated()
                 )
-                //authRequest.anyRequest().permitAll())
                 .sessionManagement(sessionManager ->
                         sessionManager.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authenticationProvider(authProvider)
