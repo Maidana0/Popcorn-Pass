@@ -11,5 +11,5 @@ public interface CommentService {
     List<ReadDtoComment> readAllCommentByUserIdAndActive(String userId, Boolean active);
     List<ReadDtoComment> readAllCommentByMovieIdAndActive(String movieId, Boolean active);
     ReadDtoComment updateComment(UpdateDtoComment updateDtoComment);
-    Boolean toggleComment(String id);
+    Boolean toggleComment(String id, String userId);
 }

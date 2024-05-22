@@ -3,9 +3,10 @@ import com.s1511.Ticketcine.application.dto.comment.CreateDtoComment;
 import com.s1511.Ticketcine.application.dto.comment.ReadDtoComment;
 import com.s1511.Ticketcine.application.dto.comment.UpdateDtoComment;
 import com.s1511.Ticketcine.application.mapper.CommentMapper;
+import com.s1511.Ticketcine.application.validations.SelfValidation;
 import com.s1511.Ticketcine.domain.entities.Comment;
-import com.s1511.Ticketcine.domain.entities.User;
 import com.s1511.Ticketcine.domain.repository.CommentRepository;
+import com.s1511.Ticketcine.domain.repository.MovieRepository;
 import com.s1511.Ticketcine.domain.repository.UserRepository;
 import com.s1511.Ticketcine.domain.services.CommentService;
 import jakarta.persistence.EntityExistsException;
@@ -22,11 +23,13 @@ public class CommentServiceImpl implements CommentService {
     public final CommentRepository commentRepository;
     public final CommentMapper commentMapper;
     public final UserRepository userRepository;
-    //public final MovieRepository movieRepository;
+    public final MovieRepository movieRepository;
+    public final SelfValidation selfValidation;
 
     @Transactional
     @Override
     public ReadDtoComment createComment(CreateDtoComment createDtoComment) {
+        selfValidation.checkSelfValidation(createDtoComment.userId());
         var commentAlreadyExists = commentRepository.findByUserId(createDtoComment.userId());
         if(commentAlreadyExists.isPresent()){
             throw new EntityExistsException("¡Ya has comentado esta película!"); }
@@ -56,7 +59,7 @@ public class CommentServiceImpl implements CommentService {
 
     @Override
     public List<ReadDtoComment> readAllCommentByMovieIdAndActive(String movieId, Boolean active) {
-        //movieRepository.findById(movieId).orElseThrow(() -> new EntityNotFoundException(movieId));
+        movieRepository.findById(movieId).orElseThrow(() -> new EntityNotFoundException(movieId));
         List<Comment> commentList = commentRepository
                 .findAllCommentByMovieIdAndActive(movieId, active);
         return commentMapper.commentListToReadDtoList(commentList);
@@ -65,6 +68,8 @@ public class CommentServiceImpl implements CommentService {
     @Transactional
     @Override
     public ReadDtoComment updateComment(UpdateDtoComment updateDtoComment) {
+        selfValidation.checkSelfValidation(updateDtoComment.userId());
+
         Comment comment = commentRepository.findByIdAndActive(updateDtoComment.id(), true)
                 .orElseThrow(() -> new EntityNotFoundException(updateDtoComment.id()));
 
@@ -78,7 +83,9 @@ public class CommentServiceImpl implements CommentService {
 
     @Transactional
     @Override
-    public Boolean toggleComment(String id) {
+    public Boolean toggleComment(String id, String userId) {
+        selfValidation.checkSelfValidation(userId);
+
         Comment comment = commentRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException(id));
         comment.setActive(!comment.getActive());
