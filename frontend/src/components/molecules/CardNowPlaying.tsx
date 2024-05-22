@@ -23,7 +23,7 @@ const CardNowPlaying = () => {
             Deadpool And Wolverine
           </Typography>
 
-          <Typography variant="subtitle2" color="#BFBFBF">
+          <Typography variant="subtitle2" color="var(--gray-color)">
             1h30min • Acción/Comedia
           </Typography>
 

@@ -37,7 +37,7 @@ const TabNavbar = () => {
                 })}
             </Tabs>
             <Box>
-                <Button variant="contained" color="warning" children="mi perfil"/>
+                <Button variant="contained" LinkComponent={Link} href="/usuario/iniciar-sesion" color="warning" children="mi perfil"/>
                 {/* <Button variant="contained" color="error" children="Cerrar sesión" /> */}
             </Box>
         </>)

@@ -82,7 +82,7 @@ const Navbar = () => {
 
                 <Box>
                     
-                    <Button variant="contained" color="warning" children="mi perfil" />
+                    <Button variant="contained" LinkComponent={Link} href="/usuario/iniciar-sesion" color="warning" children="mi perfil" />
                     {/* <Button variant="contained" color="error" children="Cerrar sesión" /> */}
                     <ListItemText sx={{ color: "#fff9", p: 2 }}>
                         Hola programador, estas codeando solo? Enserio? 🥵

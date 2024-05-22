@@ -1,8 +1,9 @@
-:root{
+:root {
   --black: #242424;
   --lightBlack: #1C1C1C;
   --yellow: #FCC434;
   --white: #FFFFFF;
+  --gray-color: #BFBFBF;
 }
 
 * {
@@ -12,7 +13,7 @@
   scroll-behavior: smooth;
 }
 
-body{
+body {
   background-color: var(--black);
   color: var(--white);
   min-height: 100vh;
@@ -22,7 +23,7 @@ body{
   justify-content: space-between;
 }
 
-a{
+a {
   text-decoration: none;
   color: var(--white);
 }
