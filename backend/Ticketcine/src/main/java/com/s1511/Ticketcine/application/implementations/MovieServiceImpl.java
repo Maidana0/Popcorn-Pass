@@ -4,13 +4,14 @@ import com.s1511.Ticketcine.application.dto.movie.CreateDtoMovie;
 import com.s1511.Ticketcine.application.dto.movie.ReadDtoMovie;
 import com.s1511.Ticketcine.application.dto.movie.ReadMovieApiData;
 import com.s1511.Ticketcine.application.mapper.MovieMapper;
+import com.s1511.Ticketcine.application.security.AppConfig;
 import com.s1511.Ticketcine.domain.entities.Movie;
 import com.s1511.Ticketcine.domain.repository.MovieRepository;
 import com.s1511.Ticketcine.domain.services.MovieService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.*;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.RestTemplate;
+
 
 import java.time.LocalDateTime;
 import java.util.Collections;
@@ -24,7 +25,8 @@ public class MovieServiceImpl implements MovieService {
     private final String apiKey = "eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIxNTM3ZDM1NTI0NDRhOWFkNDY0YTRkMGFiZmE2NDU2OCIsInN1YiI6IjY2NGFiZDZhZGQ5ZDQyN2M0MTkzMjM0NSIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.PaUBAej7XojVla0L2N6Lo-eDbXQMrpPvnOgdKMk3H7E";
     private final MovieMapper movieMapper;
     private final MovieRepository movieRepository;
-    private final RestTemplate restTemplate;
+    private final AppConfig appConfig;
+    //private final RestTemplate restTemplate;
 
     @Override
     public void saveLatestMovies() {
@@ -37,7 +39,7 @@ public class MovieServiceImpl implements MovieService {
 
         HttpEntity<String> entity = new HttpEntity<>("", headers);
 
-        ResponseEntity<ReadMovieApiData> response = restTemplate.exchange(url, HttpMethod.GET, entity, ReadMovieApiData.class);
+        ResponseEntity<ReadMovieApiData> response = appConfig.restTemplate().exchange(url, HttpMethod.GET, entity, ReadMovieApiData.class);
         // falta extraer las peliculas y guardarlas en la db
     }
 
