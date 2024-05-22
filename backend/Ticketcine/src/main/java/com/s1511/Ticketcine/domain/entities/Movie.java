@@ -9,6 +9,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @Entity
 @Data
@@ -23,7 +24,7 @@ public class Movie {
     private String cinema;
     private String description;
     private LocalDate releaseDate;
-    private Comment comments;
+    private List<Comment> comment;
     private String rate;
     private Boolean adult;
     private String image;
