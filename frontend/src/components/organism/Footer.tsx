@@ -1,11 +1,11 @@
 "use client"
-import { Box, Container, Grid, Typography } from "@mui/material";
+import { Box, Container, Typography } from "@mui/material";
 
 const Footer = () => {
     return (
         <Box
             component="footer"
-            sx={{ backgroundColor: "#1976d2", padding: "1rem 0", textAlign: "center", color: "#fff" }}
+            sx={{ backgroundColor: "#000", padding: "1rem 0", textAlign: "center", color: "#fff" }}
         >
 
             <Typography color="inherit" variant="h6">
