@@ -31,7 +31,7 @@ public class SecurityConfig {
     private static final String[] FREE_ENDPOINTS = {
            "/user/register",
             "/login",
-            "user/toggleUser/"
+            "user/toggleUser"
     };
 
     private static final String[] USER_ENDPOINTS = {
@@ -44,6 +44,8 @@ public class SecurityConfig {
                 .authorizeHttpRequests(request ->
                         request.requestMatchers(FREE_ENDPOINTS).permitAll()
                                 .requestMatchers(USER_ENDPOINTS).hasRole("USER")
+                                .requestMatchers("/swagger-ui/**").permitAll() // Permitir acceso a Swagger UI
+                                .requestMatchers("/swagger-ui.html").permitAll()  // Permitir acceso a la página de Swagger UI
                                 .anyRequest().authenticated()
                 )
                 //authRequest.anyRequest().permitAll())
