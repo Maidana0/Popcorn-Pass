@@ -4,18 +4,15 @@ import com.s1511.Ticketcine.application.dto.movie.CreateDtoMovie;
 import com.s1511.Ticketcine.application.dto.movie.ReadDtoMovie;
 import com.s1511.Ticketcine.application.dto.movie.ReadMovieApiData;
 import com.s1511.Ticketcine.application.mapper.MovieMapper;
-import com.s1511.Ticketcine.domain.entities.Comment;
 import com.s1511.Ticketcine.domain.entities.Movie;
 import com.s1511.Ticketcine.domain.repository.MovieRepository;
 import com.s1511.Ticketcine.domain.services.MovieService;
 import lombok.RequiredArgsConstructor;
-import lombok.Value;
 import org.springframework.http.*;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 import java.time.LocalDateTime;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
@@ -94,22 +91,22 @@ public class MovieServiceImpl implements MovieService {
     }
 
     @Override
-    public List<ReadDtoMovie> getMovieByTime(LocalDateTime time) {
-        List<Movie> movieList = movieRepository.findByTime(time);
+    public List<ReadDtoMovie> findByReleaseDate(LocalDateTime time) {
+        List<Movie> movieList = movieRepository.findByReleaseDate(time);
 
         return movieMapper.movieListToReadDtoList(movieList);
     }
 
-    @Override
+    /*@Override
     public List<ReadDtoMovie> getMovieByGender(String gender) {
         List<Movie> movieList = movieRepository.findByGender(gender);
 
         return movieMapper.movieListToReadDtoList(movieList);
-    }
+    }*/
 
     @Override
     public List<ReadDtoMovie> getMovieByAge(Boolean agePlus18) {
-        List<Movie> movieList = movieRepository.findByAge(agePlus18);
+        List<Movie> movieList = movieRepository.findByAdult(agePlus18);
 
         return movieMapper.movieListToReadDtoList(movieList);
     }

@@ -7,6 +7,6 @@ public record AddCommentDtoMovie(
         @NotNull
         String movieId,
         @NotNull
-        Comment comment
+        String comment
 ) {
 }

@@ -13,11 +13,11 @@ public interface MovieRepository extends JpaRepository<Movie,String> {
 
     Optional<Movie> findByTitle(String title);
 
-    List<Movie> findByTime(LocalDateTime time);
+    List<Movie> findByReleaseDate(LocalDateTime time);
 
-    List<Movie> findByGender(String gender);
+    //List<Movie> findByGender(String gender);
 
-    List<Movie> findByAge(Boolean agePlus18);
+    List<Movie> findByAdult(Boolean agePlus18);
 
     List<Movie> findByThreeD(Boolean threeD);
 

@@ -10,7 +10,6 @@ import lombok.NoArgsConstructor;
 import org.hibernate.grammars.hql.HqlParser;
 
 import java.time.LocalDateTime;
-
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
