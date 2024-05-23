@@ -23,4 +23,8 @@ public class Screen {
     private List<Seat> seat;
     private Boolean active;
 
+    @ManyToOne
+    @JoinColumn(name = "cinema_id", referencedColumnName = "id")
+    private Cinema cinema;
+
 }
