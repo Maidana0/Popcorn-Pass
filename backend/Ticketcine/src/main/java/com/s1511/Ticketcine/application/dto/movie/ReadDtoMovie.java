@@ -14,6 +14,9 @@ public record ReadDtoMovie(
         List<String> comment,
         String rate,
         Boolean adult,
-        String image
+        String image,
+        List<String> genre,
+        Boolean threeD,
+        Boolean subtitle
 ) {
 }

@@ -28,6 +28,7 @@ public class Movie {
     private String rate;
     private Boolean adult;
     private String image;
+    private List<String> genre;
     private Boolean threeD;
     private Boolean subtitle;
     private Boolean active;
