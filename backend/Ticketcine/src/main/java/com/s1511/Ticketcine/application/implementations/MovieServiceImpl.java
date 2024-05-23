@@ -8,6 +8,7 @@ import com.s1511.Ticketcine.application.security.AppConfig;
 import com.s1511.Ticketcine.domain.entities.Movie;
 import com.s1511.Ticketcine.domain.repository.MovieRepository;
 import com.s1511.Ticketcine.domain.services.MovieService;
+import com.s1511.Ticketcine.domain.utils.GenreCombert;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -33,7 +34,7 @@ public class MovieServiceImpl implements MovieService {
     private static final Logger logger = LoggerFactory.getLogger(MovieServiceImpl.class);
 
     @Override
-    public void saveLatestMovies() {
+    public List<Movie> saveLatestMovies() {
 
         LocalDate today = LocalDate.now();
 
@@ -60,7 +61,9 @@ public class MovieServiceImpl implements MovieService {
 
             // Save filtered movies to the database
             saveMoviesToDatabase(movies);
+
         }
+        return movieRepository.findAll();
     }
 
     @Override
@@ -77,7 +80,7 @@ public class MovieServiceImpl implements MovieService {
                 if (result.getStatusCode().is2xxSuccessful()) {
                     ReadMovieApiData data = result.getBody();
 
-                    if (data != null) {
+                    if (data.originalLenguage() == "en" || data.originalLenguage() == "es") {
                         Movie movie = new Movie();
                         movie.setImage(data.posterPath());
                         movie.setTitle(data.title());
@@ -85,12 +88,16 @@ public class MovieServiceImpl implements MovieService {
                         movie.setAdult(data.adult());
                         movie.setReleaseDate(LocalDate.parse(data.releaseDate())); // Assuming releaseDate is a String
                         movie.setThreeD(true);
-                        movie.setSubtitle(true);
+                        if (data.originalLenguage() == "en"){
+                            movie.setSubtitle(true);
+                            }else {
+                                movie.setSubtitle(false);
+                        }
                         movie.setActive(true);
                         movie.setCinema(null);
                         movie.setComment(null);
                         movie.setRate(null);
-
+                        movie.setGenre(assignGenre(data.gendreIds()));
                         movies.add(movie);
                     } else {
                         // Log or handle empty response body
@@ -178,4 +185,26 @@ public class MovieServiceImpl implements MovieService {
         return movieMapper.movieListToReadDtoList(movieList);
     }
 
+    @Override
+    public List<String> assignGenre(List<Integer> genresId) {
+        List<String> movieGenres = new ArrayList<>();
+
+        GenreCombert[] genreEnum = GenreCombert.values();
+        if (genreEnum != null) {
+            for (var genre : genreEnum){
+                for(var genreId : genresId ){
+                    if(genre.getId() == genreId){
+                     movieGenres.add(genre.name());
+                    }
+            }
+        }
+
+    }
+        return movieGenres;
+    }
+
+    @Override
+    public List<Movie> filterMoviesByLenguage(List<Movie> movies) {
+        return List.of();
+    }
 }
