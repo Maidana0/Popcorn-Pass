@@ -42,7 +42,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public ReadDtoUser readUserById(String id, Boolean active) {
         User user = userRepository.findByIdAndActive(id, active)
-                .orElseThrow(() -> new EntityNotFoundException(id));
+                .orElseThrow(() -> new EntityNotFoundException("No se puede encontrar el usuario con el id " + id));
 
         return userMapper.userToReadDto(user);
     }
@@ -50,7 +50,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public ReadDtoUser readUserByEmail(String email, Boolean active) {
         User user = userRepository.findByEmailAndActive(email, active)
-                .orElseThrow(() -> new EntityNotFoundException(email));
+                .orElseThrow(() -> new EntityNotFoundException("No se puede encontrar el usuario con el email " + email));
 
         return userMapper.userToReadDto(user);
     }
@@ -60,7 +60,7 @@ public class UserServiceImpl implements UserService {
     public ReadDtoUser updateUser(UpdateDtoUser updateDtoUser) {
         selfValidation.checkSelfValidation(updateDtoUser.id());
         User user = userRepository.findByIdAndActive(updateDtoUser.id(), true)
-                .orElseThrow(() -> new EntityNotFoundException(updateDtoUser.id()));
+                .orElseThrow(() -> new EntityNotFoundException("No se puede encontrar el usuario con el id " + updateDtoUser.id()));
 
             if (updateDtoUser.firstName() != null){
                 user.setFirstName(updateDtoUser.firstName());
@@ -78,7 +78,7 @@ public class UserServiceImpl implements UserService {
     public Boolean toggleUser(String id) {
         selfValidation.checkSelfValidation(id);
         User userEntity = userRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException(id));
+                .orElseThrow(() -> new EntityNotFoundException("No se puede encontrar el usuario con el id " + id));
         userEntity.setActive(!userEntity.getActive());
         userRepository.save(userEntity);
         return true;

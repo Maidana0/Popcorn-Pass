@@ -30,7 +30,8 @@ public class CommentServiceImpl implements CommentService {
     @Override
     public ReadDtoComment createComment(CreateDtoComment createDtoComment) {
         selfValidation.checkSelfValidation(createDtoComment.userId());
-        var commentAlreadyExists = commentRepository.findByUserId(createDtoComment.userId());
+        var commentAlreadyExists = commentRepository.findByUserIdAndMovieId(createDtoComment.userId(),
+                createDtoComment.movieId());
         if(commentAlreadyExists.isPresent()){
             throw new EntityExistsException("¡Ya has comentado esta película!"); }
 

@@ -4,6 +4,8 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.data.util.Lazy;
+
 import java.util.List;
 
 @Entity
@@ -16,7 +18,8 @@ public class Screen {
     @GeneratedValue(strategy = GenerationType.UUID)
     private String id;
     private String name;
-    @OneToMany
+
+    @OneToMany(fetch = FetchType.LAZY)
     private List<Seat> seat;
     private Boolean active;
 
