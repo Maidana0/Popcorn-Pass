@@ -15,10 +15,14 @@ import java.time.LocalDateTime;
 public class Seat {
 
     @Id
-    private Long id;
+    @GeneratedValue(strategy = GenerationType.UUID)
+    private String id;
     private String seatNumber;
     private LocalDateTime reservationTime;
     private boolean reserved;
+    @ManyToOne
+    @JoinColumn(name = "screen_id", referencedColumnName = "id")
+    private Screen screen;
 
 //    private Cinema cinema;
 //
