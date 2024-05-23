@@ -11,7 +11,7 @@ public record ReadDtoMovie(
         String cinema,
         String description,
         LocalDate releaseDate,
-        List<String> comment,
+        List<Comment> comment,
         String rate,
         Boolean adult,
         String image
