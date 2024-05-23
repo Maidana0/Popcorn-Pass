@@ -41,6 +41,7 @@ public class SecurityConfig {
             // USER
             "/user/register",
             "/login",
+            "movie/moviesave"
     };
 
     private static final String[] USER_ENDPOINTS = {

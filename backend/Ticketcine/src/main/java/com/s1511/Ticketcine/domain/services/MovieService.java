@@ -11,7 +11,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 public interface MovieService {
-    void saveLatestMovies();
+    List<Movie> saveLatestMovies();
     void saveMoviesToDatabase(List<Movie> movies);
     List<Movie> extractMoviesFromResponse(List<ResponseEntity<ReadMovieApiData>> response);
     List<Movie> filterMoviesByReleaseDate(List<Movie> movies, LocalDate today);
@@ -23,4 +23,6 @@ public interface MovieService {
     //List<ReadDtoMovie> getMovieByGender(String gender);
     List<ReadDtoMovie> getMovieByAge(Boolean agePlus18);
     List<ReadDtoMovie> getMovieByThreeD(Boolean threeD);
+    List<String> assignGenre(List<Integer> genre);
+    List<Movie> filterMoviesByLenguage(List<Movie> movies);
 }

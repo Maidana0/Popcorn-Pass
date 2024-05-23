@@ -24,10 +24,11 @@ public class Movie {
     private String cinema;
     private String description;
     private LocalDate releaseDate;
-    private List<Comment> comment;
+    private List<String> comment;
     private String rate;
     private Boolean adult;
     private String image;
+    private List<String> genre;
     private Boolean threeD;
     private Boolean subtitle;
     private Boolean active;
