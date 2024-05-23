@@ -18,6 +18,7 @@ public class Screen {
     @GeneratedValue(strategy = GenerationType.UUID)
     private String id;
     private String name;
+
     @OneToMany(fetch = FetchType.LAZY)
     private List<Seat> seat;
     private Boolean active;

@@ -10,5 +10,5 @@ public interface CommentRepository extends JpaRepository<Comment, String> {
     Optional<Comment> findByIdAndActive(String id, Boolean active);
     List<Comment> findAllCommentByUserIdAndActive(String userId, Boolean active);
     List<Comment> findAllCommentByMovieIdAndActive(String movieId, Boolean active);
-    Optional<Comment> findByUserId(String email); //Necesario para corroborar previo a crear.
+    Optional<Comment> findByUserIdAndMovieId(String userId, String movieId); //Necesario para corroborar previo a crear.
 }

@@ -8,7 +8,6 @@ import lombok.NoArgsConstructor;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "seats")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -25,12 +24,10 @@ public class Seat {
     private Screen screen;
 
 //    private Cinema cinema;
-//
 //    private Movie movie;
-//
 //    private Hall hall;
 //
-//     private Screening screening;
+//
 //
 //    @ManyToOne
 //    @JoinColumn(name = "current_user_id")
