@@ -14,7 +14,7 @@ const FieldsLogin: FC<IFieldsLoginProps> = ({ register, errors }) => {
 
     return <>
         <InputMui inputRegister={register("email", emailValidation)}
-            inputName="email" inputLabel="Ingresa tu correo electronico"
+            inputName="email" inputType="text" inputLabel="Ingresa tu correo electronico"
             inputHelperText={String(errors.email?.message)}
             inputError={errors.email ? true : false}
         />

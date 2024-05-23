@@ -27,3 +27,19 @@ a {
   text-decoration: none;
   color: var(--white);
 }
+
+
+/* SCROLL DESIGN */
+body::-webkit-scrollbar {
+  width: 7px;
+  scroll-behavior: smooth;
+}
+
+body::-webkit-scrollbar-track {
+  background: var(--black);
+}
+
+body::-webkit-scrollbar-thumb {
+  background-color: var(--yellow);
+  border-radius: 5px;
+}

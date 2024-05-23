@@ -2,13 +2,13 @@
 import { Tabs, Tab, useTheme, useMediaQuery, Box, Button } from "@mui/material"
 import { usePathname } from "next/navigation";
 import Link from "next/link";
-import paths from "@/data/paths";
+import routes from "@/data/routesData";
 
 const TabNavbar = () => {
     const theme = useTheme()
     const isMatch = useMediaQuery(theme.breakpoints.down("md"))
     const pathName = usePathname()
-    const activeTab = paths.findIndex(tab => pathName.endsWith(tab));
+    const activeTab = routes.findIndex(route => pathName.endsWith(route.path));
 
 
     if (isMatch) { return }
@@ -24,15 +24,15 @@ const TabNavbar = () => {
                 }}
             >
 
-                {paths.map((text, i) => {
+                {routes.map(({path,name}, i) => {
                     return (
                         <Tab
                             sx={{ fontSize: "1.1rem", }}
                             value={i}
                             tabIndex={i}
                             LinkComponent={Link}
-                            href={`/${text}`}
-                            key={i} label={text} />
+                            href={path}
+                            key={i} label={name} />
                     )
                 })}
             </Tabs>
