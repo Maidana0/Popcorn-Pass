@@ -9,11 +9,15 @@ import com.s1511.Ticketcine.domain.entities.Movie;
 import com.s1511.Ticketcine.domain.repository.MovieRepository;
 import com.s1511.Ticketcine.domain.services.MovieService;
 import lombok.RequiredArgsConstructor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.*;
 import org.springframework.stereotype.Service;
 
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
@@ -26,21 +30,37 @@ public class MovieServiceImpl implements MovieService {
     private final MovieMapper movieMapper;
     private final MovieRepository movieRepository;
     private final AppConfig appConfig;
-    //private final RestTemplate restTemplate;
+    private static final Logger logger = LoggerFactory.getLogger(MovieServiceImpl.class);
 
     @Override
     public void saveLatestMovies() {
 
-        String url = "https://api.themoviedb.org/3/discover/movie?page=1&primary_release_date.gte=2024-05-21&sort_by=primary_release_date.asc";
+        LocalDate today = LocalDate.now();
 
-        HttpHeaders headers = new HttpHeaders();
-        headers.setAccept(Collections.singletonList(MediaType.APPLICATION_JSON));
-        headers.setBearerAuth("Bearer " + apiKey);
+        // Set the start date in the URL to today's date
+        String urlTemplate = "https://api.themoviedb.org/3/discover/movie?page=%d&primary_release_date.gte=%s&sort_by=primary_release_date.asc";
 
-        HttpEntity<String> entity = new HttpEntity<>("", headers);
+        // Iterate through pages 1 to 100
+        for (int page = 1; page <= 33; page++) {
+            String url = String.format(urlTemplate, page, today.toString());
 
-        ResponseEntity<ReadMovieApiData> response = appConfig.restTemplate().exchange(url, HttpMethod.GET, entity, ReadMovieApiData.class);
-        // falta extraer las peliculas y guardarlas en la db
+            HttpHeaders headers = new HttpHeaders();
+            headers.setAccept(Collections.singletonList(MediaType.APPLICATION_JSON));
+            headers.setBearerAuth("Bearer " + apiKey);
+
+            HttpEntity<String> entity = new HttpEntity<>("", headers);
+
+            List<ResponseEntity<ReadMovieApiData>> response = Collections.singletonList(appConfig.restTemplate().exchange(url, HttpMethod.GET, entity, ReadMovieApiData.class));
+
+            // Extract movies from the response
+            List<Movie> movies = extractMoviesFromResponse(response);
+
+            // Filter movies based on release date (within 14 days from today)
+            movies = filterMoviesByReleaseDate(movies, today);
+
+            // Save filtered movies to the database
+            saveMoviesToDatabase(movies);
+        }
     }
 
     @Override
@@ -49,14 +69,52 @@ public class MovieServiceImpl implements MovieService {
     }
 
     @Override
-    public List<Movie> extractMoviesFromResponse(CreateDtoMovie response) {
-        return null;
+    public List<Movie> extractMoviesFromResponse(List<ResponseEntity<ReadMovieApiData>> response) {
+        List<Movie> movies = new ArrayList<>();
+
+        if (response != null && !response.isEmpty()) {
+            for (ResponseEntity<ReadMovieApiData> result : response) {
+                if (result.getStatusCode().is2xxSuccessful()) {
+                    ReadMovieApiData data = result.getBody();
+
+                    if (data != null) {
+                        Movie movie = new Movie();
+                        movie.setImage(data.posterPath());
+                        movie.setTitle(data.title());
+                        movie.setDescription(data.overview());
+                        movie.setAdult(data.adult());
+                        movie.setReleaseDate(LocalDate.parse(data.releaseDate())); // Assuming releaseDate is a String
+                        movie.setThreeD(true);
+                        movie.setSubtitle(true);
+                        movie.setActive(true);
+                        movie.setCinema(null);
+                        movie.setComment(null);
+                        movie.setRate(null);
+
+                        movies.add(movie);
+                    } else {
+                        // Log or handle empty response body
+                        logger.warn("Empty response body received from TMDb API for a successful response");
+                    }
+                } else {
+                    // Handle unsuccessful response status code (log or throw exception)
+                    logger.error("Error fetching movies from TMDb API: " + result.getStatusCode());
+                    throw new RuntimeException("Failed to retrieve movies from TMDb API with status code: " + result.getStatusCode());
+                }
+            }
+        } else {
+            logger.warn("The response list is null or empty");
+        }
+
+        return movies;
     }
 
+
+
     @Override
-    public List<Movie> filterMoviesByReleaseDate(List<Movie> movies, LocalDateTime today) {
+    public List<Movie> filterMoviesByReleaseDate(List<Movie> movies, LocalDate today) {
         return movies.stream()
-                .filter(movie -> movie.getReleaseDate().isAfter(today.toLocalDate()) && movie.getReleaseDate().isBefore(today.toLocalDate().plusDays(14)))
+                .filter(movie -> movie.getReleaseDate().isAfter(today) && movie.getReleaseDate().isBefore(today.plusDays(14)))
                 .collect(Collectors.toList());
     }
 
