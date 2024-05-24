@@ -41,14 +41,14 @@ public class SecurityConfig {
             // USER
             "/user/register",
             "/login",
-            "movie/moviesave"
+            "/movie/**"
     };
 
     private static final String[] USER_ENDPOINTS = {
-            "user/id/{id}/{active}",
-            "user/email/{email}/{active}",
-            "user/update",
-            "user/toggle",
+            "/user/id/{id}/{active}",
+            "/user/email/{email}/{active}",
+            "/user/update",
+            "/user/toggle",
             "/comment/**"
     };
 

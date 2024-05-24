@@ -9,17 +9,21 @@ import java.util.Optional;
 
 public interface MovieRepository extends JpaRepository<Movie,String> {
 
-    Optional<Movie> findById(String id);
+    Optional<Movie> findByIdAndActive(String id, Boolean active);
 
-    Optional<Movie> findByTitle(String title);
+    Optional<Movie> findByTitleAndActive(String title, Boolean active);
 
-    List<Movie> findByReleaseDate(LocalDateTime time);
+    List<Movie> findByReleaseDateAndActive(LocalDateTime time, Boolean active);
 
-    //List<Movie> findByGender(String gender);
+    //List<Movie> findByGenreAndActive(String genre, Boolean active);
 
-    List<Movie> findByAdult(Boolean agePlus18);
+    List<Movie> findByAdultAndActive(Boolean agePlus18, Boolean active);
 
-    List<Movie> findByThreeD(Boolean threeD);
+    List<Movie> findByThreeDAndActive(Boolean threeD, Boolean active);
+
+   List<Movie> findBySubtitleAndActive(Boolean subtitle, Boolean active);
+
+    List<Movie> findByActive(Boolean active);
 
 
 }
