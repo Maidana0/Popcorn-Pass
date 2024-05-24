@@ -12,3 +12,19 @@ insert into cinema (id,name,city,direction,state) values
 (10, 'Cine Teatro Sociedad Italiana','Maipu', 'Av.Maipu 1456', 'Buenos Aires'),
 (11 , 'Cpm Cinemas Catan Shopping','La Matanza', 'Huo del Carril 1221', 'Buenos Aires'),
 (12 , 'Cine San Martin', 'Las Flores', 'Las Flores 2121' , 'Buenos Aires');
+
+/*SCREEN TABLE'S INSERTS*/
+INSERT INTO screen (id, active, name, cinema_id, screening) 
+VALUES 
+('1', 1, 'Screen 1', '1', '2D'),
+('2', 1, 'Screen 2', '1', '3D'),
+('3', 1, 'Screen 1', '2', '2D'),
+('4', 1, 'Screen 1', '3', '3D');
+('1', 1, 'Screen 1', '1', '2D'),
+('2', 1, 'Screen 2', '1', '3D'),
+('3', 1, 'Screen 1', '2', '2D'),
+('4', 1, 'Screen 1', '3', '3D'); 
+('1', 1, 'Screen 1', '1', '2D'),
+('2', 1, 'Screen 2', '1', '3D'),
+('3', 1, 'Screen 1', '2', '2D'),
+('4', 1, 'Screen 1', '3', '3D');

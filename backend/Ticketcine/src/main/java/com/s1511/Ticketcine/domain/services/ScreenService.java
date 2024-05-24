@@ -1,4 +1,5 @@
 package com.s1511.Ticketcine.domain.services;
+import com.s1511.Ticketcine.application.dto.Seat.SeatDTO;
 import com.s1511.Ticketcine.application.dto.screen.CreateDtoScreen;
 import com.s1511.Ticketcine.application.dto.screen.ReadDtoScreen;
 import com.s1511.Ticketcine.application.dto.screen.UpdateDtoScreen;
@@ -11,5 +12,6 @@ public interface ScreenService {
     List<ReadDtoScreen> getAllScreens();
     ReadDtoScreen updateScreen(String id, UpdateDtoScreen updateDtoScreen);
     void deleteScreen(String id);
+    List<SeatDTO> selectTypeScreen(String idCinema, String typeScreen);
 }
 
