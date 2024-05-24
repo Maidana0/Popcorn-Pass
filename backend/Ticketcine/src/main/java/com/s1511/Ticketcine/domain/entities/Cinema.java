@@ -22,7 +22,6 @@ public class Cinema {
     @GeneratedValue(strategy = GenerationType.UUID)
     private String id;
     private String name;
-    private String state;
     private String city;
     private String direction;
 
