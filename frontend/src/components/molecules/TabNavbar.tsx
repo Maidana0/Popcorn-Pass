@@ -3,8 +3,14 @@ import { Tabs, Tab, useTheme, useMediaQuery, Box, Button } from "@mui/material"
 import { usePathname } from "next/navigation";
 import Link from "next/link";
 import routes from "@/data/routesData";
+import { useAuthStore } from "@/store/auth-store";
 
 const TabNavbar = () => {
+    const { logOut, isLogged } = useAuthStore(state => ({
+        logOut: state.logOut,
+        isLogged: state.isLogged
+    }))
+
     const theme = useTheme()
     const isMatch = useMediaQuery(theme.breakpoints.down("md"))
     const pathName = usePathname()
@@ -24,7 +30,7 @@ const TabNavbar = () => {
                 }}
             >
 
-                {routes.map(({path,name}, i) => {
+                {routes.map(({ path, name }, i) => {
                     return (
                         <Tab
                             sx={{ fontSize: "1.1rem", }}
@@ -37,8 +43,12 @@ const TabNavbar = () => {
                 })}
             </Tabs>
             <Box>
-                <Button variant="contained" LinkComponent={Link} href="/usuario/iniciar-sesion" color="warning" children="mi perfil"/>
-                {/* <Button variant="contained" color="error" children="Cerrar sesión" /> */}
+                <Button variant="contained" onClick={logOut} color="warning" children="mi perfil"
+                    LinkComponent={Link} href="/usuario/iniciar-sesion" />
+                {isLogged &&
+                    <Button type="button" onClick={logOut} color="error" children="Cerrar sesión"
+                        variant="contained" sx={{ marginLeft: "1.3rem" }} />
+                }
             </Box>
         </>)
 }

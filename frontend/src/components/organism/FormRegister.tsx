@@ -8,20 +8,18 @@ import { namesValidation, passwordValidation } from "@/data/commonFormValidation
 import { fetchData } from "../../utils/fetchData"
 import { useState } from "react"
 
-// REVISAR POR QUÉ FALLA CONQ AUTOCOMPLETADO
 const FormRegister = () => {
-    const [alreadyRegister, setAlreadyRegister] = useState(false)
+    const [message, setMessage] = useState({ value: false, message: "" })
 
     const { register, handleSubmit, reset, watch, formState: { errors } } = useForm()
-    const onSubmit = handleSubmit(async (data) => {
-        const res = await fetchData("user/register","POST",data)
-        console.log("DATOS ENVIADOS Y RESPUESTA: ", { data, res });
+    const onSubmit = handleSubmit(async (data): Promise<void> => {
+        const res = await fetchData("user/register", "POST", data)
 
-        if (res.id) {
-            reset()
-            setAlreadyRegister(true)
-            setTimeout(() => setAlreadyRegister(false), 8000);
-        }
+        if (!res.id) return setMessage({ value: true, message: res.errorMessage ?? "Ocurrio un error, intentelo más tarde." })
+
+        setMessage({ value: true, message: `${res.firstName} ${res.lastName}, te has registrado correctamente!` })
+        reset()
+        setTimeout(() => setMessage({ value: false, message: "" }), 7500);
     })
 
     return (
@@ -69,8 +67,8 @@ const FormRegister = () => {
 
             <Divider sx={{ bgcolor: "var(--gray-color)", margin: "12px 0" }} />
 
-            {alreadyRegister &&
-                <Typography color="var(--yellow)" textAlign="center" variant="h5" children="Usuario registrado correctamente!" />}
+            {message.value &&
+                <Typography color="var(--yellow)" textAlign="center" variant="h5" children={message.message} />}
 
             <Button type="submit" variant="contained" color="warning" children="Registrarme" />
 

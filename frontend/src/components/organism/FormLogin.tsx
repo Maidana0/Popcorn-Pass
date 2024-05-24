@@ -4,38 +4,33 @@ import { Box, Button, Divider, Typography } from "@mui/material"
 import Link from "next/link"
 import FieldsLogin from "../molecules/FieldsLogin"
 import { fetchData } from "../../utils/fetchData"
+import { ILoginUser, useAuthStore } from "@/store/auth-store"
 
-import { useState } from "react"
-import Image from "next/image"
-
-// GUARDAR LOS DATOS RECIBIDOS UTILIZANDO ZUSTAND
+// EN PROCESO
+import { useRouter } from "next/navigation"
+import { shallow } from "zustand/shallow"
 const FormLogin = () => {
+    const router = useRouter()
+// EN PROCESO || DEBERIAMOS DE REDIRIGIR AL USUARIO PARA QUE CONTINUE SU PROCESO DE SELECCIÓN
+
     const { register, handleSubmit, formState: { errors, } } = useForm()
-    const [isLogged, setIsLogged] = useState({ logged: false, message: "" })
+    const { isLogged, logIn, message, setMessage } = useAuthStore(state => ({
+        isLogged: state.isLogged,
+        logIn: state.logIn,
+        message: state.message,
+        setMessage: state.setMessage
+    }), shallow)
 
-    const onSubmit = handleSubmit(async (data) => {
-        const res = await fetchData("login", "POST", data)
+    const onSubmit = handleSubmit(async (data): Promise<void> => {
+        const res: ILoginUser = await fetchData("login", "POST", data)
         console.log("DATOS ENVIADOS Y RESPUESTA: ", { data, res });
-
-        if (res.jwt) {
-            setIsLogged({ logged: true, message: "Sesión iniciada correctamente" })
-            return
-        }
-        
-        return setIsLogged({ logged: false, message: "Usuario y/o contraseña incorrecto." })
+        res.jwt ? logIn(res) : setMessage("Usuario y/o contraseña incorrecto.")
     })
 
-    if (isLogged.logged == true) return <Box textAlign={"center"} component="div">
-        <Image
-            alt="Lisa dancing"
-            width={364}
-            height={380}
-            src={"/images/temporal.gif"}
-        />
-        <Typography color="var(--yellow)" variant="h5">
-            Usuario conectado correctamente!
-        </Typography>
-    </Box>
+    // REDIRIGIR AL USUARIO PARA QUE CONTINUE SU PROCESO DE SELECCIÓN
+    if (isLogged) router.replace("/")
+    // EN PROCESO
+
     return (
         <Box
             component="form"
@@ -44,9 +39,8 @@ const FormLogin = () => {
 
             <FieldsLogin register={register} errors={errors} />
 
-            <span style={{ color: "darkred" }}>
-                {!isLogged.logged && isLogged.message}
-            </span>
+            {message && <Typography textAlign="center" children={message} color={"darkred"} />}
+
             <Divider sx={{ bgcolor: "var(--gray-color)", margin: "12px 0" }} />
 
             <Button type="submit" variant="contained" color="warning">

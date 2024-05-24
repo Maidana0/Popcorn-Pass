@@ -5,8 +5,8 @@ export const passwordValidation = Object.freeze({
       message: "Este campo es requerido."
    },
    minLength: {
-      value: 6,
-      message: "Debe contener al menos 6 caracteres."
+      value: 7,
+      message: "Debe contener al menos 7 caracteres."
    },
    maxLength: {
       value: 30,
