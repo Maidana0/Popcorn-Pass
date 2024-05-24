@@ -49,9 +49,9 @@ public class ScreenController {
     //TODO: ESCOGER SALA DE CINE
     @PostMapping("/{screenTypeSelect}")
     //@PathVariable o @RequestBody?
-    public ResponseEntity<SeatDTO> selectTypeScreen(@PathVariable String idCinema, String typeScreem){
+    public ResponseEntity<List<SeatDTO>> selectTypeScreen(@PathVariable String idCinema, String typeScreem){
         //TODO: RETORNAR LISTA DE BUTACAS
         List <SeatDTO> dto = screenService.selectTypeScreen(idCinema, typeScreem);
-        return dt;
+        return ResponseEntity.ok(dto);
     }
 }
