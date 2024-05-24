@@ -14,6 +14,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.*;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
 
 
 import java.time.LocalDate;
@@ -22,7 +23,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -33,154 +33,120 @@ public class MovieServiceImpl implements MovieService {
     private final AppConfig appConfig;
     private static final Logger logger = LoggerFactory.getLogger(MovieServiceImpl.class);
 
-    @Override
-    public List<Movie> saveLatestMovies() {
 
+    public ResponseEntity<?> saveLastestMovies() {
         LocalDate today = LocalDate.now();
+        String urlTemplate = "https://api.themoviedb.org/3/discover/movie?page=%d&primary_release_date.gte=%s&primary_release_date.lte=2024-06-07&sort_by=primary_release_date.asc";
+        HttpHeaders headers = new HttpHeaders();
+        HttpEntity<String> entity;
+        RestTemplate restTemplate = new RestTemplate();
+        List<CreateDtoMovie> movieDtos = new ArrayList<>();
 
-        // Set the start date in the URL to today's date
-        String urlTemplate = "https://api.themoviedb.org/3/discover/movie?page=%d&primary_release_date.gte=%s&sort_by=primary_release_date.asc";
+        // Iterar a través de las páginas
+        int page = 1;
+        boolean hasMorePages = true;
 
-        // Iterate through pages 1 to 100
-        for (int page = 1; page <= 33; page++) {
+        while (hasMorePages) {
+            //
+            System.out.println(page);
             String url = String.format(urlTemplate, page, today.toString());
 
-            HttpHeaders headers = new HttpHeaders();
             headers.setAccept(Collections.singletonList(MediaType.APPLICATION_JSON));
-            headers.setBearerAuth("Bearer " + apiKey);
+            headers.setBearerAuth(apiKey);
 
-            HttpEntity<String> entity = new HttpEntity<>("", headers);
+            entity = new HttpEntity<>("", headers);
 
-            List<ResponseEntity<ReadMovieApiData>> response = Collections.singletonList(appConfig.restTemplate().exchange(url, HttpMethod.GET, entity, ReadMovieApiData.class));
+            var response = restTemplate.exchange(url, HttpMethod.GET, entity, ReadMovieApiData.class);
+            ReadMovieApiData apiData = response.getBody();
 
-            // Extract movies from the response
-            List<Movie> movies = extractMoviesFromResponse(response);
-
-            // Filter movies based on release date (within 14 days from today)
-            movies = filterMoviesByReleaseDate(movies, today);
-
-            // Save filtered movies to the database
-            saveMoviesToDatabase(movies);
-
-        }
-        return movieRepository.findAll();
-    }
-
-    @Override
-    public void saveMoviesToDatabase(List<Movie> movies) {
-        movieRepository.saveAll(movies);
-    }
-
-    @Override
-    public List<Movie> extractMoviesFromResponse(List<ResponseEntity<ReadMovieApiData>> response) {
-        List<Movie> movies = new ArrayList<>();
-
-        if (response != null && !response.isEmpty()) {
-            for (ResponseEntity<ReadMovieApiData> result : response) {
-                if (result.getStatusCode().is2xxSuccessful()) {
-                    ReadMovieApiData data = result.getBody();
-
-                    if (data.originalLenguage() == "en" || data.originalLenguage() == "es") {
-                        Movie movie = new Movie();
-                        movie.setImage(data.posterPath());
-                        movie.setTitle(data.title());
-                        movie.setDescription(data.overview());
-                        movie.setAdult(data.adult());
-                        movie.setReleaseDate(LocalDate.parse(data.releaseDate())); // Assuming releaseDate is a String
-                        movie.setThreeD(true);
-                        if (data.originalLenguage() == "en"){
-                            movie.setSubtitle(true);
-                            }else {
-                                movie.setSubtitle(false);
-                        }
-                        movie.setActive(true);
-                        movie.setCinema(null);
-                        movie.setComment(null);
-                        movie.setRate(null);
-                        movie.setGenre(assignGenre(data.gendreIds()));
-                        movies.add(movie);
-                    } else {
-                        // Log or handle empty response body
-                        logger.warn("Empty response body received from TMDb API for a successful response");
-                    }
-                } else {
-                    // Handle unsuccessful response status code (log or throw exception)
-                    logger.error("Error fetching movies from TMDb API: " + result.getStatusCode());
-                    throw new RuntimeException("Failed to retrieve movies from TMDb API with status code: " + result.getStatusCode());
-                }
+            if (apiData != null && apiData.results() != null) {
+                movieDtos.addAll(apiData.results());
+                hasMorePages = page < apiData.total_pages();
+                page++;
+            } else {
+                hasMorePages = false;
             }
-        } else {
-            logger.warn("The response list is null or empty");
         }
-
-        return movies;
-    }
-
-
-
-    @Override
-    public List<Movie> filterMoviesByReleaseDate(List<Movie> movies, LocalDate today) {
-        return movies.stream()
-                .filter(movie -> movie.getReleaseDate().isAfter(today) && movie.getReleaseDate().isBefore(today.plusDays(14)))
-                .collect(Collectors.toList());
-    }
-
-    @Override
-    public ReadDtoMovie createMovie(CreateDtoMovie createDtoMovie) throws Exception {
-        Optional<Movie> movieAlreadyExists = movieRepository.findByTitle(createDtoMovie.title());
-        if(movieAlreadyExists.isPresent()){
-            throw new Exception("esta pelicula ya esta guardada");
+        //
+        System.out.println(movieDtos);
+        // Transformar CreateDtoMovie a Movie
+        List<Movie> movies = new ArrayList<>();
+        for (CreateDtoMovie dto : movieDtos) {
+            System.out.println("DTO movie individual" +dto);
+            if (dto.original_language().equals("en") || dto.original_language().equals("es")) {
+                Movie movie = new Movie();
+                movie.setImage(dto.poster_path());
+                movie.setTitle(dto.title());
+                movie.setDescription(dto.overview());
+                movie.setAdult(dto.adult());
+                movie.setReleaseDate(LocalDate.parse(dto.release_date())); // Assuming releaseDate is a String
+                movie.setThreeD(true);
+                if (dto.original_language().equals("en")) {
+                    movie.setSubtitle(true);
+                } else {
+                    movie.setSubtitle(false);
+                }
+                movie.setActive(true);
+                movie.setCinema(null);
+                movie.setComment(null);
+                movie.setRate(null);
+                movie.setGenre(assignGenre(dto.genre_ids()));
+                //
+                System.out.println("movie individual ya guardada en objeto movie" + movie);
+            movies.add(movie);
+            }
         }
+        System.out.println("movies list" + movies);
+        // Guardar la lista de películas en la base de datos
+        movieRepository.saveAll(movies);
 
-        Movie movie = this.movieMapper.createDtoToMovie(createDtoMovie);
-        movie.setActive(Boolean.TRUE);
-        Movie movieAdded = movieRepository.save(movie);
-        return movieMapper.movieToReadDto(movieAdded);
+        return new ResponseEntity<>(movies, HttpStatus.OK);
     }
+
 
     @Override
     public ReadDtoMovie getMovieById(String id) {
-        Optional<Movie> movie = movieRepository.findById(id);
+        Optional<Movie> movie = movieRepository.findByIdAndActive(id, true);
         return movieMapper.movieToReadDto(movie.orElse(null));
     }
 
     @Override
-    public List<ReadDtoMovie> getMovieList() {
-        List<Movie> movieList = movieRepository.findAll();
+    public List<ReadDtoMovie> getActiveMovieList() {
+        List<Movie> movieList = movieRepository.findByActive(true);
         return movieMapper.movieListToReadDtoList(movieList);
     }
 
     @Override
     public ReadDtoMovie getMovieByTitle(String title) {
-        Optional<Movie> movie = movieRepository.findByTitle(title);
+        Optional<Movie> movie = movieRepository.findByTitleAndActive(title, true);
 
         return movieMapper.movieToReadDto(movie.orElse(null));
     }
 
     @Override
     public List<ReadDtoMovie> findByReleaseDate(LocalDateTime time) {
-        List<Movie> movieList = movieRepository.findByReleaseDate(time);
+        List<Movie> movieList = movieRepository.findByReleaseDateAndActive(time, true);
 
         return movieMapper.movieListToReadDtoList(movieList);
     }
 
     /*@Override
-    public List<ReadDtoMovie> getMovieByGender(String gender) {
-        List<Movie> movieList = movieRepository.findByGender(gender);
+    public List<ReadDtoMovie> getMovieByGenre(String gendre) {
+        List<Movie> movieList = movieRepository.findByGenreAndActive(gendre, true);
 
         return movieMapper.movieListToReadDtoList(movieList);
     }*/
 
     @Override
     public List<ReadDtoMovie> getMovieByAge(Boolean agePlus18) {
-        List<Movie> movieList = movieRepository.findByAdult(agePlus18);
+        List<Movie> movieList = movieRepository.findByAdultAndActive(agePlus18, true);
 
         return movieMapper.movieListToReadDtoList(movieList);
     }
 
     @Override
     public List<ReadDtoMovie> getMovieByThreeD(Boolean threeD) {
-        List<Movie> movieList = movieRepository.findByThreeD(threeD);
+        List<Movie> movieList = movieRepository.findByThreeDAndActive(threeD, true);
 
         return movieMapper.movieListToReadDtoList(movieList);
     }
@@ -204,7 +170,8 @@ public class MovieServiceImpl implements MovieService {
     }
 
     @Override
-    public List<Movie> filterMoviesByLenguage(List<Movie> movies) {
-        return List.of();
+    public List<Movie> findBySubtitleAndActive(Boolean subtitle) {
+        return movieRepository.findBySubtitleAndActive(subtitle, true);
     }
+
 }
