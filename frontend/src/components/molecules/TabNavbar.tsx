@@ -2,13 +2,19 @@
 import { Tabs, Tab, useTheme, useMediaQuery, Box, Button } from "@mui/material"
 import { usePathname } from "next/navigation";
 import Link from "next/link";
-import paths from "@/data/paths";
+import routes from "@/data/routesData";
+import { useAuthStore } from "@/store/auth-store";
 
 const TabNavbar = () => {
+    const { logOut, isLogged } = useAuthStore(state => ({
+        logOut: state.logOut,
+        isLogged: state.isLogged
+    }))
+
     const theme = useTheme()
     const isMatch = useMediaQuery(theme.breakpoints.down("md"))
     const pathName = usePathname()
-    const activeTab = paths.findIndex(tab => pathName.endsWith(tab));
+    const activeTab = routes.findIndex(route => pathName.endsWith(route.path));
 
 
     if (isMatch) { return }
@@ -24,21 +30,25 @@ const TabNavbar = () => {
                 }}
             >
 
-                {paths.map((text, i) => {
+                {routes.map(({ path, name }, i) => {
                     return (
                         <Tab
                             sx={{ fontSize: "1.1rem", }}
                             value={i}
                             tabIndex={i}
                             LinkComponent={Link}
-                            href={`/${text}`}
-                            key={i} label={text} />
+                            href={path}
+                            key={i} label={name} />
                     )
                 })}
             </Tabs>
             <Box>
-                <Button variant="contained" color="warning" children="mi perfil"/>
-                {/* <Button variant="contained" color="error" children="Cerrar sesión" /> */}
+                <Button variant="contained" onClick={logOut} color="warning" children="mi perfil"
+                    LinkComponent={Link} href="/usuario/iniciar-sesion" />
+                {isLogged &&
+                    <Button type="button" onClick={logOut} color="error" children="Cerrar sesión"
+                        variant="contained" sx={{ marginLeft: "1.3rem" }} />
+                }
             </Box>
         </>)
 }
