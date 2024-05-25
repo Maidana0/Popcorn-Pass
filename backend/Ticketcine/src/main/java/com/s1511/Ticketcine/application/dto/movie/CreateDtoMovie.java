@@ -6,17 +6,19 @@ import java.time.LocalDate;
 import java.util.List;
 
 public record CreateDtoMovie(
-        @NotNull
+        boolean adult,
+        String backdrop_path,
+        List<Integer> genre_ids,
+        int id,
+        String original_language,
+        String original_title,
+        String overview,
+        double popularity,
+        String poster_path,
+        String release_date,
         String title,
-        @NotNull
-        String description,
-        @NotNull
-        LocalDate releaseDate,
-        @NotNull
-        Boolean adult,
-        @NotNull
-        String image,
-        @NotNull
-        List<String> genre
+        boolean video,
+        double vote_average,
+        int vote_count
 ) {
 }

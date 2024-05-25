@@ -7,7 +7,7 @@ interface IUseMenuState {
     layoutBackgroundColor: string;
 }
 
-export const useMenuState = createWithEqualityFn<IUseMenuState>()(set => ({
+export const useMenuState = createWithEqualityFn<IUseMenuState>(set => ({
     isSideMenuOpen: false,
     openSideMenu: () => set({ isSideMenuOpen: true }),
     closeSideMenu: () => set({ isSideMenuOpen: false }),

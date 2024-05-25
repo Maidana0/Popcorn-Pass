@@ -1,4 +1,5 @@
 package com.s1511.Ticketcine.application.implementations;
+import com.s1511.Ticketcine.application.dto.Seat.SeatDTO;
 import com.s1511.Ticketcine.application.dto.screen.CreateDtoScreen;
 import com.s1511.Ticketcine.application.dto.screen.ReadDtoScreen;
 import com.s1511.Ticketcine.application.dto.screen.UpdateDtoScreen;
@@ -58,6 +59,14 @@ public class ScreenServiceImpl implements ScreenService {
             throw new RuntimeException("Screen not found");
         }
         screenRepository.deleteById(id);
+    }
+
+    //TODO: TRAER LISTA DE BUTACAS
+    @Override
+    public List<SeatDTO> selectTypeScreen(String idCinema, String typeScreen) {
+
+        
+        throw new UnsupportedOperationException("Unimplemented method 'selectTypeScreen'");
     }
 }
 

@@ -1,20 +1,25 @@
 "use client"
-import { Box, Drawer, Divider, ListItemText, List, ListItem, ListItemButton, useTheme, Button, useMediaQuery } from "@mui/material"
+import { Box, Drawer, ListItemText, List, ListItem, ListItemButton, useTheme, Button, useMediaQuery, Container } from "@mui/material"
 import { useMenuState } from '@/store/ui-store';
 import { shallow } from "zustand/shallow";
 import Link from "next/link";
 import BoxButtonSvg from "@/components/atoms/BoxButtonSvg";
 import { usePathname } from "next/navigation";
-import paths from "@/data/paths";
-
+import routes from "@/data/routesData";
+import { useAuthStore } from "@/store/auth-store";
 
 
 const Navbar = () => {
+    const { logOut, isLogged } = useAuthStore(state => ({
+        logOut: state.logOut,
+        isLogged: state.isLogged
+    }), shallow)
+
     const theme = useTheme()
     const isMatch = useMediaQuery(theme.breakpoints.down("md"))
 
     const pathName = usePathname()
-    const isActive = paths.findIndex(tab => pathName.endsWith(tab));
+    const isActive = routes.findIndex(route => pathName.endsWith(route.path));
 
     const { isSideMenuOpen, openSideMenu, closeSideMenu, layoutBackgroundColor } = useMenuState(state => ({
         isSideMenuOpen: state.isSideMenuOpen,
@@ -30,7 +35,7 @@ const Navbar = () => {
         <BoxButtonSvg
             alt="open-menu"
             handleClick={handleMenuState}
-            sxBox={{marginRight: "15px",}}
+            sxBox={{ marginRight: "15px", }}
             sxButton={{
                 minWidth: "auto", p: 0,
             }}
@@ -64,11 +69,11 @@ const Navbar = () => {
             <Box sx={{ width: '100%', height: "100%", display: "flex", marginTop: "auto", flexDirection: "column", justifyContent: "space-between", textAlign: "center" }} role="navigation" component="nav">
 
                 <List sx={{ color: "rgba(255, 255, 255, 0.5)" }}>
-                    {paths.map((text, i) => (
+                    {routes.map(({ name, path }, i) => (
                         <ListItem key={i} disablePadding onClick={handleMenuState}>
-                            <ListItemButton LinkComponent={Link} href={`/${text}`} sx={{ p: 2 }}>
+                            <ListItemButton LinkComponent={Link} href={path} sx={{ p: 2 }}>
                                 <ListItemText
-                                    primary={text}
+                                    primary={name}
                                     primaryTypographyProps={{
                                         color: isActive == i ? "#fff" : "inherit",
                                         textTransform: "capitalize", fontSize: "1.33rem", textAlign: 'center'
@@ -80,14 +85,25 @@ const Navbar = () => {
                 </List>
 
 
-                <Box>
-                    
-                    <Button variant="contained" color="warning" children="mi perfil" />
-                    {/* <Button variant="contained" color="error" children="Cerrar sesión" /> */}
+                <Container sx={{ display: "flex", flexWrap: "wrap", flexDirection: "column", justifyContent: "center" }}>
+
+                    <Button variant="contained" color="warning" LinkComponent={Link}
+                        href="/usuario/iniciar-sesion" children="mi perfil" onClick={closeSideMenu}
+                        sx={{ width: "70%", minHeight: "2.5rem", margin: "auto" }}
+                    />
+
+
+                    {isLogged &&
+                        <Button variant="contained" type="button"
+                            sx={{ width: "70%", minHeight: "2.5rem", margin: "1.5rem auto" }}
+                            onClick={() => { logOut(); closeSideMenu() }}
+                            color="error" children="Cerrar sesión"
+                        />}
+
                     <ListItemText sx={{ color: "#fff9", p: 2 }}>
-                        Hola programador, estas codeando solo? Enserio? 🥵
+                        Que esperas para obtener tu entrada!
                     </ListItemText>
-                </Box>
+                </Container>
 
             </Box>
         </Drawer>

@@ -63,4 +63,4 @@ public class MercadoPagoServiceImpl implements MercadoPagoService {
     }
 }
 /* Nota de Guille hasta que esto esté en prod: Cada vez que se apaga el ngrok hay que
-correr el comando de nuevo. */
+correr el comando  ngrok http http://localhost:8080/   de nuevo. =D */

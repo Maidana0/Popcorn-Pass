@@ -19,8 +19,18 @@ public class Screen {
     private String id;
     private String name;
 
+    //TIPO DE SALA: 2d,3d,etc
+    private String screening; 
     @OneToMany(fetch = FetchType.LAZY)
     private List<Seat> seat;
     private Boolean active;
+
+    
+    @OneToMany(fetch = FetchType.LAZY)
+    private List<FunctionDetails> functionDetails;
+
+    @ManyToOne
+    @JoinColumn(name = "cinema_id", referencedColumnName = "id")
+    private Cinema cinema;
 
 }
