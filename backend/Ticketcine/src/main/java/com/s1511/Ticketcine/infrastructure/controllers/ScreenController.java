@@ -10,12 +10,12 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/screens")
+@RequestMapping("/screens")
 public class ScreenController {
     @Autowired
     private ScreenService screenService;
 
-    @PostMapping
+    @PostMapping("/create")
     public ResponseEntity<ReadDtoScreen> createScreen(@RequestBody CreateDtoScreen createDtoScreen) {
         ReadDtoScreen createdScreen = screenService.createScreen(createDtoScreen);
         return ResponseEntity.ok(createdScreen);
@@ -27,7 +27,7 @@ public class ScreenController {
         return ResponseEntity.ok(screen);
     }
 
-    @GetMapping
+    @GetMapping("/all")
     public ResponseEntity<List<ReadDtoScreen>> getAllScreens() {
         List<ReadDtoScreen> screens = screenService.getAllScreens();
         return ResponseEntity.ok(screens);
