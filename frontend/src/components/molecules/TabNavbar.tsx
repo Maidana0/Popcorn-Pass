@@ -4,12 +4,13 @@ import { usePathname } from "next/navigation";
 import Link from "next/link";
 import routes from "@/data/routesData";
 import { useAuthStore } from "@/store/auth-store";
+import { shallow } from "zustand/shallow";
 
 const TabNavbar = () => {
     const { logOut, isLogged } = useAuthStore(state => ({
         logOut: state.logOut,
         isLogged: state.isLogged
-    }))
+    }), shallow)
 
     const theme = useTheme()
     const isMatch = useMediaQuery(theme.breakpoints.down("md"))

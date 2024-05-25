@@ -41,14 +41,10 @@ public class SecurityConfig {
             // USER
             "/user/register",
             "/login",
-<<<<<<< HEAD
             // MOVIE
             "/movie/**",
             // MP
             "/mp/response"
-=======
-            "/movie/**"
->>>>>>> 617993487b1c9f7c332464c07395e34441c16219
     };
 
     private static final String[] USER_ENDPOINTS = {
@@ -56,14 +52,10 @@ public class SecurityConfig {
             "/user/email/{email}/{active}",
             "/user/update",
             "/user/toggle",
-<<<<<<< HEAD
             "/comment/**",
             "/mp/**",
             "/seat/**",
             "/screen/**"
-=======
-            "/comment/**"
->>>>>>> 617993487b1c9f7c332464c07395e34441c16219
     };
 
     @Bean
