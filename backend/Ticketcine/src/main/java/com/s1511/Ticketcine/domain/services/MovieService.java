@@ -11,18 +11,15 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 public interface MovieService {
-    List<Movie> saveLatestMovies();
-    void saveMoviesToDatabase(List<Movie> movies);
-    List<Movie> extractMoviesFromResponse(List<ResponseEntity<ReadMovieApiData>> response);
-    List<Movie> filterMoviesByReleaseDate(List<Movie> movies, LocalDate today);
-    ReadDtoMovie createMovie(CreateDtoMovie createDtoMovie) throws Exception;
+
+    ResponseEntity<?> saveLastestMovies();
     ReadDtoMovie getMovieById(String id);
-    List<ReadDtoMovie> getMovieList();
+    List<ReadDtoMovie> getActiveMovieList();
     ReadDtoMovie getMovieByTitle(String title);
     List<ReadDtoMovie> findByReleaseDate(LocalDateTime time);
-    //List<ReadDtoMovie> getMovieByGender(String gender);
+   // List<ReadDtoMovie> getMovieByGenre(String gendre);
     List<ReadDtoMovie> getMovieByAge(Boolean agePlus18);
     List<ReadDtoMovie> getMovieByThreeD(Boolean threeD);
     List<String> assignGenre(List<Integer> genre);
-    List<Movie> filterMoviesByLenguage(List<Movie> movies);
+    List<Movie> findBySubtitleAndActive(Boolean subtitle);
 }
