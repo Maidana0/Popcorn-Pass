@@ -26,12 +26,8 @@ const FormRegister = () => {
         <Box
             component="form"
             onSubmit={onSubmit}
-            sx={{ display: "flex", flexDirection: "column", gap: ".7rem", width: "100%" }}
+            sx={{ display: "flex", flexDirection: "column", gap: "1rem"}}
         >
-
-            <Typography color="var(--gray-color)" variant="h5">
-                Datos Personales
-            </Typography>
 
             <Box display="flex" gap="1rem">
                 <InputMui inputName="firstName" inputType="text" inputLabel="Nombre"
@@ -47,23 +43,18 @@ const FormRegister = () => {
                 />
             </Box>
 
-            <Divider sx={{ bgcolor: "var(--gray-color)", margin: "12px 0" }} />
+            <FieldsLogin register={register} errors={errors}>
 
-            <Typography color="var(--gray-color)" variant="h5">
-                Datos de Ingreso
-            </Typography>
-
-            <FieldsLogin register={register} errors={errors} />
-
-            <InputMui inputName="confirmPassword" inputType="password"
-                inputLabel={"Confirme su contraseña"}
-                inputHelperText={String(errors.confirmPassword?.message)}
-                inputError={errors.confirmPassword ? true : false}
-                inputRegister={register("confirmPassword", {
-                    ...passwordValidation,
-                    validate: value => value == watch("password") ? true : "No coincide con su contraseña."
-                })}
-            />
+                <InputMui inputName="confirmPassword" inputType="password"
+                    inputLabel={"Confirma tu contraseña"}
+                    inputHelperText={String(errors.confirmPassword?.message)}
+                    inputError={errors.confirmPassword ? true : false}
+                    inputRegister={register("confirmPassword", {
+                        ...passwordValidation,
+                        validate: value => value == watch("password") ? true : "No coincide con su contraseña."
+                    })}
+                />
+            </FieldsLogin>
 
             <Divider sx={{ bgcolor: "var(--gray-color)", margin: "12px 0" }} />
 

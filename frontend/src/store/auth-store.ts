@@ -1,3 +1,4 @@
+import { getItemLStorage, setItemLStorage } from '@/data/localStorageConvert'
 import { createWithEqualityFn } from 'zustand/traditional'
 
 export interface ILoginUser {
@@ -29,16 +30,30 @@ const initialState: IAuthStore = {
     message: ""
 }
 
-export const useAuthStore = createWithEqualityFn<IAuthStore & Actions>(set => ({
-    ...initialState,
-    logIn: (user: ILoginUser) => set({
-        jwt: user.jwt,
-        rol: user.rol,
-        id: user.id,
-        firstName: user.firstName,
-        lastName: user.lastName,
-        isLogged: true,
-    }),
-    logOut: () => set(initialState),
-    setMessage: (newMsg: string) => set({ message: newMsg })
-}))
+export const useAuthStore = createWithEqualityFn<IAuthStore & Actions>(set => {
+    const isUserAlreadyLoggedOrInitialState = getItemLStorage("user") || initialState
+
+    return ({
+        ...isUserAlreadyLoggedOrInitialState,
+        logIn: (user: ILoginUser) => {
+            if(isUserAlreadyLoggedOrInitialState.isLogged) return
+            const dataUser = {
+                jwt: user.jwt,
+                rol: user.rol,
+                id: user.id,
+                firstName: user.firstName,
+                lastName: user.lastName,
+                isLogged: true,
+            }
+
+            setItemLStorage("user", dataUser)
+            set(dataUser)
+        },
+        logOut: () => {
+            if(!isUserAlreadyLoggedOrInitialState.isLogged) return
+            set(initialState)
+            localStorage.removeItem("user")
+        },
+        setMessage: (newMsg: string) => set({ message: newMsg })
+    })
+})
