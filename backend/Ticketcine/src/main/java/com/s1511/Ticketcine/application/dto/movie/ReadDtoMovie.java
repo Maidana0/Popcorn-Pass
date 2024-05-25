@@ -6,7 +6,7 @@ import java.time.LocalDate;
 import java.util.List;
 
 public record ReadDtoMovie(
-        Long id,
+        String id,
         String title,
         String cinema,
         String description,

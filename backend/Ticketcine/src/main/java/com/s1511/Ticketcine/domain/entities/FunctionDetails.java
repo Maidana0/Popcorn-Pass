@@ -1,13 +1,11 @@
 package com.s1511.Ticketcine.domain.entities;
 
-import java.util.List;
-
 import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -15,17 +13,18 @@ import lombok.NoArgsConstructor;
 @Entity
 @Data
 @AllArgsConstructor
-@NoArgsConstructor
-public class Cinema {
+@NoArgsConstructor 
+public class FunctionDetails {
+
+    //TODO: AGREGAR CAMPOS
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private String id;
-    private String name;
-    private String city;
-    private String direction;
 
-    @OneToMany(fetch = FetchType.LAZY)
-    private List<Screen> screens;
+    @ManyToOne
+    @JoinColumn(name = "screen_id", referencedColumnName="id")
+    private Screen screen;
     
+
 }

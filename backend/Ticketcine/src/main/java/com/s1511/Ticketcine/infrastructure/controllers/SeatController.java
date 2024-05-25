@@ -19,7 +19,7 @@ public class SeatController {
 
     private final SeatService seatService;
 
-    @GetMapping
+    @GetMapping("/all")
     public List<SeatDTO> getAllSeats() {
         return seatService.findAllSeats();
     }
