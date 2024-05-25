@@ -41,15 +41,21 @@ public class SecurityConfig {
             // USER
             "/user/register",
             "/login",
-            "movie/moviesave"
+            // MOVIE
+            "/movie/**",
+            // MP
+            "/mp/response"
     };
 
     private static final String[] USER_ENDPOINTS = {
-            "user/id/{id}/{active}",
-            "user/email/{email}/{active}",
-            "user/update",
-            "user/toggle",
-            "/comment/**"
+            "/user/id/{id}/{active}",
+            "/user/email/{email}/{active}",
+            "/user/update",
+            "/user/toggle",
+            "/comment/**",
+            "/mp/**",
+            "/seat/**",
+            "/screen/**"
     };
 
     @Bean
