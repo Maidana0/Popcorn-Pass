@@ -25,7 +25,7 @@ export const getItemLStorage = (key: string) => {
 export const setItemLStorage = (key: string, value: Object): void => {
     const date = new Date()
 
-    const stringifyValue = JSON.stringify({ ...value, expiry: date.getTime() + ONE_DAY })
+    const stringifyValue = JSON.stringify({ ...value, expiry: date.getTime() + (ONE_DAY * 3) })
     
     localStorage.setItem(key, stringifyValue)
 }       

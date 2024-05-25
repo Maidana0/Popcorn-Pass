@@ -4,9 +4,9 @@ import { useMenuState } from '@/store/ui-store';
 import { shallow } from "zustand/shallow";
 import Link from "next/link";
 import BoxButtonSvg from "@/components/atoms/BoxButtonSvg";
-import { usePathname } from "next/navigation";
 import routes from "@/data/routesData";
 import { useAuthStore } from "@/store/auth-store";
+import isLinkActive from "@/utils/isLinkActive";
 
 
 const Navbar = () => {
@@ -18,8 +18,7 @@ const Navbar = () => {
     const theme = useTheme()
     const isMatch = useMediaQuery(theme.breakpoints.down("md"))
 
-    const pathName = usePathname()
-    const isActive = routes.findIndex(route => pathName.endsWith(route.path));
+    const isActive = isLinkActive()
 
     const { isSideMenuOpen, openSideMenu, closeSideMenu, layoutBackgroundColor } = useMenuState(state => ({
         isSideMenuOpen: state.isSideMenuOpen,

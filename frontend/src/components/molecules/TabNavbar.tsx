@@ -1,10 +1,10 @@
 "use client"
 import { Tabs, Tab, useTheme, useMediaQuery, Box, Button } from "@mui/material"
-import { usePathname } from "next/navigation";
 import Link from "next/link";
 import routes from "@/data/routesData";
 import { useAuthStore } from "@/store/auth-store";
 import { shallow } from "zustand/shallow";
+import isLinkActive from "@/utils/isLinkActive";
 
 const TabNavbar = () => {
     const { logOut, isLogged } = useAuthStore(state => ({
@@ -14,15 +14,14 @@ const TabNavbar = () => {
 
     const theme = useTheme()
     const isMatch = useMediaQuery(theme.breakpoints.down("md"))
-    const pathName = usePathname()
-    const activeTab = routes.findIndex(route => pathName.endsWith(route.path));
 
+    const linkActive = isLinkActive()
 
     if (isMatch) { return }
     return (
         <>
             <Tabs component={"ul"}
-                value={activeTab !== -1 ? activeTab : false}
+                value={linkActive !== -1 ? linkActive : false}
                 textColor="inherit"
                 indicatorColor="secondary"
                 sx={{
@@ -44,7 +43,7 @@ const TabNavbar = () => {
                 })}
             </Tabs>
             <Box>
-                <Button variant="contained" onClick={logOut} color="warning" children="mi perfil"
+                <Button variant="contained" color="warning" children="mi perfil"
                     LinkComponent={Link} href="/usuario/iniciar-sesion" />
                 {isLogged &&
                     <Button type="button" onClick={logOut} color="error" children="Cerrar sesión"

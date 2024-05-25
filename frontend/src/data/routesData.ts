@@ -9,13 +9,17 @@ const routes: ReadonlyArray<IRoute> = Object.freeze([
         path: "/"
     },
     {
-        name: "cartelera",
+        name: "peliculas",
+        path: "/peliculas/en-pantalla"
+    },
+    {
+        name: "promociones",
         path: "/#"
     },
     {
-        name: "estrenos",
+        name: "nosotros",
         path: "/#"
-    }
+    },
 ]);
 
 export default routes;
