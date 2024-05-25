@@ -1,4 +1,4 @@
-import { getItemLStorage, setItemLStorage } from '@/data/localStorageConvert'
+import { getItemLStorage, setItemLStorage } from '@/utils/localStorageConvert'
 import { createWithEqualityFn } from 'zustand/traditional'
 
 export interface ILoginUser {
@@ -36,7 +36,7 @@ export const useAuthStore = createWithEqualityFn<IAuthStore & Actions>(set => {
     return ({
         ...isUserAlreadyLoggedOrInitialState,
         logIn: (user: ILoginUser) => {
-            if(isUserAlreadyLoggedOrInitialState.isLogged) return
+            if (isUserAlreadyLoggedOrInitialState.isLogged) return
             const dataUser = {
                 jwt: user.jwt,
                 rol: user.rol,
@@ -50,9 +50,9 @@ export const useAuthStore = createWithEqualityFn<IAuthStore & Actions>(set => {
             set(dataUser)
         },
         logOut: () => {
-            if(!isUserAlreadyLoggedOrInitialState.isLogged) return
             set(initialState)
             localStorage.removeItem("user")
+            window.location.reload()
         },
         setMessage: (newMsg: string) => set({ message: newMsg })
     })

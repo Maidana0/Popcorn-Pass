@@ -6,12 +6,12 @@ import FieldsLogin from "../molecules/FieldsLogin"
 import { fetchData } from "../../utils/fetchData"
 import { ILoginUser, useAuthStore } from "@/store/auth-store"
 
-// EN PROCESO
 import { useRouter } from "next/navigation"
 import { shallow } from "zustand/shallow"
+import { useEffect } from "react"
+
 const FormLogin = () => {
     const router = useRouter()
-// EN PROCESO || DEBERIAMOS DE REDIRIGIR AL USUARIO PARA QUE CONTINUE SU PROCESO DE SELECCIÓN
 
     const { register, handleSubmit, formState: { errors, } } = useForm()
     const { isLogged, logIn, message, setMessage } = useAuthStore(state => ({
@@ -28,9 +28,13 @@ const FormLogin = () => {
     })
 
     // REDIRIGIR AL USUARIO PARA QUE CONTINUE SU PROCESO DE SELECCIÓN
-    if (isLogged) router.replace("/")
+    useEffect(() => {
+        if (isLogged) {
+            router.replace("/")
+        }
+    }, [isLogged, router])
     // EN PROCESO
-
+    if(isLogged) return
     return (
         <Box
             component="form"
