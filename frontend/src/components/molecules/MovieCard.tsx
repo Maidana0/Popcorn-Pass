@@ -3,8 +3,9 @@ import BoxIconWithText from '../atoms/BoxIconWithText';
 import Image from 'next/image';
 
 interface PropsMovieCard {
+  id?: string,
   isComingSoon?: boolean,
-  handleClick?: () => void,
+  handleClick?: (id: string) => void,
   nameMovie?: string,
   imagePath?: string,
 
@@ -14,9 +15,9 @@ interface PropsMovieCard {
   textCalendar?: string,
 }
 
-const MovieCard = ({ nameMovie, imagePath, isComingSoon, handleClick, textStar, textVideo, textCalendar, textClock }: PropsMovieCard) => {
+const MovieCard = ({ id, nameMovie, imagePath, isComingSoon, handleClick, textStar, textVideo, textCalendar, textClock }: PropsMovieCard) => {
   return (
-    <Card component="figure" onClick={handleClick} sx={{
+    <Card component="figure" onClick={() => { handleClick && handleClick(id || "#") }} sx={{
       width: { xs: 180, sm: 192 },
       height: 360,
       bgcolor: "var(--lightBlack)",
@@ -34,17 +35,17 @@ const MovieCard = ({ nameMovie, imagePath, isComingSoon, handleClick, textStar, 
         />
         <CardContent sx={{ padding: "7px" }}>
           <Typography maxHeight={"40px"} maxWidth={"95%"} gutterBottom variant="caption" overflow={"hidden"} textOverflow={"ellipsis"} component="figcaption" color="var(--yellow)" fontWeight={700} fontSize={16} lineHeight={"20px"} >
-            Deadpool and Wolverine
+            {nameMovie || "Deadpool and Wolverine"}
           </Typography>
 
           {isComingSoon
             ? <BoxIconWithText leftText={true} typographyProps={{ color: "var(--gray-color)", fontSize: "15px" }} text={textCalendar || "28.06.2024"} svgPath="/images/cards/calendar.svg" />
             : <>
-              <BoxIconWithText leftText={true} typographyProps={{ color: "var(--gray-color)", fontSize: "15px" }} text={textStar||"4.8"} svgPath="/images/cards/star.svg" />
-              <BoxIconWithText leftText={true} typographyProps={{ color: "var(--gray-color)", fontSize: "15px" }} text={textClock||"1 hora, 30 minutos."} svgPath="/images/cards/clock.svg" />
+              <BoxIconWithText leftText={true} typographyProps={{ color: "var(--gray-color)", fontSize: "15px" }} text={textStar || "4.8"} svgPath="/images/cards/star.svg" />
+              <BoxIconWithText leftText={true} typographyProps={{ color: "var(--gray-color)", fontSize: "15px" }} text={textClock || "1 hora, 30 minutos."} svgPath="/images/cards/clock.svg" />
             </>}
 
-          <BoxIconWithText leftText={true} typographyProps={{ color: "var(--gray-color)", fontSize: "15px" }} text={textVideo||"Accion, Comedia."} svgPath="/images/cards/video.svg" />
+          <BoxIconWithText leftText={true} typographyProps={{ color: "var(--gray-color)", fontSize: "15px" }} text={textVideo || "Accion, Comedia."} svgPath="/images/cards/video.svg" />
 
         </CardContent>
       </CardActionArea>

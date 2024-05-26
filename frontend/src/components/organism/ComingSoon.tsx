@@ -1,19 +1,18 @@
 "use client"
 import MovieCard from "../molecules/MovieCard"
-import { useRouter, usePathname } from "next/navigation"
+import { useRouter } from "next/navigation"
 
 const ComingSoon = () => {
     const router = useRouter()
-    const path = usePathname().toString()
 
-    const handleClick = () => router.push(path + "/hola")
+    const handleClick = (id: string) => router.push("/pelicula/" + id)
 
     return <>
-        <MovieCard handleClick={handleClick} isComingSoon={true} />
-        <MovieCard isComingSoon={true} />
-        <MovieCard isComingSoon={true} />
-        <MovieCard isComingSoon={true} />
-        <MovieCard isComingSoon={true} />
+        <MovieCard id={"1"} handleClick={handleClick} isComingSoon={true} />
+        <MovieCard id={"2"} handleClick={handleClick} isComingSoon={true} />
+        <MovieCard id={"3"} handleClick={handleClick} isComingSoon={true} />
+        <MovieCard id={"4"} handleClick={handleClick} isComingSoon={true} />
+        <MovieCard id={"5"} handleClick={handleClick} isComingSoon={true} />
     </>
 }
 

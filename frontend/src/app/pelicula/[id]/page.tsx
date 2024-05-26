@@ -1,6 +1,6 @@
 import BackButton from '@/components/atoms/BackButton'
 import { Container } from '@mui/material'
-import type { Metadata, ResolvingMetadata } from 'next'
+import type { Metadata } from 'next'
 
 type Props = {
     params: { id: string }
