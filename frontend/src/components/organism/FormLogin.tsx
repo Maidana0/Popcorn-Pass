@@ -23,12 +23,12 @@ const FormLogin = () => {
 
     const onSubmit = handleSubmit(async (data): Promise<void> => {
         const res: ILoginUser = await fetchData("login", "POST", data)
-        console.log("DATOS ENVIADOS Y RESPUESTA: ", { data, res });
         res.jwt ? logIn(res) : setMessage("Usuario y/o contraseña incorrecto.")
     })
 
     // REDIRIGIR AL USUARIO PARA QUE CONTINUE SU PROCESO DE SELECCIÓN
     useEffect(() => {
+        setMessage("")
         if (isLogged) {
             router.replace("/")
         }

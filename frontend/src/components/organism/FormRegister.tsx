@@ -7,26 +7,29 @@ import InputMui from "../atoms/InputMui"
 import { namesValidation, passwordValidation } from "@/data/commonFormValidation"
 import { fetchData } from "../../utils/fetchData"
 import { useState } from "react"
+import { useAuthStore } from "@/store/auth-store"
+import { shallow } from "zustand/shallow"
 
 const FormRegister = () => {
-    const [message, setMessage] = useState({ value: false, message: "" })
+    // const [message, setMessage] = useState({ value: false, message: "" })
+    const { message, setMessage } = useAuthStore((state) => ({ message: state.message, setMessage: state.setMessage }), shallow)
 
     const { register, handleSubmit, reset, watch, formState: { errors } } = useForm()
     const onSubmit = handleSubmit(async (data): Promise<void> => {
         const res = await fetchData("user/register", "POST", data)
 
-        if (!res.id) return setMessage({ value: true, message: res.errorMessage ?? "Ocurrio un error, intentelo más tarde." })
+        if (!res.id) return setMessage(res.errorMessage ?? "Ocurrio un error, intentelo más tarde.")
 
-        setMessage({ value: true, message: `${res.firstName} ${res.lastName}, te has registrado correctamente!` })
+        setMessage(`${res.firstName} ${res.lastName}, te has registrado correctamente!`)
         reset()
-        setTimeout(() => setMessage({ value: false, message: "" }), 7500);
+        setTimeout(() => setMessage(""), 7500);
     })
 
     return (
         <Box
             component="form"
             onSubmit={onSubmit}
-            sx={{ display: "flex", flexDirection: "column", gap: "1rem"}}
+            sx={{ display: "flex", flexDirection: "column", gap: "1rem" }}
         >
 
             <Box display="flex" gap="1rem">
@@ -58,8 +61,8 @@ const FormRegister = () => {
 
             <Divider sx={{ bgcolor: "var(--gray-color)", margin: "12px 0" }} />
 
-            {message.value &&
-                <Typography color="var(--yellow)" textAlign="center" variant="h5" children={message.message} />}
+            {message &&
+                <Typography color="var(--yellow)" textAlign="center" variant="h5" children={message} />}
 
             <Button type="submit" variant="contained" color="warning" children="Registrarme" />
 
