@@ -1,9 +1,9 @@
 import TextField from '@mui/material/TextField';
-import * as React from "react";
+import { FC } from "react";
 import { UseFormRegisterReturn } from "react-hook-form";
 import { Theme } from "@emotion/react";
 
-import { Box, Button, SxProps } from "@mui/material"
+import { SxProps } from "@mui/material"
 interface IInputMuiProps {
   inputName: string;
   inputType?: React.InputHTMLAttributes<unknown>['type'];
@@ -13,9 +13,10 @@ interface IInputMuiProps {
   inputHelperText?: string;
   inputError?: boolean;
   inputSx?: SxProps<Theme>;
+  inputVariant?: "outlined" | "standard";
 }
 
-const InputMui: React.FC<IInputMuiProps> = ({ inputHelperText, inputError, inputRequired, inputRegister, inputName, inputType, inputLabel, inputSx }) => {
+const InputMui: FC<IInputMuiProps> = ({ inputVariant, inputHelperText, inputError, inputRequired, inputRegister, inputName, inputType, inputLabel, inputSx }) => {
   return (
     <TextField
       {...inputRegister}
@@ -27,7 +28,7 @@ const InputMui: React.FC<IInputMuiProps> = ({ inputHelperText, inputError, input
       type={inputType ?? inputName}
       label={inputLabel || false}
       helperText={inputError ? inputHelperText : false}
-      variant={"filled"}
+      variant={inputVariant || "filled"}
       color="warning"
       inputProps={{ sx: { color: "var(--white)" } }}
       sx={{

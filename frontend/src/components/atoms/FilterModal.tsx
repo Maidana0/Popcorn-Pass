@@ -1,5 +1,3 @@
-"use client"
-
 /* 
 VA A FILTRARSE POR: "/movie/..."
 TITULO (getByTitle)/ STRING
@@ -8,8 +6,7 @@ SI ESTA EN 3D O NO (getByThreeD) / BOOLEAN
 POR FECHA (getByReleaseDate) / LOCALDATE
 */
 import { useState } from 'react';
-import { SxProps, Typography, Button, Modal, Box } from '@mui/material';
-import { Container } from '@mui/system';
+import { SxProps, Typography, Button, Modal, Box, useTheme, useMediaQuery, Container } from '@mui/material';
 
 const style: SxProps = {
     position: 'absolute' as 'absolute',
@@ -22,26 +19,28 @@ const style: SxProps = {
     borderRadius: "8px",
     p: 4,
 };
-const styleBoxButton: SxProps = {
-    textAlign: "end", padding: "0 2rem 2rem", "& button": {
-        bgcolor: "var(--lightBlack)", borderColor: "transparent",
-        color: "var(--gray-color)",
-        "&:hover": {
-            borderColor: "var(--gray-color)",
-            bgcolor: "#000"
-        }
+const styleButton: SxProps = {
+    bgcolor: "var(--lightBlack)", borderColor: "transparent",
+    width:"fit-content",
+    color: "var(--gray-color)",
+    marginLeft:"auto",
+    "&:hover": {
+        borderColor: "var(--gray-color)",
+        bgcolor: "#000"
     }
+
 }
-export default function KeepMountedModal() {
+const FilterModal = () => {
     const [open, setOpen] = useState(false);
+    const theme = useTheme()
+    const isMatch: boolean = useMediaQuery(theme.breakpoints.down("sm"))
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
 
     return (
         <>
-            <Box sx={styleBoxButton}>
-                <Button color="inherit" variant="outlined" onClick={handleOpen}>Filtrar por categoría</Button>
-            </Box>
+            <Button sx={styleButton} color="inherit" variant="outlined" onClick={handleOpen}
+                children={isMatch ? "Filtrar" : "Filtrar por categoría"} />
             <Modal
                 keepMounted
                 open={open}
@@ -66,3 +65,6 @@ export default function KeepMountedModal() {
         </>
     );
 }
+
+
+export default FilterModal

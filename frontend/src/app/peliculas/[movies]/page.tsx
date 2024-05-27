@@ -4,8 +4,7 @@ import Link from "next/link";
 import dynamic from "next/dynamic";
 import Loader from "@/components/atoms/Loader";
 
-const MovieFilter = dynamic(() => import("@/components/organism/MovieFilter"), { ssr: false })
-
+const MovieFilters = dynamic(() => import("@/components/organism/MovieFilters"), { ssr: false })
 const PlayingNow = dynamic(() => import("@/components/organism/PlayingNow"), { ssr: false, loading: () => <Loader /> })
 const ComingSoon = dynamic(() => import("@/components/organism/ComingSoon"), { ssr: false, loading: () => <Loader /> })
 
@@ -13,9 +12,20 @@ export const metadata: Metadata = {
     title: "Peliculas"
 };
 
-const Page = ({ params }: { params: { movies: "en-pantalla" | "proximamente" } }) => {
+interface IProps {
+    params: {
+        movies: "en-pantalla" | "proximamente"
+    },
+    searchParams: {
+        title: string
+    }
+}
+
+const Page = ({ params, searchParams }: IProps) => {
     const { movies } = params
     const inComingSoon = movies == "proximamente"
+    const { title }: { title: string } = searchParams
+
     if (movies != "en-pantalla" && !inComingSoon) return <h1 style={{ margin: "auto", textAlign: "center" }}>404 - Not Found</h1>
 
     return (<>
@@ -40,12 +50,14 @@ const Page = ({ params }: { params: { movies: "en-pantalla" | "proximamente" } }
                     }} />
             </Box>
         </Box>
-        {!inComingSoon && <MovieFilter />}
-        <Box sx={{ display: "flex", flexWrap: "wrap", gap: { xs: "20px 0", sm: "16px" }, justifyContent: "space-evenly" }} mb="3.5rem" >
-            {
-                inComingSoon ? <ComingSoon /> : <PlayingNow />
-            }
-        </Box>
+
+        <MovieFilters inComingSoon={inComingSoon} />
+
+            <Box sx={{ display: "flex", flexWrap: "wrap", gap: { xs: "20px 0", sm: "16px" }, justifyContent: "space-evenly" }} mb="3.5rem" >
+                {
+                    inComingSoon ? <ComingSoon /> : <PlayingNow />
+                }
+            </Box>
 
     </>)
 }
