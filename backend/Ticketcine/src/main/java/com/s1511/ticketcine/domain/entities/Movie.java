@@ -25,7 +25,7 @@ public class Movie {
     private String description;
     private LocalDate releaseDate;
     private List<String> comment;
-    private Double rate;
+    private String rate;
     private Boolean adult;
     private String image;
     private List<String> genre;
