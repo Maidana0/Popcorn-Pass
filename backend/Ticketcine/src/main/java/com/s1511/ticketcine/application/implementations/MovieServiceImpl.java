@@ -1,5 +1,6 @@
 package com.s1511.ticketcine.application.implementations;
 
+import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -171,6 +172,21 @@ public class MovieServiceImpl implements MovieService {
     @Override
     public List<Movie> findBySubtitleAndActive(Boolean subtitle) {
         return movieRepository.findBySubtitleAndActive(subtitle, true);
+    }
+
+    @Override
+    public Double findAvgRateByMovieId(String movieId) {
+        Movie movie = movieRepository.findById(movieId)
+                .orElseThrow(() -> new EntityNotFoundException(movieId));
+        var calificationList = movie.getUsersRating();
+
+        Double addition = 0.0;
+        for (int i = 0; i < calificationList.size(); i++) {
+            addition = calificationList.get(i) + addition;
+        }
+        Double avgRate = addition/calificationList.size();
+
+        return avgRate;
     }
 
 }

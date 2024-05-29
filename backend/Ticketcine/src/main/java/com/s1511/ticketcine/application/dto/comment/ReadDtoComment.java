@@ -9,6 +9,7 @@ public record ReadDtoComment(
         String userId,
         String movieId,
         String comment,
-        LocalDateTime date
+        LocalDateTime date,
+        Integer userRate
 ) {
 }

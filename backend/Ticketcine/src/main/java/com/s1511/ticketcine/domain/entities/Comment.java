@@ -7,29 +7,23 @@ import jakarta.persistence.Id;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.grammars.hql.HqlParser;
 
-import java.time.LocalDate;
-import java.util.List;
+import java.time.LocalDateTime;
 
 @Entity
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class Movie {
+public class Comment {
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private String id;
-    private String title;
-    private String description;
-    private LocalDate releaseDate;
-    private List<String> comment;
-    private String rate;
-    private Boolean adult;
-    private String image;
-    private List<String> genre;
-    private Boolean threeD;
-    private Boolean subtitle;
+    private String userId;
+    private String movieId;
+    private String comment;
+    private LocalDateTime date = LocalDateTime.now();
     private Boolean active;
-
+    private Integer userRate;
 }

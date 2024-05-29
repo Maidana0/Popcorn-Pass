@@ -23,4 +23,5 @@ public interface MovieService {
     List<ReadDtoMovie> getMovieByThreeD(Boolean threeD);
     List<String> assignGenre(List<Integer> genre);
     List<Movie> findBySubtitleAndActive(Boolean subtitle);
+    Double findAvgRateByMovieId(String movieId);
 }

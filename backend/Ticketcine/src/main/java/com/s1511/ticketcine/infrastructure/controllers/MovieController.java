@@ -63,4 +63,9 @@ public class MovieController {
     public ResponseEntity<?> filterMoviesByLenguage(@PathVariable @NotNull Boolean subtitle){
         return ResponseEntity.ok(movieServiceImp.findBySubtitleAndActive(subtitle));
     }
+
+    @GetMapping("/avgrate/{movieId}")
+    public ResponseEntity<?> getAvgRateMovieId(@PathVariable @NotNull String movieId){
+        return ResponseEntity.ok(movieService.findAvgRateByMovieId(movieId));
+    }
 }
