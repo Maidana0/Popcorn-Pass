@@ -15,7 +15,7 @@ import java.util.Optional;
 
 @RequiredArgsConstructor
 @RestController
-@RequestMapping("/seats")
+@RequestMapping("/seat")
 public class SeatController {
 
     private final SeatService seatService;
