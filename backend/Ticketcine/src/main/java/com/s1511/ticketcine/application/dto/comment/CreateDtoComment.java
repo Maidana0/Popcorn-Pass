@@ -7,6 +7,8 @@ public record CreateDtoComment(
         @NotNull(message = "El movieId no puede ser nulo")
         String movieId,
         @NotNull(message = "El comentario no puede ser nulo")
-        String comment
+        String comment,
+        @NotNull(message = "La puntuacion no puede ser nula")
+        Integer userRate
 ) {
 }

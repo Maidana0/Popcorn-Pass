@@ -7,6 +7,8 @@ public record UpdateDtoComment(
         @NotNull(message = "El UserId no puede ser nulo")
         String userId,
         @NotNull(message = "El comentario no puede ser nulo")
-        String comment
+        String comment,
+        @NotNull(message = "La puntuacion no puede ser nula")
+        Integer userRate
 ) {
 }

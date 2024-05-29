@@ -1,4 +1,5 @@
 package com.s1511.ticketcine.application.implementations;
+import com.s1511.ticketcine.domain.entities.Movie;
 import jakarta.persistence.EntityExistsException;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
@@ -40,6 +41,13 @@ public class CommentServiceImpl implements CommentService {
         Comment comment = this.commentMapper.createDtoToComment(createDtoComment);
         comment.setActive(Boolean.TRUE);
         comment.setDate(LocalDateTime.now());
+        Movie movieEntity = movieRepository.findById(comment.getMovieId())
+                .orElseThrow(() -> new EntityNotFoundException(comment.getMovieId()));
+        Integer calification = comment.getUserRate();
+        var calificationList = movieEntity.getUsersRating();
+        calificationList.add(calification);
+        movieEntity.setUsersRating(calificationList);
+
         var commentAdded = commentRepository.save(comment);
         return commentMapper.commentToReadDto(commentAdded);
     }
