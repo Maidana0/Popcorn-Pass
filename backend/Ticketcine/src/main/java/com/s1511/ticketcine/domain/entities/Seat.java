@@ -29,19 +29,14 @@ public class Seat {
     @ManyToOne
     @JoinColumn(name = "cinema_id", referencedColumnName = "id")
     private Cinema cinema;
-//    private Movie movie;
-//    private Hall hall;
-//
-//
-//
-//    @ManyToOne
-//    @JoinColumn(name = "current_user_id")
-//    private User currentUser;
-//
-//    @ManyToOne
-//    @JoinColumn(name = "previous_user_id")
-//    private User previousUser;
 
+    @ManyToOne
+    @JoinColumn(name = "current_user_id")
+    private User currentUser;
+
+    @ManyToOne
+    @JoinColumn(name = "previous_user_id")
+    private User previousUser;
 
     private Availability availability;
 
