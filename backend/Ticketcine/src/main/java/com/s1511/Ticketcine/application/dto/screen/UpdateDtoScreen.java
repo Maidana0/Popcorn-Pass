@@ -1,10 +1,11 @@
-package com.s1511.Ticketcine.application.dto.screen;
-import com.s1511.Ticketcine.application.dto.Seat.SeatDTO;
+package com.s1511.ticketcine.application.dto.screen;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.util.List;
+
+import com.s1511.ticketcine.application.dto.seat.SeatDTO;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor

@@ -1,20 +1,21 @@
-package com.s1511.Ticketcine.application.implementations;
+package com.s1511.ticketcine.application.implementations;
 
-import com.s1511.Ticketcine.application.dto.user.CreateDtoUser;
-import com.s1511.Ticketcine.application.dto.user.ReadDtoUser;
-import com.s1511.Ticketcine.application.dto.user.UpdateDtoUser;
-import com.s1511.Ticketcine.application.mapper.UserMapper;
-import com.s1511.Ticketcine.application.validations.SelfValidation;
-import com.s1511.Ticketcine.domain.entities.User;
-import com.s1511.Ticketcine.domain.repository.UserRepository;
-import com.s1511.Ticketcine.domain.services.UserService;
-import com.s1511.Ticketcine.domain.utils.RolesEnum;
 import jakarta.persistence.EntityExistsException;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+
+import com.s1511.ticketcine.application.dto.user.CreateDtoUser;
+import com.s1511.ticketcine.application.dto.user.ReadDtoUser;
+import com.s1511.ticketcine.application.dto.user.UpdateDtoUser;
+import com.s1511.ticketcine.application.mapper.UserMapper;
+import com.s1511.ticketcine.application.validations.SelfValidation;
+import com.s1511.ticketcine.domain.entities.User;
+import com.s1511.ticketcine.domain.repository.UserRepository;
+import com.s1511.ticketcine.domain.services.UserService;
+import com.s1511.ticketcine.domain.utils.RolesEnum;
 
 @Service
 @RequiredArgsConstructor
@@ -33,6 +34,8 @@ public class UserServiceImpl implements UserService {
 
         User user = this.userMapper.createDtoToUser(createDtoUser);
         user.setPassword(passwordEncoder.encode(createDtoUser.password()));
+
+        
         user.setActive(Boolean.TRUE);
         user.setRole(RolesEnum.USER);
         var userAdded = userRepository.save(user);

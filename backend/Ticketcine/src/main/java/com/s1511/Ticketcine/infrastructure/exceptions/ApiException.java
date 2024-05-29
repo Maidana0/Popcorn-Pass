@@ -1,4 +1,4 @@
-package com.s1511.Ticketcine.infrastructure.exceptions;
+package com.s1511.ticketcine.infrastructure.exceptions;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;

@@ -1,4 +1,4 @@
-package com.s1511.Ticketcine.infrastructure.controllers;
+package com.s1511.ticketcine.infrastructure.controllers;
 
 import java.io.IOException;
 
@@ -8,9 +8,8 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 import org.springframework.stereotype.Service;
 
-import com.s1511.Ticketcine.domain.repository.CinemaRepository;
-import com.s1511.Ticketcine.domain.repository.ScreenRepository;
-
+import com.s1511.ticketcine.domain.repository.CinemaRepository;
+import com.s1511.ticketcine.domain.repository.ScreenRepository;
 
 import lombok.RequiredArgsConstructor;
 
@@ -32,11 +31,11 @@ public class Scraping {
        
         Elements rows = table.select("thgoogle-visualization-table-tr-head");
 
-        for (Element row : rows) {
+        /* for (Element row : rows) {
             System.out.print(row.select("th.google-visualization-table-th gradient unsorted").text());
            
             System.out.println();
-}
+        } */
 
     }
     

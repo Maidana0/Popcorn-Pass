@@ -1,4 +1,4 @@
-package com.s1511.Ticketcine.domain.entities;
+package com.s1511.ticketcine.domain.entities;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -22,8 +22,13 @@ public class Seat {
     @ManyToOne
     @JoinColumn(name = "screen_id", referencedColumnName = "id")
     private Screen screen;
+    @ManyToOne
+    @JoinColumn(name = "ticket_id", referencedColumnName = "id")
+    private Ticket ticket;
 
-//    private Cinema cinema;
+    @ManyToOne
+    @JoinColumn(name = "cinema_id", referencedColumnName = "id")
+    private Cinema cinema;
 //    private Movie movie;
 //    private Hall hall;
 //

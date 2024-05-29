@@ -1,4 +1,4 @@
-package com.s1511.Ticketcine.domain.entities;
+package com.s1511.ticketcine.domain.entities;
 
 import java.util.List;
 
@@ -24,6 +24,7 @@ public class Cinema {
     private String name;
     private String city;
     private String direction;
+    private Boolean active;
 
     @OneToMany(fetch = FetchType.LAZY)
     private List<Screen> screens;

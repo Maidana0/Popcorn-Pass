@@ -1,8 +1,4 @@
-package com.s1511.Ticketcine.infrastructure.controllers;
-import com.s1511.Ticketcine.application.dto.user.CreateDtoUser;
-import com.s1511.Ticketcine.application.dto.user.ReadDtoUser;
-import com.s1511.Ticketcine.application.dto.user.UpdateDtoUser;
-import com.s1511.Ticketcine.domain.services.UserService;
+package com.s1511.ticketcine.infrastructure.controllers;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
@@ -10,6 +6,11 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import com.s1511.ticketcine.application.dto.user.CreateDtoUser;
+import com.s1511.ticketcine.application.dto.user.ReadDtoUser;
+import com.s1511.ticketcine.application.dto.user.UpdateDtoUser;
+import com.s1511.ticketcine.domain.services.UserService;
 
 @RequestMapping("/user")
 @RestController
@@ -44,7 +45,7 @@ public class UserController {
         return ResponseEntity.ok(userService.updateUser(updateUser));
     }
 
-    @PutMapping("/toggle/{id}")
+    @DeleteMapping("/toggle/{id}")
     public ResponseEntity<Boolean> toggleUser(@PathVariable String id){
         return ResponseEntity.ok(userService.toggleUser(id));
     }

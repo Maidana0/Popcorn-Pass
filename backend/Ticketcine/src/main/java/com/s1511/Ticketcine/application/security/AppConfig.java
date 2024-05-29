@@ -1,4 +1,4 @@
-package com.s1511.Ticketcine.application.security;
+package com.s1511.ticketcine.application.security;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

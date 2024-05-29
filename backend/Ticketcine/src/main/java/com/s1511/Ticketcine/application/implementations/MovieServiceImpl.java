@@ -1,14 +1,5 @@
-package com.s1511.Ticketcine.application.implementations;
+package com.s1511.ticketcine.application.implementations;
 
-import com.s1511.Ticketcine.application.dto.movie.CreateDtoMovie;
-import com.s1511.Ticketcine.application.dto.movie.ReadDtoMovie;
-import com.s1511.Ticketcine.application.dto.movie.ReadMovieApiData;
-import com.s1511.Ticketcine.application.mapper.MovieMapper;
-import com.s1511.Ticketcine.application.security.AppConfig;
-import com.s1511.Ticketcine.domain.entities.Movie;
-import com.s1511.Ticketcine.domain.repository.MovieRepository;
-import com.s1511.Ticketcine.domain.services.MovieService;
-import com.s1511.Ticketcine.domain.utils.GenreCombert;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -16,6 +7,15 @@ import org.springframework.http.*;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
+import com.s1511.ticketcine.application.dto.movie.CreateDtoMovie;
+import com.s1511.ticketcine.application.dto.movie.ReadDtoMovie;
+import com.s1511.ticketcine.application.dto.movie.ReadMovieApiData;
+import com.s1511.ticketcine.application.mapper.MovieMapper;
+import com.s1511.ticketcine.application.security.AppConfig;
+import com.s1511.ticketcine.domain.entities.Movie;
+import com.s1511.ticketcine.domain.repository.MovieRepository;
+import com.s1511.ticketcine.domain.services.MovieService;
+import com.s1511.ticketcine.domain.utils.GenreCombert;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -77,7 +77,7 @@ public class MovieServiceImpl implements MovieService {
                 Movie movie = new Movie();
                 movie.setImage(dto.poster_path());
                 movie.setTitle(dto.title());
-                movie.setDescription(dto.overview());
+                movie.setDescription("https://image.tmdb.org/t/p/w220_and_h330_face"+dto.overview());
                 movie.setAdult(dto.adult());
                 movie.setReleaseDate(LocalDate.parse(dto.release_date())); // Assuming releaseDate is a String
                 movie.setThreeD(true);
@@ -87,7 +87,6 @@ public class MovieServiceImpl implements MovieService {
                     movie.setSubtitle(false);
                 }
                 movie.setActive(true);
-                movie.setCinema(null);
                 movie.setComment(null);
                 movie.setRate(null);
                 movie.setGenre(assignGenre(dto.genre_ids()));

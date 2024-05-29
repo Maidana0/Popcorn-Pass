@@ -1,5 +1,4 @@
-package com.s1511.Ticketcine.domain.entities;
-import com.s1511.Ticketcine.domain.utils.RolesEnum;
+package com.s1511.ticketcine.domain.entities;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -7,6 +6,8 @@ import lombok.NoArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+
+import com.s1511.ticketcine.domain.utils.RolesEnum;
 
 import java.util.Collection;
 import java.util.HashSet;

@@ -1,19 +1,21 @@
-package com.s1511.Ticketcine.application.implementations;
-import com.s1511.Ticketcine.application.dto.comment.CreateDtoComment;
-import com.s1511.Ticketcine.application.dto.comment.ReadDtoComment;
-import com.s1511.Ticketcine.application.dto.comment.UpdateDtoComment;
-import com.s1511.Ticketcine.application.mapper.CommentMapper;
-import com.s1511.Ticketcine.application.validations.SelfValidation;
-import com.s1511.Ticketcine.domain.entities.Comment;
-import com.s1511.Ticketcine.domain.repository.CommentRepository;
-import com.s1511.Ticketcine.domain.repository.MovieRepository;
-import com.s1511.Ticketcine.domain.repository.UserRepository;
-import com.s1511.Ticketcine.domain.services.CommentService;
+package com.s1511.ticketcine.application.implementations;
 import jakarta.persistence.EntityExistsException;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+
+import com.s1511.ticketcine.application.dto.comment.CreateDtoComment;
+import com.s1511.ticketcine.application.dto.comment.ReadDtoComment;
+import com.s1511.ticketcine.application.dto.comment.UpdateDtoComment;
+import com.s1511.ticketcine.application.mapper.CommentMapper;
+import com.s1511.ticketcine.application.validations.SelfValidation;
+import com.s1511.ticketcine.domain.entities.Comment;
+import com.s1511.ticketcine.domain.repository.CommentRepository;
+import com.s1511.ticketcine.domain.repository.MovieRepository;
+import com.s1511.ticketcine.domain.repository.UserRepository;
+import com.s1511.ticketcine.domain.services.CommentService;
+
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -78,6 +80,7 @@ public class CommentServiceImpl implements CommentService {
                 comment.setComment(updateDtoComment.comment());
             }
 
+        comment.setDate(LocalDateTime.now());
         this.commentRepository.save(comment);
         return commentMapper.commentToReadDto(comment);
     }

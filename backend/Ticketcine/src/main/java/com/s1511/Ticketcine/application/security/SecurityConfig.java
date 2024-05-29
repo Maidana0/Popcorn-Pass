@@ -1,4 +1,4 @@
-package com.s1511.Ticketcine.application.security;
+package com.s1511.ticketcine.application.security;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
@@ -44,7 +44,11 @@ public class SecurityConfig {
             // MOVIE
             "/movie/**",
             // MP
-            "/mp/response"
+            "/mp/response",
+            //CINES Y SALAS
+            "/screens/**",
+            "/functionDetails/**",
+            "/cinema/**"
     };
 
     private static final String[] USER_ENDPOINTS = {
@@ -55,7 +59,8 @@ public class SecurityConfig {
             "/comment/**",
             "/mp/**",
             "/seat/**",
-            "/screen/**"
+            "/screen/**",
+            "/ticket/**"
     };
 
     @Bean

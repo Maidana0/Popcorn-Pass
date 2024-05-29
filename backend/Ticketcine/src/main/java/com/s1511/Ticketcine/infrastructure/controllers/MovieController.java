@@ -1,8 +1,5 @@
-package com.s1511.Ticketcine.infrastructure.controllers;
+package com.s1511.ticketcine.infrastructure.controllers;
 
-import com.s1511.Ticketcine.application.implementations.MovieServiceImpl;
-import com.s1511.Ticketcine.domain.entities.Movie;
-import com.s1511.Ticketcine.domain.services.MovieService;
 import jakarta.validation.constraints.NotNull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -10,6 +7,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import com.s1511.ticketcine.application.implementations.MovieServiceImpl;
+import com.s1511.ticketcine.domain.entities.Movie;
+import com.s1511.ticketcine.domain.services.MovieService;
 
 import java.time.LocalDateTime;
 

@@ -1,8 +1,8 @@
-package com.s1511.Ticketcine;
+package com.s1511.ticketcine;
 
 import java.io.IOException;
 
-import com.s1511.Ticketcine.infrastructure.controllers.Scraping;
+import com.s1511.ticketcine.infrastructure.controllers.Scraping;
 
 
 

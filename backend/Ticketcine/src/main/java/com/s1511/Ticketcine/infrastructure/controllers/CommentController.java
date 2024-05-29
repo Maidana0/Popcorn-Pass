@@ -1,9 +1,5 @@
-package com.s1511.Ticketcine.infrastructure.controllers;
+package com.s1511.ticketcine.infrastructure.controllers;
 
-import com.s1511.Ticketcine.application.dto.comment.CreateDtoComment;
-import com.s1511.Ticketcine.application.dto.comment.ReadDtoComment;
-import com.s1511.Ticketcine.application.dto.comment.UpdateDtoComment;
-import com.s1511.Ticketcine.domain.services.CommentService;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
@@ -12,6 +8,11 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import com.s1511.ticketcine.application.dto.comment.CreateDtoComment;
+import com.s1511.ticketcine.application.dto.comment.ReadDtoComment;
+import com.s1511.ticketcine.application.dto.comment.UpdateDtoComment;
+import com.s1511.ticketcine.domain.services.CommentService;
 
 import java.util.List;
 

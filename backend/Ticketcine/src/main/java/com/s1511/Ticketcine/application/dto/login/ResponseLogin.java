@@ -1,4 +1,4 @@
-package com.s1511.Ticketcine.application.dto.login;
+package com.s1511.ticketcine.application.dto.login;
 
 public record ResponseLogin(
         String jwt,

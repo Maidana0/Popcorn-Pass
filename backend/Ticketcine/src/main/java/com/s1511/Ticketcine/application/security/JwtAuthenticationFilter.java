@@ -1,5 +1,4 @@
-package com.s1511.Ticketcine.application.security;
-import com.s1511.Ticketcine.application.security.JwtService;
+package com.s1511.ticketcine.application.security;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -14,6 +13,8 @@ import org.springframework.security.web.authentication.WebAuthenticationDetailsS
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 import org.springframework.web.filter.OncePerRequestFilter;
+
+import com.s1511.ticketcine.application.security.JwtService;
 
 import java.io.IOException;
 

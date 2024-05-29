@@ -1,12 +1,15 @@
-package com.s1511.Ticketcine.domain.repository;
+package com.s1511.ticketcine.domain.repository;
 
-import com.s1511.Ticketcine.domain.entities.Movie;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
+
+import com.s1511.ticketcine.domain.entities.Movie;
 
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
+@Repository
 public interface MovieRepository extends JpaRepository<Movie,String> {
 
     Optional<Movie> findByIdAndActive(String id, Boolean active);

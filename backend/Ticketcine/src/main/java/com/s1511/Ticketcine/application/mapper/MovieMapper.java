@@ -1,9 +1,10 @@
-package com.s1511.Ticketcine.application.mapper;
+package com.s1511.ticketcine.application.mapper;
 
-import com.s1511.Ticketcine.application.dto.movie.CreateDtoMovie;
-import com.s1511.Ticketcine.application.dto.movie.ReadDtoMovie;
-import com.s1511.Ticketcine.domain.entities.Movie;
 import org.mapstruct.Mapper;
+
+import com.s1511.ticketcine.application.dto.movie.CreateDtoMovie;
+import com.s1511.ticketcine.application.dto.movie.ReadDtoMovie;
+import com.s1511.ticketcine.domain.entities.Movie;
 
 import java.util.List;
 

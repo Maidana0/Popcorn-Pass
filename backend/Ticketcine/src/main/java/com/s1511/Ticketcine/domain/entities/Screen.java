@@ -1,5 +1,5 @@
 
-package com.s1511.Ticketcine.domain.entities;
+package com.s1511.ticketcine.domain.entities;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -25,12 +25,11 @@ public class Screen {
     private List<Seat> seat;
     private Boolean active;
 
-    
     @OneToMany(fetch = FetchType.LAZY)
     private List<FunctionDetails> functionDetails;
 
     @ManyToOne
-    @JoinColumn(name = "cinema_id", referencedColumnName = "id")
+    @JoinColumn(name = "cinemaId", referencedColumnName = "id")
     private Cinema cinema;
 
 }

@@ -1,14 +1,21 @@
-package com.s1511.Ticketcine.application.implementations;
-import com.s1511.Ticketcine.application.dto.Seat.SeatDTO;
-import com.s1511.Ticketcine.application.dto.screen.CreateDtoScreen;
-import com.s1511.Ticketcine.application.dto.screen.ReadDtoScreen;
-import com.s1511.Ticketcine.application.dto.screen.UpdateDtoScreen;
-import com.s1511.Ticketcine.application.mapper.ScreenMapper;
-import com.s1511.Ticketcine.domain.entities.Screen;
-import com.s1511.Ticketcine.domain.repository.ScreenRepository;
-import com.s1511.Ticketcine.domain.services.ScreenService;
+package com.s1511.ticketcine.application.implementations;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import com.s1511.ticketcine.application.dto.movie.ReadDtoMovie;
+import com.s1511.ticketcine.application.dto.screen.CreateDtoScreen;
+import com.s1511.ticketcine.application.dto.screen.ReadDtoScreen;
+import com.s1511.ticketcine.application.dto.screen.UpdateDtoScreen;
+import com.s1511.ticketcine.application.dto.seat.SeatDTO;
+import com.s1511.ticketcine.application.mapper.ScreenMapper;
+import com.s1511.ticketcine.application.mapper.SeatMapper;
+import com.s1511.ticketcine.domain.entities.Screen;
+import com.s1511.ticketcine.domain.entities.Seat;
+import com.s1511.ticketcine.domain.repository.FunctionDetailsRepository;
+import com.s1511.ticketcine.domain.repository.ScreenRepository;
+import com.s1511.ticketcine.domain.repository.SeatRepository;
+import com.s1511.ticketcine.domain.services.ScreenService;
+
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -18,6 +25,12 @@ public class ScreenServiceImpl implements ScreenService {
     private ScreenRepository screenRepository;
     @Autowired
     private ScreenMapper screenMapper;
+    @Autowired
+    private SeatRepository seatRepository;
+    @Autowired
+    private SeatMapper seatMapper;
+    @Autowired
+    private FunctionDetailsRepository fdr;
     @Override
     public ReadDtoScreen createScreen(CreateDtoScreen createDtoScreen) {
         Screen screen = screenMapper.createDtoToScreen(createDtoScreen);
@@ -25,8 +38,8 @@ public class ScreenServiceImpl implements ScreenService {
         return screenMapper.screenToReadDto(savedScreen);
     }
     @Override
-    public ReadDtoScreen getScreenByIdAndName(String id, String name) {
-        Screen screen = screenRepository.findByIdAndName(id,name).orElseThrow(() -> new RuntimeException("Screen not found"));
+    public ReadDtoScreen getScreenByIdAndActive(String id){
+        Screen screen = screenRepository.findByIdAndActive(id,true).orElseThrow(() -> new RuntimeException("Screen not found"));
         if (!screen.getActive()) {
             throw new RuntimeException("Screen is inactive");
         }
@@ -60,13 +73,25 @@ public class ScreenServiceImpl implements ScreenService {
         }
         screenRepository.deleteById(id);
     }
-
-    //TODO: TRAER LISTA DE BUTACAS
     @Override
-    public List<SeatDTO> selectTypeScreen(String idCinema, String typeScreen) {
-
-        
+    public List<ReadDtoScreen> selectTypeScreen(String idMovie, String typeScreen, String idCinema) {
+        // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'selectTypeScreen'");
     }
+    @Override
+    public List<ReadDtoScreen> selectMovieByCine(String idCinema) {
+        List<Screen> screens = screenRepository.findByCinemaId(idCinema);
+
+        return screenMapper.screenListToReadDtoList(screens);
+    }
+
+    @Override
+    public List<ReadDtoScreen> selectScreenByCinemaIdAndMovieId(String cinemaId, String movieId) {
+        
+        List<Screen> screens = fdr.findByCinemaIdAndMovieName(cinemaId, movieId);
+        return screenMapper.screenListToReadDtoList(screens);
+    }
+
+    
 }
 

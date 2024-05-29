@@ -1,16 +1,17 @@
-package com.s1511.Ticketcine.application.implementations;
-import com.s1511.Ticketcine.application.dto.login.RequestLogin;
-import com.s1511.Ticketcine.application.dto.login.ResponseLogin;
-import com.s1511.Ticketcine.application.security.JwtService;
-import com.s1511.Ticketcine.domain.entities.User;
-import com.s1511.Ticketcine.domain.repository.UserRepository;
-import com.s1511.Ticketcine.domain.services.AuthenticationService;
+package com.s1511.ticketcine.application.implementations;
 import jakarta.persistence.EntityExistsException;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.stereotype.Service;
+
+import com.s1511.ticketcine.application.dto.login.RequestLogin;
+import com.s1511.ticketcine.application.dto.login.ResponseLogin;
+import com.s1511.ticketcine.application.security.JwtService;
+import com.s1511.ticketcine.domain.entities.User;
+import com.s1511.ticketcine.domain.repository.UserRepository;
+import com.s1511.ticketcine.domain.services.AuthenticationService;
 
 @Service
 @RequiredArgsConstructor

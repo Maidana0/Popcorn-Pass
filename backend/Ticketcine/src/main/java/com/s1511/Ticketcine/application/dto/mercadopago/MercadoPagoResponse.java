@@ -1,4 +1,4 @@
-package com.s1511.Ticketcine.application.dto.mercadopago;
+package com.s1511.ticketcine.application.dto.mercadopago;
 
 public record MercadoPagoResponse(
         String action,

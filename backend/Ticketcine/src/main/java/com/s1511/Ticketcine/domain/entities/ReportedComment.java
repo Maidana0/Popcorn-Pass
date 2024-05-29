@@ -1,4 +1,4 @@
-package com.s1511.Ticketcine.domain.entities;
+package com.s1511.ticketcine.domain.entities;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;

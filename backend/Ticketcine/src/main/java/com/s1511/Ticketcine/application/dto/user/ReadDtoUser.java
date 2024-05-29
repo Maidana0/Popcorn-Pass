@@ -1,4 +1,4 @@
-package com.s1511.Ticketcine.application.dto.user;
+package com.s1511.ticketcine.application.dto.user;
 
 public record ReadDtoUser(
         String id,

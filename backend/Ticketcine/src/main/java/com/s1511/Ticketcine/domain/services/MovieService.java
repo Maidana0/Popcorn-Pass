@@ -1,10 +1,11 @@
-package com.s1511.Ticketcine.domain.services;
+package com.s1511.ticketcine.domain.services;
 
-import com.s1511.Ticketcine.application.dto.movie.CreateDtoMovie;
-import com.s1511.Ticketcine.application.dto.movie.ReadDtoMovie;
-import com.s1511.Ticketcine.application.dto.movie.ReadMovieApiData;
-import com.s1511.Ticketcine.domain.entities.Movie;
 import org.springframework.http.ResponseEntity;
+
+import com.s1511.ticketcine.application.dto.movie.CreateDtoMovie;
+import com.s1511.ticketcine.application.dto.movie.ReadDtoMovie;
+import com.s1511.ticketcine.application.dto.movie.ReadMovieApiData;
+import com.s1511.ticketcine.domain.entities.Movie;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;

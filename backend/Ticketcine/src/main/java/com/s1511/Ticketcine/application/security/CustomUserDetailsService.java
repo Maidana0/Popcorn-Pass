@@ -1,12 +1,13 @@
-package com.s1511.Ticketcine.application.security;
-import com.s1511.Ticketcine.domain.repository.UserRepository;
-import com.s1511.Ticketcine.domain.utils.RolesEnum;
+package com.s1511.ticketcine.application.security;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+
+import com.s1511.ticketcine.domain.repository.UserRepository;
+import com.s1511.ticketcine.domain.utils.RolesEnum;
 
 @RequiredArgsConstructor
 public class CustomUserDetailsService implements UserDetailsService {

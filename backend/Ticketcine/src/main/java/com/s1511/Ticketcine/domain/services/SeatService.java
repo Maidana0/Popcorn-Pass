@@ -1,9 +1,10 @@
-package com.s1511.Ticketcine.domain.services;
+package com.s1511.ticketcine.domain.services;
 
-import com.s1511.Ticketcine.application.dto.Seat.SeatDTO;
-import com.s1511.Ticketcine.application.dto.Seat.SeatReservationDTO;
-import com.s1511.Ticketcine.domain.entities.Seat;
 import org.springframework.stereotype.Service;
+
+import com.s1511.ticketcine.application.dto.seat.SeatDTO;
+import com.s1511.ticketcine.application.dto.seat.SeatReservationDTO;
+import com.s1511.ticketcine.domain.entities.Seat;
 
 import java.util.List;
 import java.util.Optional;

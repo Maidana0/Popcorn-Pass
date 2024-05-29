@@ -1,9 +1,10 @@
-package com.s1511.Ticketcine.application.mapper;
+package com.s1511.ticketcine.application.mapper;
 
-import com.s1511.Ticketcine.application.dto.user.CreateDtoUser;
-import com.s1511.Ticketcine.application.dto.user.ReadDtoUser;
-import com.s1511.Ticketcine.domain.entities.User;
 import org.mapstruct.Mapper;
+
+import com.s1511.ticketcine.application.dto.user.CreateDtoUser;
+import com.s1511.ticketcine.application.dto.user.ReadDtoUser;
+import com.s1511.ticketcine.domain.entities.User;
 
 @Mapper(componentModel = "spring")
 public interface UserMapper {

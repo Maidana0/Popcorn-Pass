@@ -1,4 +1,4 @@
-package com.s1511.Ticketcine.application.dto.Seat;
+package com.s1511.ticketcine.application.dto.seat;
 
 public record SeatReservationDTO(boolean reserved) {
 

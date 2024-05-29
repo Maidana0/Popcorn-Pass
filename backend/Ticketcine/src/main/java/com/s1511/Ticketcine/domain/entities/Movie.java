@@ -1,4 +1,4 @@
-package com.s1511.Ticketcine.domain.entities;
+package com.s1511.ticketcine.domain.entities;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -21,7 +21,6 @@ public class Movie {
     @GeneratedValue(strategy = GenerationType.UUID)
     private String id;
     private String title;
-    private String cinema;
     private String description;
     private LocalDate releaseDate;
     private List<String> comment;

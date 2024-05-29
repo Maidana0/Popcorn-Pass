@@ -1,4 +1,6 @@
-package com.s1511.Ticketcine.domain.entities;
+package com.s1511.ticketcine.domain.entities;
+
+import java.time.LocalDateTime;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -21,10 +23,12 @@ public class FunctionDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private String id;
-
+    private LocalDateTime schedule;
+    private String movieName;
     @ManyToOne
     @JoinColumn(name = "screen_id", referencedColumnName="id")
     private Screen screen;
+
     
 
 }

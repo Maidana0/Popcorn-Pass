@@ -1,6 +1,5 @@
-package com.s1511.Ticketcine.application.security;
+package com.s1511.ticketcine.application.security;
 
-import com.s1511.Ticketcine.domain.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -9,6 +8,8 @@ import org.springframework.security.authentication.dao.DaoAuthenticationProvider
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+
+import com.s1511.ticketcine.domain.repository.UserRepository;
 
 @Configuration
 @RequiredArgsConstructor

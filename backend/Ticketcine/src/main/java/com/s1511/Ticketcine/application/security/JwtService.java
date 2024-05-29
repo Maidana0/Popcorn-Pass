@@ -1,4 +1,4 @@
-package com.s1511.Ticketcine.application.security;
+package com.s1511.ticketcine.application.security;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;

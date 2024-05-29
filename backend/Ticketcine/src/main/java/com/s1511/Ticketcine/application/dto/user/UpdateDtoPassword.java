@@ -1,4 +1,4 @@
-package com.s1511.Ticketcine.application.dto.user;
+package com.s1511.ticketcine.application.dto.user;
 
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;

@@ -1,4 +1,4 @@
-package com.s1511.Ticketcine.application.dto.Seat;
+package com.s1511.ticketcine.application.dto.seat;
 
 public record SeatDTO(
         Long id,

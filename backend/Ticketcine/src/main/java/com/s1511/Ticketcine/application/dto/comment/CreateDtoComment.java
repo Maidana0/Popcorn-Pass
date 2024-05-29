@@ -1,4 +1,4 @@
-package com.s1511.Ticketcine.application.dto.comment;
+package com.s1511.ticketcine.application.dto.comment;
 import jakarta.validation.constraints.NotNull;
 
 public record CreateDtoComment(

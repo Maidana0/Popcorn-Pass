@@ -1,4 +1,4 @@
-package com.s1511.Ticketcine.application.dto.movie;
+package com.s1511.ticketcine.application.dto.movie;
 
 import jakarta.validation.constraints.NotNull;
 

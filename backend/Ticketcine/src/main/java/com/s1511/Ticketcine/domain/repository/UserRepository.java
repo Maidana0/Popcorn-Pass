@@ -1,7 +1,9 @@
-package com.s1511.Ticketcine.domain.repository;
-import com.s1511.Ticketcine.domain.entities.User;
+package com.s1511.ticketcine.domain.repository;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
+
+import com.s1511.ticketcine.domain.entities.User;
+
 import java.util.Optional;
 
 @Repository

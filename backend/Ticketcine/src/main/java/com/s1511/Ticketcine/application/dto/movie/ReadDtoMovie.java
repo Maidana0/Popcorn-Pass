@@ -1,9 +1,8 @@
-package com.s1511.Ticketcine.application.dto.movie;
-
-import com.s1511.Ticketcine.domain.entities.Comment;
-
+package com.s1511.ticketcine.application.dto.movie;
 import java.time.LocalDate;
 import java.util.List;
+
+
 
 public record ReadDtoMovie(
         String id,

@@ -1,4 +1,4 @@
-package com.s1511.Ticketcine;
+package com.s1511.ticketcine;
 
 import com.mercadopago.MercadoPagoConfig;
 import io.swagger.v3.oas.annotations.enums.SecuritySchemeIn;

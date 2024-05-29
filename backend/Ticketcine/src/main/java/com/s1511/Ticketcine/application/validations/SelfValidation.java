@@ -1,8 +1,9 @@
-package com.s1511.Ticketcine.application.validations;
-import com.s1511.Ticketcine.domain.repository.UserRepository;
+package com.s1511.ticketcine.application.validations;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
+
+import com.s1511.ticketcine.domain.repository.UserRepository;
 
 @Service
 @RequiredArgsConstructor

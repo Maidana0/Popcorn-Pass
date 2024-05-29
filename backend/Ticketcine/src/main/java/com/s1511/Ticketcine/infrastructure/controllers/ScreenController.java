@@ -1,12 +1,17 @@
-package com.s1511.Ticketcine.infrastructure.controllers;
-import com.s1511.Ticketcine.application.dto.Seat.SeatDTO;
-import com.s1511.Ticketcine.application.dto.screen.CreateDtoScreen;
-import com.s1511.Ticketcine.application.dto.screen.ReadDtoScreen;
-import com.s1511.Ticketcine.application.dto.screen.UpdateDtoScreen;
-import com.s1511.Ticketcine.domain.services.ScreenService;
+package com.s1511.ticketcine.infrastructure.controllers;
+import com.s1511.ticketcine.application.dto.seat.SeatDTO;
+import com.s1511.ticketcine.application.dto.screen.CreateDtoScreen;
+import com.s1511.ticketcine.application.dto.screen.ReadDtoScreen;
+import com.s1511.ticketcine.application.dto.screen.UpdateDtoScreen;
+import com.s1511.ticketcine.domain.services.ScreenService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+
+import com.s1511.ticketcine.domain.entities.Screen;
+import com.s1511.ticketcine.domain.services.ScreenService;
+
 import java.util.List;
 
 @RestController
@@ -22,8 +27,8 @@ public class ScreenController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<ReadDtoScreen> getScreenById(@PathVariable String id, String name) {
-        ReadDtoScreen screen = screenService.getScreenByIdAndName(id, name);
+    public ResponseEntity<ReadDtoScreen> getScreenById(@PathVariable String id) {
+        ReadDtoScreen screen = screenService.getScreenByIdAndActive(id);
         return ResponseEntity.ok(screen);
     }
 
@@ -45,13 +50,17 @@ public class ScreenController {
         return ResponseEntity.noContent().build();
     }
 
-
-    //TODO: ESCOGER SALA DE CINE
-    @PostMapping("/{screenTypeSelect}")
-    //@PathVariable o @RequestBody?
-    public ResponseEntity<List<SeatDTO>> selectTypeScreen(@PathVariable String idCinema, String typeScreem){
-        //TODO: RETORNAR LISTA DE BUTACAS
-        List <SeatDTO> dto = screenService.selectTypeScreen(idCinema, typeScreem);
+    //TRAE SALAS POR ID CINE
+   
+    public ResponseEntity<List<ReadDtoScreen>> selectMovieByCine (@PathVariable String idCinema){
+        List<ReadDtoScreen> dto = screenService.selectMovieByCine(idCinema);
         return ResponseEntity.ok(dto);
+    }
+
+    //TRAIGA SALAS CON IDCINE Y IDPELICULA
+    @GetMapping("/selectScreen")
+    public ResponseEntity<List<ReadDtoScreen>> selectScreenByCinemaIdAndMovieId(@RequestParam String cinemaId, @RequestParam String MovieId){
+        List<ReadDtoScreen> screens = screenService.selectScreenByCinemaIdAndMovieId(cinemaId, MovieId);
+        return ResponseEntity.ok(screens);
     }
 }

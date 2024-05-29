@@ -1,9 +1,11 @@
-package com.s1511.Ticketcine.application.dto.screen;
+package com.s1511.ticketcine.application.dto.screen;
 
-import com.s1511.Ticketcine.application.dto.Seat.SeatDTO;
+import com.s1511.ticketcine.application.dto.seat.SeatDTO;
 import jakarta.validation.constraints.NotNull;
 
 import java.util.List;
+
+import com.s1511.ticketcine.application.dto.seat.SeatDTO;
 
 public class CreateDtoScreen {
     @NotNull

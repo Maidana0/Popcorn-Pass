@@ -1,4 +1,4 @@
-package com.s1511.Ticketcine.domain.utils;
+package com.s1511.ticketcine.domain.utils;
 
 public enum GenreCombert {
     ACTION(28),

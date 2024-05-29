@@ -1,14 +1,15 @@
-package com.s1511.Ticketcine.application.implementations;
+package com.s1511.ticketcine.application.implementations;
 
-import com.s1511.Ticketcine.application.dto.Seat.SeatDTO;
-import com.s1511.Ticketcine.application.dto.Seat.SeatReservationDTO;
-import com.s1511.Ticketcine.application.mapper.SeatMapper;
-import com.s1511.Ticketcine.domain.entities.Seat;
-import com.s1511.Ticketcine.domain.repository.SeatRepository;
-import com.s1511.Ticketcine.domain.services.SeatService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import com.s1511.ticketcine.application.dto.seat.SeatDTO;
+import com.s1511.ticketcine.application.dto.seat.SeatReservationDTO;
+import com.s1511.ticketcine.application.mapper.SeatMapper;
+import com.s1511.ticketcine.domain.entities.Seat;
+import com.s1511.ticketcine.domain.repository.SeatRepository;
+import com.s1511.ticketcine.domain.services.SeatService;
 
 import java.util.List;
 import java.util.Optional;
