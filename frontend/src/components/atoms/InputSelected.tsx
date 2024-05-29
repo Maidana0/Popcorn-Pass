@@ -1,14 +1,24 @@
 import * as React from "react";
 import { SelectChangeEvent } from "@mui/material/Select";
 import { MenuItem, FormControl, Select, useTheme } from "@mui/material";
+import { UseFormRegisterReturn } from "react-hook-form";
 
+export interface IOptionsValue {
+    value: string;
+    name: string;
+}
 
-const InputSelected: any = () => {
-    const [age, setAge] = React.useState("")
-    const theme = useTheme()
-    const handleChange = (event: SelectChangeEvent) => {
-        setAge(event.target.value);
-    };
+interface Props {
+    register: UseFormRegisterReturn,
+    optionsValue: IOptionsValue[] | false,
+    listTo: string
+}
+
+const InputSelected: any = ({ register, optionsValue, listTo }: Props) => {
+    const [selectedValue, setSelectedValue] = React.useState("empty")
+    const { palette } = useTheme()
+    const handleChange = (event: SelectChangeEvent) => setSelectedValue(event.target.value);
+
 
     return (
         <FormControl sx={{
@@ -17,11 +27,12 @@ const InputSelected: any = () => {
             "&:hover fieldset": { borderColor: "rgba(255, 255, 255, 0.5)!important" }
         }}>
             <Select
-                value={age}
+                value={selectedValue}
                 onChange={handleChange}
                 color="warning"
                 displayEmpty
                 inputProps={{
+                    ...register,
                     "aria-label": "Without label",
                     sx: { color: "var(--gray-color)", "&:hover": { color: "var(--gray-color)!important" } }
                 }}
@@ -39,19 +50,21 @@ const InputSelected: any = () => {
                                     color: "var(--white)",
                                     backgroundColor: "rgba(255, 255, 255, 0.1)",
                                 },
-                                "&.Mui-selected": { color: theme.palette.warning.main, },
+                                "&.Mui-selected": { color: palette.warning.main, },
+                                "&.Mui-disabled": { opacity: 0.75 },
                             },
                         },
                     },
                 }}
             >
-
-                <MenuItem value="">
-                    <em>Ciudad</em>
+                <MenuItem value="empty" disabled>
+                    <em>{listTo}</em>
                 </MenuItem>
-                <MenuItem value={10}>Ten</MenuItem>
-                <MenuItem value={20}>Twenty</MenuItem>
-                <MenuItem value={30}>ThThirty Thirtyirty</MenuItem>
+                {optionsValue && optionsValue.length > 0
+                    ? optionsValue.map(({ value, name }, i) => (
+                        <MenuItem key={i} value={value} children={name} />))
+                    : <MenuItem disabled children="Cargando opciones..." />
+                }
             </Select>
         </FormControl >
     );
