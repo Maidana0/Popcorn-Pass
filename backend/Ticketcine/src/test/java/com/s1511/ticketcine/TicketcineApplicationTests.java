@@ -1,7 +1,6 @@
-package com.s1511.Ticketcine;
+package com.s1511.ticketcine;
 
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest

@@ -73,11 +73,11 @@ public class MovieServiceImpl implements MovieService {
         List<Movie> movies = new ArrayList<>();
         for (CreateDtoMovie dto : movieDtos) {
             System.out.println("DTO movie individual" +dto);
-            if (dto.original_language().equals("en") || dto.original_language().equals("es")) {
+            if (dto.original_language().equals("en") || dto.original_language().equals("es") && dto.overview()!= null && dto.poster_path()!=null) {
                 Movie movie = new Movie();
-                movie.setImage(dto.poster_path());
+                movie.setImage("https://image.tmdb.org/t/p/w220_and_h330_face"+dto.poster_path());
                 movie.setTitle(dto.title());
-                movie.setDescription("https://image.tmdb.org/t/p/w220_and_h330_face"+dto.overview());
+                movie.setDescription(dto.overview());
                 movie.setAdult(dto.adult());
                 movie.setReleaseDate(LocalDate.parse(dto.release_date())); // Assuming releaseDate is a String
                 movie.setThreeD(true);
