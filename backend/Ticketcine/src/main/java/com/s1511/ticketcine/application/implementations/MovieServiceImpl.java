@@ -179,7 +179,7 @@ public class MovieServiceImpl implements MovieService {
         Movie movie = movieRepository.findById(movieId)
                 .orElseThrow(() -> new EntityNotFoundException(movieId));
         var calificationList = movie.getUsersRating();
-
+        calificationList.add(1);
         Double addition = 0.0;
         for (int i = 0; i < calificationList.size(); i++) {
             addition = calificationList.get(i) + addition;
