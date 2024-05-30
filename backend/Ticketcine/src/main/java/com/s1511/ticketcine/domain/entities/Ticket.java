@@ -18,12 +18,10 @@ public class Ticket {
     private String id;
     private String userId;
     private Double value;
+    private String functionDetailsId;
     private String movieName;
-    private LocalDateTime functionDate;
-    private String cinemaName;
-    private String screenId;
     @OneToMany(fetch = FetchType.LAZY)
-    private List<Seat> seatsNames;
+    private List<Seat> seatsIds;
     private Boolean active;
 
 
