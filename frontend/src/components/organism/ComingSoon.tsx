@@ -7,6 +7,7 @@ import { filterMovies, convertGenre, convertImagePath, filterLastMovies } from "
 import { useMoviesPagination } from "@/store/cspagination-store";
 import { shallow } from "zustand/shallow";
 import { demoMoviesState } from "@/store/movies-store";
+import { IMovie } from "@/common/interfaces";
 
 
 const ComingSoon = () => {
@@ -17,14 +18,14 @@ const ComingSoon = () => {
         { page: state.page, setTotalPages: state.setTotalPages }
     ), shallow)
 
-    const [movies, setMovies] = useState([]);
+    const [movies, setMovies] = useState<IMovie[] | []>([]);
 
     const ITEMS_PER_PAGES = 15;
     const handleClick = (id: string) => router.push("/pelicula/" + id);
 
     useEffect(() => {
         const fetchDataAndSetState = async () => {
-            const res = await fetchData("movie/list", "GET");
+            const res: IMovie[] = await fetchData("movie/list", "GET");
             const filteredMovies = filterMovies(res);
 
             const totalMovies = filteredMovies.length;
@@ -34,9 +35,7 @@ const ComingSoon = () => {
             setMovies(filteredMovies);
 
             //  LO DE ABAJO ES MOMENTANEO
-            const demoMovies: any = filterLastMovies(res)
-            console.log(demoMovies);
-
+            const demoMovies: IMovie[] = filterLastMovies(res)
             demoSetMovies(demoMovies)
         };
 
@@ -51,7 +50,7 @@ const ComingSoon = () => {
 
     return (
         <>
-            {currentMovies.map((data, i) => (
+            {currentMovies.map((data: IMovie, i: number) => (
                 <MovieCard key={i} isComingSoon={true} handleClick={handleClick}
                     id={data.id}
                     nameMovie={data.title}
