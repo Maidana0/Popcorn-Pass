@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
-public interface SeatRepository extends JpaRepository<Seat, Long> {
+public interface SeatRepository extends JpaRepository<Seat, String> {
     List<Seat> findByCinemaIdAndScreenId(String idCinema, String idScreen);
     List<Seat> findByScreenId(String idScreen);
     Optional<Seat> findBySeatNumberAndReserved(String seatNumber, Boolean reserved);
