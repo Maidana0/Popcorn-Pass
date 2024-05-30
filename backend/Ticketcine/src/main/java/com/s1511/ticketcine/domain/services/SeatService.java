@@ -13,7 +13,7 @@ import java.util.Optional;
 public interface SeatService {
 
     List<SeatDTO> findAllSeats();
-    SeatDTO findSeatById(Long id);
-    Optional<Seat> seatReservation(Long id, SeatReservationDTO seatReservationDTO);
+    SeatDTO findSeatById(String id);
+    Optional<Seat> seatReservation(String id, SeatReservationDTO seatReservationDTO);
 
 }
