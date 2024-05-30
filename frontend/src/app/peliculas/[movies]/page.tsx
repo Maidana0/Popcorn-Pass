@@ -58,7 +58,7 @@ const Page = ({ params }: IProps) => {
             {inComingSoon ? <ComingSoon /> : <PlayingNow />}
         </Box>
 
-        <MoviePagination />
+        {inComingSoon && <MoviePagination />}
     </>)
 }
 

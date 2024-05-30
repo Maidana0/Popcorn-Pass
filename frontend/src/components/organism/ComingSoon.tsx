@@ -3,13 +3,15 @@ import { useEffect, useState } from "react";
 import MovieCard from "../molecules/MovieCard";
 import { useRouter } from "next/navigation";
 import { fetchData } from "@/utils/fetchData";
-import { filterMovies, convertGenre, convertImagePath } from "@/utils/fc-movies";
+import { filterMovies, convertGenre, convertImagePath, filterLastMovies } from "@/utils/fc-movies";
 import { useMoviesPagination } from "@/store/cspagination-store";
 import { shallow } from "zustand/shallow";
+import { demoMoviesState } from "@/store/movies-store";
 
 
 const ComingSoon = () => {
     const router = useRouter();
+    const { demoSetMovies } = demoMoviesState((state: any) => ({ demoSetMovies: state.setMovies }))
 
     const { page, setTotalPages } = useMoviesPagination(state => (
         { page: state.page, setTotalPages: state.setTotalPages }
@@ -30,6 +32,12 @@ const ComingSoon = () => {
 
             setTotalPages(totalPages);
             setMovies(filteredMovies);
+
+            //  LO DE ABAJO ES MOMENTANEO
+            const demoMovies: any = filterLastMovies(res)
+            console.log(demoMovies);
+
+            demoSetMovies(demoMovies)
         };
 
         fetchDataAndSetState();
