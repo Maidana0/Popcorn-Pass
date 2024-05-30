@@ -19,12 +19,14 @@ public class FunctionDetails {
     private String id;
     private LocalDateTime schedule;
     private String movieName;
+
     @ManyToOne
     @JoinColumn(name = "screen_id", referencedColumnName="id")
     private Screen screen;
     @OneToMany(fetch = FetchType.LAZY)
     private List<Seat> seatsList;
     private Boolean active;
+
 }
 
 // TODO. VER DTOS Y MÉTODOS PERTINENTES.
