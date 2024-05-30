@@ -30,14 +30,13 @@ public class SeatController {
         return seatService.findSeatById(id);
     }
 
-    @PutMapping("/{id}/reserve")
-    public ResponseEntity<String> reserveSeat(@PathVariable Long id, @RequestBody SeatReservationDTO seatReservationDTO) {
-        Optional<Seat> reservedSeat = seatService.seatReservation(id, seatReservationDTO);
-
-        if (reservedSeat.isPresent()) {
-            return ResponseEntity.ok("Seat reserved successfully.");
+    @PostMapping("/{seatId}/reserve")
+    public ResponseEntity<String> reserveSeat(@PathVariable Long seatId, @RequestBody SeatReservationDTO reservationDTO) {
+        // Llama a la función seatReservation del servicio de asientos
+        if (seatService.seatReservation(seatId, reservationDTO).isPresent()) {
+            return ResponseEntity.ok("Seat reserved successfully");
         } else {
-            return ResponseEntity.status(HttpStatus.CONFLICT).body("Seat is already reserved or not found.");
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Failed to reserve seat");
         }
     }
 
