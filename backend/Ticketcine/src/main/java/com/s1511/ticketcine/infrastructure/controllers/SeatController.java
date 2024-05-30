@@ -26,12 +26,12 @@ public class SeatController {
     }
 
     @GetMapping("/{id}")
-    public SeatDTO getSeatById(@PathVariable Long id) {
+    public SeatDTO getSeatById(@PathVariable String id) {
         return seatService.findSeatById(id);
     }
 
     @PostMapping("/{seatId}/reserve")
-    public ResponseEntity<String> reserveSeat(@PathVariable Long seatId, @RequestBody SeatReservationDTO reservationDTO) {
+    public ResponseEntity<?> reserveSeat(@PathVariable String seatId, @RequestBody SeatReservationDTO reservationDTO) {
         // Llama a la función seatReservation del servicio de asientos
         if (seatService.seatReservation(seatId, reservationDTO).isPresent()) {
             return ResponseEntity.ok("Seat reserved successfully");
