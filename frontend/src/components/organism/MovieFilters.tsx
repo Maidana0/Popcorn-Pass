@@ -43,8 +43,8 @@ const MovieFilters = () => {
     const listFetch = async (): Promise<any> => {
       if (!city) {
         // PEDIR LISTA DE CIUDADES
-        const res: string[] = await fetchData("cinema/getCinemasCityName", "GET");
-        setCitiesList(res)
+        const res = await fetchData("cinema/getCinemasCityName", "GET");
+        if (!res.error) setCitiesList(res)
         return
       }
 
