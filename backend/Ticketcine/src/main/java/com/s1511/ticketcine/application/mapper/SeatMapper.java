@@ -2,13 +2,11 @@ package com.s1511.ticketcine.application.mapper;
 
 import java.util.List;
 
-import org.mapstruct.Mapper;
-import org.mapstruct.MappingConstants;
-
 import com.s1511.ticketcine.application.dto.seat.SeatDTO;
+import org.mapstruct.Mapper;
 import com.s1511.ticketcine.domain.entities.Seat;
 
-@Mapper(componentModel = MappingConstants.ComponentModel.SPRING)
+@Mapper(componentModel = "spring")
 public interface SeatMapper {
 
     SeatDTO toDTO(Seat seat);

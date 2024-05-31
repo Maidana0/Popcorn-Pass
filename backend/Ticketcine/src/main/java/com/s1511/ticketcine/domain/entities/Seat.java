@@ -21,21 +21,13 @@ public class Seat {
 
     @Column(columnDefinition = "BOOLEAN")
     private boolean reserved;
-    @ManyToOne
-    @JoinColumn(name = "screen_id", referencedColumnName = "id")
-    private Screen screen;
+    private String functionDetailsId;
     @ManyToOne
     @JoinColumn(name = "ticket_id", referencedColumnName = "id")
     private Ticket ticket;
-
-    @ManyToOne
-    @JoinColumn(name = "cinema_id", referencedColumnName = "id")
-    private Cinema cinema;
-
     @ManyToOne
     @JoinColumn(name = "current_user_id")
     private User currentUser;
-
     @ManyToOne
     @JoinColumn(name = "previous_user_id")
     private User previousUser;

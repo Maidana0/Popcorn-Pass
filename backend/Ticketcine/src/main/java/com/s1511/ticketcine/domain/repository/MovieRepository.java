@@ -28,5 +28,7 @@ public interface MovieRepository extends JpaRepository<Movie,String> {
 
     List<Movie> findByActive(Boolean active);
 
+    List<String> findTitleByIdAndActive(String movieId, Boolean active);
+
 
 }

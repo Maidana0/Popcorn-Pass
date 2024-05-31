@@ -2,6 +2,7 @@ package com.s1511.ticketcine.application.implementations;
 
 import com.s1511.ticketcine.application.dto.ticket.ResponseTicketDto;
 import com.s1511.ticketcine.application.mapper.TicketMapper;
+import com.s1511.ticketcine.domain.services.FunctionDetailsService;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -19,19 +20,16 @@ import java.util.List;
 @RequiredArgsConstructor
 public class TicketServiceImpl implements TicketService {
     public final TicketRepository ticketRepository;
+    public final FunctionDetailsRepository functionDetailsRepository;
     public final UserRepository userRepository;
-    public final CinemaRepository cinemaRepository;
-    public final ScreenRepository screenRepository;
-    public final MovieRepository movieRepository;
-    public final SeatRepository seatRepository;
     public final TicketMapper ticketMapper;
 
     public String createTicket(RequestTicketDto requestDto){
         User user = userRepository.findByIdAndActive(requestDto.userId(), true)
                 .orElseThrow(() -> new EntityNotFoundException(
                         "No se puede encontrar el usuario con el id " + requestDto.userId()));
-
-        Screen screen = screenRepository.findByIdAndActive(requestDto.screenId(), true)
+/*
+        Screen screen = functionDetailsService.findByIdAndActive(requestDto.screenId(), true)
                 .orElseThrow(() -> new EntityNotFoundException(
                         "No se puede encontrar la sala con el nombre " + requestDto.screenId()));
 
@@ -43,7 +41,7 @@ public class TicketServiceImpl implements TicketService {
                 .orElseThrow(() -> new EntityNotFoundException(
                         "No se puede encontrar la película con el nombre " + requestDto.movieName()));
 
-/*        List<Seat> seatEntityList = new ArrayList<>();
+        List<Seat> seatEntityList = new ArrayList<>();
         List<String> seatsList = requestDto.seatsNames();
         for (String seatNumber : seatsList) {
             Seat seat = seatRepository.findBySeatNumberAndReserved(seatNumber, false)
@@ -55,7 +53,7 @@ public class TicketServiceImpl implements TicketService {
         Double value = calculateTicketPrice(requestDto.unitPrice(), requestDto.amountOfSeats());
 
         LocalDateTime functionDate = LocalDateTime.now(); // Reemplazar por function Date real cuando esté.
-
+/*
         Ticket ticket = new Ticket();
         ticket.setUserId(user.getId());
         ticket.setCinemaName(cinema.getName());
@@ -65,8 +63,8 @@ public class TicketServiceImpl implements TicketService {
         ticket.setValue(value);
         ticket.setFunctionDate(functionDate);
         ticket.setActive(false);
-
-        Ticket savedTicket = ticketRepository.save(ticket);
+*/
+        Ticket savedTicket = ticketRepository.save(null);
         return savedTicket.getId();
     }
 
