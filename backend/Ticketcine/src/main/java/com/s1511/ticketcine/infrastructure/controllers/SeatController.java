@@ -10,7 +10,6 @@ import com.s1511.ticketcine.domain.services.SeatService;
 
 import java.util.List;
 
-
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/seat")

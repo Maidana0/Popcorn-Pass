@@ -1,4 +1,5 @@
 package com.s1511.ticketcine.application.mapper;
+
 import org.mapstruct.Mapper;
 import com.s1511.ticketcine.application.dto.screen.CreateDtoScreen;
 import com.s1511.ticketcine.application.dto.screen.ReadDtoScreen;
