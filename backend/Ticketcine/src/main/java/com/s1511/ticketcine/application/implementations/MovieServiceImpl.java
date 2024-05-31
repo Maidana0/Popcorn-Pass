@@ -1,6 +1,7 @@
 package com.s1511.ticketcine.application.implementations;
 
 import jakarta.persistence.EntityNotFoundException;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -20,10 +21,7 @@ import com.s1511.ticketcine.domain.utils.GenreCombert;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 @RequiredArgsConstructor
@@ -34,7 +32,7 @@ public class MovieServiceImpl implements MovieService {
     private final AppConfig appConfig;
     private static final Logger logger = LoggerFactory.getLogger(MovieServiceImpl.class);
 
-
+    @Transactional
     public ResponseEntity<?> saveLastestMovies() {
         LocalDate today = LocalDate.now();
         String urlTemplate = "https://api.themoviedb.org/3/discover/movie?page=%d&primary_release_date.gte=%s&primary_release_date.lte=2024-06-07&sort_by=primary_release_date.asc";
@@ -185,5 +183,17 @@ public class MovieServiceImpl implements MovieService {
 
         return avgRate;
     }
+
+    @Override
+    public String getRandomMovieId() {
+        List<Movie> allMovies = movieRepository.findByActive(true);
+        if (allMovies.isEmpty()) {
+            throw new RuntimeException("No movies found in the database");
+        }
+        Random random = new Random();
+        int randomIndex = random.nextInt(allMovies.size());
+        return allMovies.get(randomIndex).getId();
+    }
+
 
 }

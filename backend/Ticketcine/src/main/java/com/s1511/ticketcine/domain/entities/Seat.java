@@ -17,10 +17,11 @@ public class Seat {
     @GeneratedValue(strategy = GenerationType.UUID)
     private String id;
     private String seatNumber;
+    private LocalDateTime reservationTime;
+
+    @Column(columnDefinition = "BOOLEAN")
     private boolean reserved;
-    @ManyToOne
-    @JoinColumn(name = "function_details_id", referencedColumnName = "id")
-    private FunctionDetails functionDetails;
+    private String functionDetailsId;
     @ManyToOne
     @JoinColumn(name = "ticket_id", referencedColumnName = "id")
     private Ticket ticket;
@@ -31,6 +32,7 @@ public class Seat {
     @JoinColumn(name = "previous_user_id")
     private User previousUser;
 
+    @Enumerated(EnumType.STRING)
     private Availability availability;
 
     public enum Availability {

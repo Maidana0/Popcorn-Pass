@@ -6,10 +6,7 @@ import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Repository;
-
-import com.s1511.ticketcine.application.dto.movie.ReadDtoMovie;
 import com.s1511.ticketcine.domain.entities.FunctionDetails;
 import com.s1511.ticketcine.domain.entities.Movie;
 import com.s1511.ticketcine.domain.entities.Screen;
@@ -19,9 +16,9 @@ public interface FunctionDetailsRepository extends JpaRepository<FunctionDetails
 
     Movie getMovieById(String idMovie);
 
-    @Query("SELECT s FROM Screen s JOIN s.functionDetails fd WHERE s.cinema.id = :cinemaId AND fd.movieName = :movieName")
-    List<Screen> findByCinemaIdAndMovieName(@Param("cinemaId") String cinemaId, @Param("movieName") String movieName);
-
+    @Query("SELECT s FROM Screen s JOIN s.functionDetails fd WHERE s.cinema.id = :cinemaId AND fd.movieId = :movieId")
+    List<Screen> findByCinemaIdAndMovieId(@Param("cinemaId") String cinemaId, @Param("movieId") String movieId);
+    List<String> findMovieIdByScreenId(String screenId);
     //List<Movie> findByCinemaAndActive(String cinema, boolean active);
 
     @Query("SELECT fd.movieName FROM FunctionDetails fd " +
@@ -30,4 +27,5 @@ public interface FunctionDetailsRepository extends JpaRepository<FunctionDetails
     List<String> findMovieNamesByCinemaId(@Param("cinemaId") String cinemaId);
 
     Optional<FunctionDetails> findByIdAndActive(String functionDetailsId, Boolean active);
+
 }

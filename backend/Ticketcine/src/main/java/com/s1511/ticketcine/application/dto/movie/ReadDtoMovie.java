@@ -7,7 +7,6 @@ import java.util.List;
 public record ReadDtoMovie(
         String id,
         String title,
-        String cinema,
         String description,
         LocalDate releaseDate,
         List<String> comment,

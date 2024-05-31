@@ -18,10 +18,8 @@ public class FunctionDetails {
     @GeneratedValue(strategy = GenerationType.UUID)
     private String id;
     private LocalDateTime schedule;
-    private String movieName;
-    @ManyToOne
-    @JoinColumn(name = "screen_id", referencedColumnName="id")
-    private Screen screen;
+    private String movieId;
+    private String screenId;
     @OneToMany(fetch = FetchType.LAZY)
     private List<Seat> seatsList;
     private Boolean active;

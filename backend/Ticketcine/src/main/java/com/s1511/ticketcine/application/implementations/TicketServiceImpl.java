@@ -22,6 +22,8 @@ public class TicketServiceImpl implements TicketService {
     public final TicketRepository ticketRepository;
     public final FunctionDetailsRepository functionDetailsRepository;
     public final UserRepository userRepository;
+    public final ScreenRepository screenRepository;
+    public final MovieRepository movieRepository;
     public final SeatRepository seatRepository;
     public final TicketMapper ticketMapper;
 
@@ -34,10 +36,22 @@ public class TicketServiceImpl implements TicketService {
                 .orElseThrow(() -> new EntityNotFoundException(
                         "No se puede encontrar la función con el id " + requestDto.functionDetailsId()));
 
-        Screen screen = functionDetails.getScreen();
-        Cinema cinema = functionDetails.getScreen().getCinema();
-        String movieName = functionDetails.getMovieName();
+        String screenId = functionDetails.getScreenId();
+        String movieId = functionDetails.getMovieId();
         LocalDateTime functionDate = functionDetails.getSchedule();
+
+        Screen screen = screenRepository.findByIdAndActive(screenId, true)
+                .orElseThrow(() -> new EntityNotFoundException(
+                        "No se puede encontrar la sala con el id " + screenId));
+
+        String cinemaName = screen.getCinema().getId();
+
+        Movie movie = movieRepository.findByIdAndActive(movieId, true)
+                .orElseThrow(() -> new EntityNotFoundException(
+                        "No se puede encontrar la película con el id " + movieId));
+
+        String movieName = movie.getTitle();
+
 
         List<Seat> seatEntityList = new ArrayList<>();
         List<String> seatsList = requestDto.seatsIds();
@@ -50,10 +64,9 @@ public class TicketServiceImpl implements TicketService {
 
         Double value = calculateTicketPrice(requestDto.unitPrice(), requestDto.amountOfSeats());
 
-
         Ticket ticket = new Ticket();
         ticket.setUserId(user.getId());
-        ticket.setCinemaName(cinema.getName());
+        ticket.setCinemaName(cinemaName);
         ticket.setScreenName(screen.getName());
         ticket.setSeatsIds(seatEntityList);
         ticket.setMovieName(movieName);
