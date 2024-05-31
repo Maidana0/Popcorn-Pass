@@ -24,4 +24,5 @@ public interface MovieService {
     List<String> assignGenre(List<Integer> genre);
     List<Movie> findBySubtitleAndActive(Boolean subtitle);
     Double findAvgRateByMovieId(String movieId);
+    String getRandomMovieId();
 }
