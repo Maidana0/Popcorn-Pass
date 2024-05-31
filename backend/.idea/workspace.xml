@@ -4,7 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="c41083b2-23c2-4294-9a2a-6a0971ca1943" name="Changes" comment="" />
+    <list default="true" id="c41083b2-23c2-4294-9a2a-6a0971ca1943" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -36,7 +38,7 @@
     "Maven.Ticketcine [org.springframework.boot:spring-boot-maven-plugin:3.2.5:run].executor": "Run",
     "Maven.Ticketcine [org.springframework.boot:spring-boot-maven-plugin:3.2.5:stop].executor": "Run",
     "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "Merging develop",
+    "git-widget-placeholder": "facu",
     "kotlin-language-version-configured": "true",
     "last_opened_file_path": "C:/Users/Facu/Desktop/Proyectos NoCountry/pepe/backend"
   }
