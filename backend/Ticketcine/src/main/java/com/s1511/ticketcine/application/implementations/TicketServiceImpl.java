@@ -41,20 +41,21 @@ public class TicketServiceImpl implements TicketService {
 
         List<Seat> seatEntityList = new ArrayList<>();
         List<String> seatsList = requestDto.seatsIds();
-        for (String seatNumber : seatsList) {
-            Seat seat = functionDetails.getSeatsList(seatNumber)
+        for (String id : seatsList) {
+            Seat seat = seatRepository.findById(id)
                     .orElseThrow(() -> new EntityNotFoundException(
-                            "El asiento " + seatNumber + " no se encuentra disponible."));
+                            "El asiento " + id + " no se encuentra disponible."));
             seatEntityList.add(seat);
         }
 
         Double value = calculateTicketPrice(requestDto.unitPrice(), requestDto.amountOfSeats());
 
+
         Ticket ticket = new Ticket();
         ticket.setUserId(user.getId());
         ticket.setCinemaName(cinema.getName());
         ticket.setScreenName(screen.getName());
-        ticket.setSeatsNames(seatEntityList);
+        ticket.setSeatsIds(seatEntityList);
         ticket.setMovieName(movieName);
         ticket.setValue(value);
         ticket.setFunctionDate(functionDate);
