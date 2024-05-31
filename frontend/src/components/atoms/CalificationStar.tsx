@@ -20,7 +20,11 @@ const CalificationStar = ({ vote_average }: { vote_average?: number | null }) =>
     //     onChange={handleChange}
     // />
 
-    return <Rating name="half-rating-read" size="large" precision={0.5}  value={value} readOnly />
+    return <Rating name="half-rating-read" size="large" precision={0.5} value={value} readOnly sx={{
+        '& .MuiRating-iconEmpty': {
+            color: "#575757"
+        }
+    }} />
 
 }
 

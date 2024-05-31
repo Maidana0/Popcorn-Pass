@@ -1,21 +1,26 @@
-import { IHeaderMovieDetail } from '@/common/interfaces'
-import { Box, Button, Typography } from '@mui/material'
+"use client"
+import { IMovieHeaderDetail } from '@/common/interfaces'
+import { Box, Button, Typography, useMediaQuery, useTheme } from '@mui/material'
 import Image from 'next/image'
 import CalificationStar from '../atoms/CalificationStar'
 
+// width={{ xs: "100%",sm:"43%", md: 290 }}
 
 
-const HeaderDetail = ({ title, runtime, releaseDate, vote_average, vote_count }: IHeaderMovieDetail) => {
+const HeaderDetail = ({ title, runtime, releaseDate, vote_average, vote_count }: IMovieHeaderDetail) => {
+  const theme = useTheme()
+  const isMatch = useMediaQuery(theme.breakpoints.down("md"))
+
   return (
-    <Box width={"100%"} display="flex" padding="20px" gap="30px"
-      justifyContent={{ md: "space-evenly" }} flexDirection={{ xs: "column", md: "row" }}
-      bgcolor={{ xs: "var(--lightBlack)",sm:"transparent" }} borderRadius={{ xs: "0 0 16px 16px", sm:"0" }} >
+    <Box width={"100%"} display="flex" padding="20px 20px 10px" gap="20px"
+      justifyContent={{ md: "space-between" }} flexDirection={{ xs: "column", md: "row" }}
+      bgcolor={{ xs: "var(--lightBlack)", sm: "transparent" }} borderRadius={{ xs: "0 0 16px 16px", sm: "0" }} >
 
-      <Box>
-        <Typography variant="body1" lineHeight={"30px"} fontSize={26} fontWeight={700}
-          children={title} color={"var(--white)"} />
+      <Box overflow={"hidden"}>
+        <Typography title={title} variant="body1" lineHeight={"30px"} fontSize={26} fontWeight={700}
+          children={title} color={"var(--light-white-color)"} noWrap={isMatch} />
         <Typography variant="body2" marginTop={1} lineHeight={"21px"} fontSize={16} fontWeight={400}
-          color={"var(--gray-color)"}>
+          color={"var(--light-gray-color)"}>
           {runtime} ● {releaseDate}
         </Typography>
       </Box>
@@ -45,7 +50,7 @@ const HeaderDetail = ({ title, runtime, releaseDate, vote_average, vote_count }:
               height={16}
               style={{ marginRight: "5px" }}
             />
-            trailer
+            <Typography component="span" variant="body2" sx={{ display: { xs: "block", sm: "none", md: "block" } }} children="trailer" />
           </Button>
         </Box>
 
