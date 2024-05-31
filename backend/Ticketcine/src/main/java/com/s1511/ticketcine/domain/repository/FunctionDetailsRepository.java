@@ -14,17 +14,9 @@ import com.s1511.ticketcine.domain.entities.Screen;
 @Repository
 public interface FunctionDetailsRepository extends JpaRepository<FunctionDetails, String> {
 
-    Movie getMovieById(String idMovie);
-
     @Query("SELECT s FROM Screen s JOIN s.functionDetails fd WHERE s.cinema.id = :cinemaId AND fd.movieId = :movieId")
     List<Screen> findByCinemaIdAndMovieId(@Param("cinemaId") String cinemaId, @Param("movieId") String movieId);
     List<String> findMovieIdByScreenId(String screenId);
-    //List<Movie> findByCinemaAndActive(String cinema, boolean active);
-
-    @Query("SELECT fd.movieName FROM FunctionDetails fd " +
-            "JOIN fd.screen s " +
-            "WHERE s.cinema.id = :cinemaId")
-    List<String> findMovieNamesByCinemaId(@Param("cinemaId") String cinemaId);
 
     Optional<FunctionDetails> findByIdAndActive(String functionDetailsId, Boolean active);
 
