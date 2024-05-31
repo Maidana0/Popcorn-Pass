@@ -18,9 +18,7 @@ public class Seat {
     private String id;
     private String seatNumber;
     private boolean reserved;
-    @ManyToOne
-    @JoinColumn(name = "function_details_id", referencedColumnName = "id")
-    private FunctionDetails functionDetails;
+    private String functionDetailsId;
     @ManyToOne
     @JoinColumn(name = "ticket_id", referencedColumnName = "id")
     private Ticket ticket;

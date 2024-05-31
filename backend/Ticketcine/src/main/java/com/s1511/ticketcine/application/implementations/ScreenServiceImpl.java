@@ -1,4 +1,6 @@
 package com.s1511.ticketcine.application.implementations;
+import com.s1511.ticketcine.domain.entities.FunctionDetails;
+import com.s1511.ticketcine.domain.repository.MovieRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -26,6 +28,7 @@ public class ScreenServiceImpl implements ScreenService {
     private SeatRepository seatRepository;
     private SeatMapper seatMapper;
     private FunctionDetailsRepository fdr;
+    private MovieRepository movieRepository;
 
     @Override //todo. ver si es necesario.
     public ReadDtoScreen createScreen(CreateDtoScreen createDtoScreen) {
@@ -86,10 +89,21 @@ public class ScreenServiceImpl implements ScreenService {
     @Override
     public List<ReadDtoScreen> selectScreenByCinemaIdAndMovieId(String cinemaId, String movieId) {
         
-        List<Screen> screens = fdr.findByCinemaIdAndMovieName(cinemaId, movieId);
+        List<Screen> screens = fdr.findByCinemaIdAndMovieId(cinemaId, movieId);
         return screenMapper.screenListToReadDtoList(screens);
     }
 
-    
+    @Override
+    public List<FunctionDetails> findMoviesNamesByCinemaId(String cinemaId) {
+        var cinemaFunctionDetails = screenRepository.findFunctionDetailsByCinemaId(cinemaId);
+        List<String> cinemaMovieNames = movieRepository.findTitleByIdAndActive(cinemaFunctionDetails.iterator().next().getMovieId(),true);
+
+
+
+
+        return null;
+    }
+
+
 }
 

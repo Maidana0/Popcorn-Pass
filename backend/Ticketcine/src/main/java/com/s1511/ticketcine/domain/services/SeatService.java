@@ -2,6 +2,7 @@ package com.s1511.ticketcine.domain.services;
 
 import com.s1511.ticketcine.application.dto.seat.RequestSeatDto;
 import com.s1511.ticketcine.application.dto.seat.ResponseSeatDto;
+import com.s1511.ticketcine.domain.entities.FunctionDetails;
 import org.springframework.stereotype.Service;
 import com.s1511.ticketcine.domain.entities.Seat;
 
@@ -19,4 +20,5 @@ public interface SeatService {
 //    boolean reserveSeat(Long seatId, Long userId);
 //    boolean cancelReservation(Long reservationId);
 */
+    List<Seat> createSeatMatrix(String functionDetailsId);
 }
