@@ -18,6 +18,8 @@ public class Seat {
     private String id;
     private String seatNumber;
     private LocalDateTime reservationTime;
+
+    @Column(columnDefinition = "BOOLEAN")
     private boolean reserved;
     @ManyToOne
     @JoinColumn(name = "screen_id", referencedColumnName = "id")
@@ -29,20 +31,16 @@ public class Seat {
     @ManyToOne
     @JoinColumn(name = "cinema_id", referencedColumnName = "id")
     private Cinema cinema;
-//    private Movie movie;
-//    private Hall hall;
-//
-//
-//
-//    @ManyToOne
-//    @JoinColumn(name = "current_user_id")
-//    private User currentUser;
-//
-//    @ManyToOne
-//    @JoinColumn(name = "previous_user_id")
-//    private User previousUser;
 
+    @ManyToOne
+    @JoinColumn(name = "current_user_id")
+    private User currentUser;
 
+    @ManyToOne
+    @JoinColumn(name = "previous_user_id")
+    private User previousUser;
+
+    @Enumerated(EnumType.STRING)
     private Availability availability;
 
     public enum Availability {

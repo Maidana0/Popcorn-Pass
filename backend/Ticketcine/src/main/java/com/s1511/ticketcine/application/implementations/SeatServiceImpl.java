@@ -1,5 +1,7 @@
 package com.s1511.ticketcine.application.implementations;
 
+import com.s1511.ticketcine.domain.entities.User;
+import com.s1511.ticketcine.domain.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -20,11 +22,10 @@ import java.util.stream.Collectors;
 public class SeatServiceImpl implements SeatService {
 
     private final SeatRepository seatRepository;
-
+    private final UserRepository userRepository;
     private final SeatMapper seatMapper;
 
     @Override
-    @Transactional(readOnly = true)
     public List<SeatDTO> findAllSeats() {
         List<Seat> seats = seatRepository.findAll();
         return seats.stream()
@@ -33,8 +34,7 @@ public class SeatServiceImpl implements SeatService {
     }
 
     @Override
-    @Transactional(readOnly = true)
-    public SeatDTO findSeatById(Long id) {
+    public SeatDTO findSeatById(String id) {
         Seat seat = seatRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Seat not found"));
         return seatMapper.toDTO(seat);
@@ -42,7 +42,7 @@ public class SeatServiceImpl implements SeatService {
 
     @Override
     @Transactional
-    public Optional<Seat> seatReservation(Long id, SeatReservationDTO seatReservationDTO) {
+    public Optional<Seat> seatReservation(String id, SeatReservationDTO seatReservationDTO) {
         Optional<Seat> seatOptional = seatRepository.findById(id);
 
         if (!seatOptional.isPresent()) {
@@ -50,13 +50,21 @@ public class SeatServiceImpl implements SeatService {
         }
 
         Seat seat = seatOptional.get();
-        if (seat.isReserved()) {
-            return Optional.empty(); // Asiento ya reservado
+        if (seat.getAvailability() != Seat.Availability.AVAILABLE) {
+            return Optional.empty(); // Asiento no disponible para reservar
         }
 
-        seat.setReserved(seatReservationDTO.reserved());
+        Optional<User> userOptional = userRepository.findById(seatReservationDTO.userId());
+
+        if (!userOptional.isPresent()) {
+            return Optional.empty(); // Usuario no encontrado o no activo
+        }
+
+        User user = userOptional.get();
+        seat.setCurrentUser(user);
+        seat.setAvailability(Seat.Availability.OCCUPIED); // Actualizar a OCCUPIED al reservar
         seatRepository.save(seat);
-        return Optional.of(seat); // Asiento reservado exitosamente
+        return Optional.of(seat); // Estado del asiento actualizado exitosamente
     }
 
 
