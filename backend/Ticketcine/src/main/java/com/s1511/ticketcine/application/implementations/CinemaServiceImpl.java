@@ -1,6 +1,8 @@
 package com.s1511.ticketcine.application.implementations;
 
+import com.s1511.ticketcine.application.dto.cinema.ReadDtoCinema;
 import com.s1511.ticketcine.application.dto.movie.ReadDtoMovie;
+import com.s1511.ticketcine.application.mapper.CinemaMapper;
 import com.s1511.ticketcine.application.mapper.MovieMapper;
 import com.s1511.ticketcine.domain.entities.Cinema;
 import com.s1511.ticketcine.domain.entities.Movie;
@@ -24,6 +26,7 @@ public class CinemaServiceImpl implements CinemaService {
     private final MovieMapper movieMapper;
     private final MovieRepository movieRepository;
     private final ScreenRepository screenRepository;
+    private final CinemaMapper cinemaMapper;
 
     @Override
     public List<String> getCinemasCityName() {
@@ -39,10 +42,9 @@ public class CinemaServiceImpl implements CinemaService {
     }
 
     @Override
-    public List<Cinema> getCinemaListByCity(String city) {
-        return cinemaRepository.findByCityAndActive(city, true);
+    public List<ReadDtoCinema> getCinemaListByCity(String city) {
+        return cinemaMapper.ListToReadDtoList(cinemaRepository.findByCityAndActive(city, true));
     }
-        //TODO. DEVOLVER DTO, NO ENTIDAD, PERRI!!!
 
     @Override
     public List<ReadDtoMovie> getMoviesByCinema(String cinemaId) {
