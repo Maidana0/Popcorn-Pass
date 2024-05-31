@@ -22,48 +22,58 @@ public class TicketServiceImpl implements TicketService {
     public final TicketRepository ticketRepository;
     public final FunctionDetailsRepository functionDetailsRepository;
     public final UserRepository userRepository;
+    public final ScreenRepository screenRepository;
+    public final MovieRepository movieRepository;
+    public final SeatRepository seatRepository;
     public final TicketMapper ticketMapper;
 
     public String createTicket(RequestTicketDto requestDto){
         User user = userRepository.findByIdAndActive(requestDto.userId(), true)
                 .orElseThrow(() -> new EntityNotFoundException(
                         "No se puede encontrar el usuario con el id " + requestDto.userId()));
-/*
-        Screen screen = functionDetailsService.findByIdAndActive(requestDto.screenId(), true)
-                .orElseThrow(() -> new EntityNotFoundException(
-                        "No se puede encontrar la sala con el nombre " + requestDto.screenId()));
 
-        Cinema cinema = cinemaRepository.findByNameAndActive(requestDto.cinemaName(), true)
+        FunctionDetails functionDetails = functionDetailsRepository.findByIdAndActive(requestDto.functionDetailsId(), true)
                 .orElseThrow(() -> new EntityNotFoundException(
-                        "No se puede encontrar el cine con el nombre " + requestDto.cinemaName()));
+                        "No se puede encontrar la función con el id " + requestDto.functionDetailsId()));
 
-        Movie movie = movieRepository.findByTitleAndActive(requestDto.movieName(), true)
+        String screenId = functionDetails.getScreenId();
+        String movieId = functionDetails.getMovieId();
+        LocalDateTime functionDate = functionDetails.getSchedule();
+
+        Screen screen = screenRepository.findByIdAndActive(screenId, true)
                 .orElseThrow(() -> new EntityNotFoundException(
-                        "No se puede encontrar la película con el nombre " + requestDto.movieName()));
+                        "No se puede encontrar la sala con el id " + screenId));
+
+        String cinemaName = screen.getCinema().getId();
+
+        Movie movie = movieRepository.findByIdAndActive(movieId, true)
+                .orElseThrow(() -> new EntityNotFoundException(
+                        "No se puede encontrar la película con el id " + movieId));
+
+        String movieName = movie.getTitle();
+
 
         List<Seat> seatEntityList = new ArrayList<>();
-        List<String> seatsList = requestDto.seatsNames();
-        for (String seatNumber : seatsList) {
-            Seat seat = seatRepository.findBySeatNumberAndReserved(seatNumber, false)
+        List<String> seatsList = requestDto.seatsIds();
+        for (String id : seatsList) {
+            Seat seat = seatRepository.findById(id)
                     .orElseThrow(() -> new EntityNotFoundException(
-                            "El asiento " + seatNumber + " no se encuentra disponible."));
+                            "El asiento " + id + " no se encuentra disponible."));
             seatEntityList.add(seat);
-        }*/
+        }
 
         Double value = calculateTicketPrice(requestDto.unitPrice(), requestDto.amountOfSeats());
 
-        LocalDateTime functionDate = LocalDateTime.now(); // Reemplazar por function Date real cuando esté.
-/*
         Ticket ticket = new Ticket();
         ticket.setUserId(user.getId());
-        ticket.setCinemaName(cinema.getName());
-        ticket.setScreenId(screen.getId());
-        //ticket.setSeatsNames(seatEntityList);
-        ticket.setMovieName(movie.getTitle());
+        ticket.setCinemaName(cinemaName);
+        ticket.setScreenName(screen.getName());
+        ticket.setSeatsIds(seatEntityList);
+        ticket.setMovieName(movieName);
         ticket.setValue(value);
         ticket.setFunctionDate(functionDate);
         ticket.setActive(false);
-*/
+
         Ticket savedTicket = ticketRepository.save(null);
         return savedTicket.getId();
     }
