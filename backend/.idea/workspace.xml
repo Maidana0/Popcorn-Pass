@@ -4,11 +4,21 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="c41083b2-23c2-4294-9a2a-6a0971ca1943" name="Changes" comment="" />
+    <list default="true" id="c41083b2-23c2-4294-9a2a-6a0971ca1943" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Record" />
+        <option value="Interface" />
+      </list>
+    </option>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
@@ -24,9 +34,11 @@
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
     "Maven.Ticketcine [org.apache.maven.plugins:maven-clean-plugin:3.3.2:clean].executor": "Run",
+    "Maven.Ticketcine [org.apache.maven.plugins:maven-install-plugin:3.1.1:install].executor": "Run",
     "Maven.Ticketcine [org.springframework.boot:spring-boot-maven-plugin:3.2.5:run].executor": "Run",
+    "Maven.Ticketcine [org.springframework.boot:spring-boot-maven-plugin:3.2.5:stop].executor": "Run",
     "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "Merging develop",
+    "git-widget-placeholder": "facu",
     "kotlin-language-version-configured": "true",
     "last_opened_file_path": "C:/Users/Facu/Desktop/Proyectos NoCountry/pepe/backend"
   }
