@@ -4,10 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="c41083b2-23c2-4294-9a2a-6a0971ca1943" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/Ticketcine/src/main/java/com/s1511/ticketcine/application/mapper/ScreenMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/Ticketcine/src/main/java/com/s1511/ticketcine/application/mapper/ScreenMapper.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Ticketcine/src/main/java/com/s1511/ticketcine/infrastructure/controllers/SeatController.java" beforeDir="false" afterPath="$PROJECT_DIR$/Ticketcine/src/main/java/com/s1511/ticketcine/infrastructure/controllers/SeatController.java" afterDir="false" />
-    </list>
+    <list default="true" id="c41083b2-23c2-4294-9a2a-6a0971ca1943" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -29,7 +26,7 @@
     "Maven.Ticketcine [org.apache.maven.plugins:maven-clean-plugin:3.3.2:clean].executor": "Run",
     "Maven.Ticketcine [org.springframework.boot:spring-boot-maven-plugin:3.2.5:run].executor": "Run",
     "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "facu",
+    "git-widget-placeholder": "Merging develop",
     "kotlin-language-version-configured": "true",
     "last_opened_file_path": "C:/Users/Facu/Desktop/Proyectos NoCountry/pepe/backend"
   }
