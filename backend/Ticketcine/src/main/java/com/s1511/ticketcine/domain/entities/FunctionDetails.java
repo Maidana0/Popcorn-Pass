@@ -1,13 +1,9 @@
 package com.s1511.ticketcine.domain.entities;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -18,17 +14,15 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor 
 public class FunctionDetails {
 
-    //TODO: AGREGAR CAMPOS
-
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private String id;
     private LocalDateTime schedule;
-    private String movieName;
-    @ManyToOne
-    @JoinColumn(name = "screen_id", referencedColumnName="id")
-    private Screen screen;
-
-    
-
+    private String movieId;
+    private String screenId;
+    @OneToMany(fetch = FetchType.LAZY)
+    private List<Seat> seatsList;
+    private Boolean active;
 }
+
+// TODO. VER DTOS Y MÉTODOS PERTINENTES.
