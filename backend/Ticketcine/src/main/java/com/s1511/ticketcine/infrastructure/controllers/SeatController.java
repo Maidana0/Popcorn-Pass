@@ -1,18 +1,15 @@
 package com.s1511.ticketcine.infrastructure.controllers;
 
-import com.s1511.ticketcine.application.dto.seat.RequestSeatDto;
-import com.s1511.ticketcine.application.dto.seat.ResponseSeatDto;
+
 import com.s1511.ticketcine.application.dto.seat.SeatDTO;
 import com.s1511.ticketcine.application.dto.seat.SeatReservationDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import com.s1511.ticketcine.domain.entities.Seat;
 import com.s1511.ticketcine.domain.services.SeatService;
 
 import java.util.List;
-import java.util.Optional;
 
 @RequiredArgsConstructor
 @RestController
