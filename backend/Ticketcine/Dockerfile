@@ -1,6 +1,23 @@
 # CONSTRUCCION DE DOCKER
+FROM openjdk:17-jdk-slim as builder
+
+WORKDIR /app
+
+COPY .mvn/ .mvn
+COPY mvnw ./
+COPY pom.xml ./
+
+RUN chmod +x mvnw && ./mvnw dependency:go-offline
+
+COPY src/ ./src
+
+RUN ./mvnw clean package -DskipTests
+
 FROM openjdk:17-jdk-slim
-ARG JAR_FILE=target/Ticketcine-0.0.1-SNAPSHOT.jar
-COPY ${JAR_FILE} app_ticketcine.jar
+
+WORKDIR /app
+RUN mkdir ./logs
+COPY --from=builder /app/target/Ticketcine-0.0.1-SNAPSHOT.jar .
 EXPOSE 8080
+
 ENTRYPOINT [ "java", "-jar", "app_ticketcine.jar" ]
