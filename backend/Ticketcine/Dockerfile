@@ -20,4 +20,4 @@ RUN mkdir ./logs
 COPY --from=builder /app/target/Ticketcine-0.0.1-SNAPSHOT.jar .
 EXPOSE 8080
 
-ENTRYPOINT [ "java", "-jar", "app_ticketcine.jar" ]
+ENTRYPOINT [ "java", "-jar", "Ticketcine-0.0.1-SNAPSHOT.jar" ]
