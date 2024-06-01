@@ -38,15 +38,15 @@ const MovieCard = ({ id, nameMovie, imagePath, isComingSoon, handleClick, textSt
             {nameMovie || "Deadpool and Wolverine"}
           </Typography>
           <Box maxHeight={61}>
-          {isComingSoon
-            ? <BoxIconWithText leftText={true} typographyProps={{ color: "var(--gray-color)", fontSize: "15px" }} text={textCalendar || "28.06.2024"} svgPath="/images/cards/calendar.svg" />
-            : <>
-              <BoxIconWithText leftText={true} typographyProps={{ color: "var(--gray-color)", fontSize: "15px" }} text={textStar || "4.8"} svgPath="/images/cards/star.svg" />
-              <BoxIconWithText leftText={true} typographyProps={{ color: "var(--gray-color)", fontSize: "15px" }} text={textClock || "1 hora, 30 minutos."} svgPath="/images/cards/clock.svg" />
-            </>}
+            {isComingSoon
+              ? <BoxIconWithText leftText={true} typographyProps={{ color: "var(--gray-color)", fontSize: "15px" }} text={textCalendar || "28.06.2024"} svgPath="/images/cards/calendar.svg" />
+              : <>
+                <BoxIconWithText leftText={true} typographyProps={{ color: "var(--gray-color)", fontSize: "15px" }} text={textStar || "4.8"} svgPath="/images/cards/star.svg" />
+                {/* <BoxIconWithText leftText={true} typographyProps={{ color: "var(--gray-color)", fontSize: "15px" }} text={textClock || "1 hora, 30 minutos."} svgPath="/images/cards/clock.svg" /> */}
+              </>}
 
-          <BoxIconWithText leftText={true} typographyProps={{ color: "var(--gray-color)", fontSize: "15px" }} text={textVideo || "Accion, Comedia."} svgPath="/images/cards/video.svg" />
-            </Box>
+            <BoxIconWithText leftText={true} typographyProps={{ color: "var(--gray-color)", fontSize: "15px" }} text={`${textVideo || "Accion, Comedia"}.`} svgPath="/images/cards/video.svg" />
+          </Box>
 
         </CardContent>
       </CardActionArea>
