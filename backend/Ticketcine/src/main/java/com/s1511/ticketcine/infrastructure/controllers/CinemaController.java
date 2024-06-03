@@ -21,18 +21,18 @@ public class CinemaController {
 
     private final CinemaService cinemaService;
 
-    @GetMapping("/getCinemasCityName")
+    @GetMapping("/cities")
     private ResponseEntity<List<String>> getCinemasCityName(){
         return ResponseEntity.ok(cinemaService.getCinemasCityName());
     }
 
-    @GetMapping("/getCinemaListByCity/{city}")
+    @GetMapping("/cinemasByCity/{city}")
     private ResponseEntity<List<ReadDtoCinema>> getCinemaListByCity(@PathVariable @NotNull String city){
         return ResponseEntity.ok(cinemaService.getCinemaListByCity(city));
     }
-    @GetMapping("/getMoviesByCine/{cinema}")
-    private ResponseEntity<List<ReadDtoMovie>> getMoviesByCine(@PathVariable @NotNull String cinema){
-        return ResponseEntity.ok(cinemaService.getMoviesByCinema(cinema));
+    @GetMapping("/moviesByCine/{cinemaId}")
+    private ResponseEntity<List<ReadDtoMovie>> getMoviesByCine(@PathVariable @NotNull String cinemaId){
+        return ResponseEntity.ok(cinemaService.getMoviesByCinema(cinemaId));
     }
 
 }

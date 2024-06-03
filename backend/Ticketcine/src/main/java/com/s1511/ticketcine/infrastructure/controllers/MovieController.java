@@ -34,7 +34,7 @@ public class MovieController {
         return ResponseEntity.ok(movieService.getActiveMovieList());
     }
 
-    @GetMapping("/getById/{id}")
+    @GetMapping("/{id}")
     public ResponseEntity<?> getMovieById(@PathVariable @NotNull String id){
         return ResponseEntity.ok(movieService.getMovieById(id));
     }

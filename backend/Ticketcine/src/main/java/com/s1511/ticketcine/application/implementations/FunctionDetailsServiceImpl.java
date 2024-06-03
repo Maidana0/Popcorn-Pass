@@ -27,7 +27,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class FunctionDetailsServiceImpl implements FunctionDetailsService {
 
-    private final FunctionDetailsRepository functionDetailsRepositoryRepository;
+    private final FunctionDetailsRepository functionDetailsRepository;
     private final MovieMapper movieMapper;
     private final MovieRepository movieRepository;
     private final MovieService movieService;
@@ -45,9 +45,11 @@ public class FunctionDetailsServiceImpl implements FunctionDetailsService {
         var screens = screenRepository.findAll();
         LocalDateTime time = LocalDateTime.now().plusDays(14);
         for (Screen screen: screens) {
-            for (int i = 0; i < 3; i++) {
+            for (int i = 0; i <= 2; i++) {
                 FunctionDetails functionDetail = new FunctionDetails();
+                functionDetailsRepository.save(functionDetail);
                 functionDetail.setScreenId(screenId);
+                System.out.println("functionDetails ID cuando se crea el fd"+functionDetail.getId());
                 if (i == 0) {
                     functionDetail.setSchedule(time.with(LocalTime.of(18,0)));
                 } else if (i == 1) {
@@ -58,6 +60,7 @@ public class FunctionDetailsServiceImpl implements FunctionDetailsService {
                 functionDetail.setSeatsList(seatService.createSeatMatrix(functionDetail.getId()));
                 functionDetail.setMovieId(movieService.getRandomMovieId());
                 functionDetail.setActive(true);
+                functionDetailsRepository.save(functionDetail);
             }
         }
 
