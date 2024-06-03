@@ -4,7 +4,13 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="c41083b2-23c2-4294-9a2a-6a0971ca1943" name="Changes" comment="" />
+    <list default="true" id="c41083b2-23c2-4294-9a2a-6a0971ca1943" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/../.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/../.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Ticketcine/Dockerfile" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Ticketcine/src/main/resources/.env" beforeDir="false" afterPath="$PROJECT_DIR$/Ticketcine/src/main/resources/.env" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Ticketcine/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/Ticketcine/src/main/resources/application.properties" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -17,20 +23,49 @@
   &quot;associatedIndex&quot;: 7
 }</component>
   <component name="ProjectId" id="2h9PiLBel4mZW8UEYrqHZpkyWLI" />
+  <component name="ProjectLevelVcsManager">
+    <ConfirmationsSetting value="1" id="Add" />
+  </component>
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "Maven.Ticketcine [org.apache.maven.plugins:maven-clean-plugin:3.3.2:clean].executor": "Run",
-    "Maven.Ticketcine [org.springframework.boot:spring-boot-maven-plugin:3.2.5:run].executor": "Run",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "Merging develop",
-    "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "C:/Users/Facu/Desktop/Proyectos NoCountry/pepe/backend"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Application.TicketcineApplication.executor&quot;: &quot;Run&quot;,
+    &quot;Maven.Ticketcine [clean].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.Ticketcine [compile].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.Ticketcine [deploy].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.Ticketcine [install].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.Ticketcine [org.apache.maven.plugins:maven-clean-plugin:3.3.2:clean].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.Ticketcine [org.springframework.boot:spring-boot-maven-plugin:3.2.5:run].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.Ticketcine [package].executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;Merging develop&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/Facu/Desktop/Proyectos NoCountry/pepe/backend&quot;
   }
-}]]></component>
+}</component>
+  <component name="RunManager">
+    <configuration name="TicketcineApplication" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="com.s1511.ticketcine.TicketcineApplication" />
+      <module name="Ticketcine" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.s1511.ticketcine.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Application.TicketcineApplication" />
+      </list>
+    </recent_temporary>
+  </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
@@ -41,5 +76,8 @@
       <updated>1717003445669</updated>
     </task>
     <servers />
+  </component>
+  <component name="UnknownFeatures">
+    <option featureType="com.intellij.fileTypeFactory" implementationName=".env" />
   </component>
 </project>
