@@ -1,10 +1,13 @@
-export const filterMovies = (res: Array<any>) => res.filter(movie =>
+export const filteredListComingSoon = (res: Array<any>) => res.filter(movie =>
     movie.genre.length > 0 &&
     movie.image &&
     new Date(movie.releaseDate) > new Date()
 );
 
-export const convertGenre = (genreArray: Array<string>) => genreArray.join(", ").toLowerCase()
+export const convertGenre = (genreArray: Array<string>) => {
+    const toString = genreArray.join(", ").toLowerCase()
+    return toString.includes("_") ? toString.replace("_", " ") : toString
+}
 
 export const convertImagePath = (description: string, imagePath: string) => {
     const onlyPath = description.split("_face");
@@ -12,7 +15,7 @@ export const convertImagePath = (description: string, imagePath: string) => {
 };
 
 
-export const filterLastMovies = (res: Array<any>) => res.filter(movie =>
+export const filteredListPlayingNow = (res: Array<any>) => res.filter(movie =>
     movie.genre.length > 0 &&
     movie.image &&
     new Date(movie.releaseDate) < new Date()
