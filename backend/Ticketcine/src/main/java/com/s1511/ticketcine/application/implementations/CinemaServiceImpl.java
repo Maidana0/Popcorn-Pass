@@ -50,11 +50,13 @@ public class CinemaServiceImpl implements CinemaService {
     public List<ReadDtoMovie> getMoviesByCinema(String cinemaId) {
         List<Screen> cinemaScreens = screenRepository.findByCinemaId(cinemaId);
         List<String> allCinemaMoviesId = new ArrayList();
-
+        System.out.println("movies 1;;;;");
         for (Screen Screen : cinemaScreens){
-            allCinemaMoviesId.add(functionDetailsRepository.findMovieIdByScreenId(Screen.getId()).toString());
-        }
+           allCinemaMoviesId.add(functionDetailsRepository.findMovieIdByScreenId(Screen.getId()));
 
+            System.out.println(allCinemaMoviesId+"movieId total");
+        }
+        System.out.println("movies 2;;;;");
         Set<Movie> uniqueCinemaMovies = new HashSet<>();
 
         for (String movieId : allCinemaMoviesId) {
@@ -63,6 +65,6 @@ public class CinemaServiceImpl implements CinemaService {
                 uniqueCinemaMovies.add(movie);
             }
         }
-
+        System.out.println("movies 3;;;;");
         return movieMapper.movieListToReadDtoList(new ArrayList<>(uniqueCinemaMovies));
     }}

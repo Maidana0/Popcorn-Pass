@@ -71,7 +71,7 @@ public class SeatServiceImpl implements SeatService {
     @Override
     public List<Seat> createSeatMatrix(String functionDetailsId) {
         List<Seat> seatsMatrix = new ArrayList();
-        for (int i = 0; i < 19; i++) {
+        for (int i = 1; i < 20; i++) {
             for (int j = 0; j <= 9; j++) {
                 String letter = "";
 
@@ -105,6 +105,7 @@ public class SeatServiceImpl implements SeatService {
                 seat.setFunctionDetailsId(functionDetailsId);
                 seat.setPreviousUser(null);
                 seat.setCurrentUser(null);
+                seatRepository.save(seat);
 
                 seatsMatrix.add(seat);
             }

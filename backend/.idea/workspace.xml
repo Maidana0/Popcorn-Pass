@@ -5,7 +5,16 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="c41083b2-23c2-4294-9a2a-6a0971ca1943" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Ticketcine/src/main/java/com/s1511/ticketcine/application/implementations/CinemaServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/Ticketcine/src/main/java/com/s1511/ticketcine/application/implementations/CinemaServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Ticketcine/src/main/java/com/s1511/ticketcine/application/implementations/FunctionDetailsServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/Ticketcine/src/main/java/com/s1511/ticketcine/application/implementations/FunctionDetailsServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Ticketcine/src/main/java/com/s1511/ticketcine/application/implementations/MovieServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/Ticketcine/src/main/java/com/s1511/ticketcine/application/implementations/MovieServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Ticketcine/src/main/java/com/s1511/ticketcine/application/implementations/SeatServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/Ticketcine/src/main/java/com/s1511/ticketcine/application/implementations/SeatServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Ticketcine/src/main/java/com/s1511/ticketcine/domain/repository/FunctionDetailsRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/Ticketcine/src/main/java/com/s1511/ticketcine/domain/repository/FunctionDetailsRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Ticketcine/src/main/java/com/s1511/ticketcine/infrastructure/controllers/CinemaController.java" beforeDir="false" afterPath="$PROJECT_DIR$/Ticketcine/src/main/java/com/s1511/ticketcine/infrastructure/controllers/CinemaController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Ticketcine/src/main/java/com/s1511/ticketcine/infrastructure/controllers/FunctionDetailsController.java" beforeDir="false" afterPath="$PROJECT_DIR$/Ticketcine/src/main/java/com/s1511/ticketcine/infrastructure/controllers/FunctionDetailsController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Ticketcine/src/main/java/com/s1511/ticketcine/infrastructure/controllers/MovieController.java" beforeDir="false" afterPath="$PROJECT_DIR$/Ticketcine/src/main/java/com/s1511/ticketcine/infrastructure/controllers/MovieController.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -31,18 +40,19 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "Maven.Ticketcine [org.apache.maven.plugins:maven-clean-plugin:3.3.2:clean].executor": "Run",
-    "Maven.Ticketcine [org.apache.maven.plugins:maven-install-plugin:3.1.1:install].executor": "Run",
-    "Maven.Ticketcine [org.springframework.boot:spring-boot-maven-plugin:3.2.5:run].executor": "Run",
-    "Maven.Ticketcine [org.springframework.boot:spring-boot-maven-plugin:3.2.5:stop].executor": "Run",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "facu",
-    "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "C:/Users/Facu/Desktop/Proyectos NoCountry/pepe/backend"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Application.TicketcineApplication.executor&quot;: &quot;Debug&quot;,
+    &quot;Maven.Ticketcine [org.apache.maven.plugins:maven-clean-plugin:3.3.2:clean].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.Ticketcine [org.apache.maven.plugins:maven-install-plugin:3.1.1:install].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.Ticketcine [org.springframework.boot:spring-boot-maven-plugin:3.2.5:run].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.Ticketcine [org.springframework.boot:spring-boot-maven-plugin:3.2.5:stop].executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;facu&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/Facu/Desktop/Proyectos NoCountry/pepe/backend&quot;
   }
-}]]></component>
+}</component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
