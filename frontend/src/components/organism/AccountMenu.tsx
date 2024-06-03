@@ -21,16 +21,16 @@ const styled: SxProps = {
         ml: -0.5,
         mr: 1,
     },
-    '&::before': {
-        content: '""',
-        display: 'block',
-        position: 'absolute',
+    "&::before": {
+        content: "''",
+        display: "block",
+        position: "absolute",
         top: 0,
         right: 14,
         width: 16,
         height: 16,
         bgcolor: "var(--lightBlack)",
-        transform: 'translateY(-50%) rotate(45deg)',
+        transform: "translateY(-50%) rotate(45deg)",
         zIndex: 0,
     },
 }
@@ -46,7 +46,7 @@ const AccountMenu = () => {
     const { firstName, lastName, logOut, isLogged } = useAuthStore(state => ({ logOut: state.logOut, firstName: state.firstName, lastName: state.lastName, isLogged: state.isLogged }), shallow)
 
     return (
-        <Fragment>
+        <>
             <Tooltip title="Mi cuenta">
                 <IconButton
                     onClick={handleClick}
@@ -90,17 +90,15 @@ const AccountMenu = () => {
 
                 {
                     isLogged &&
-                    <Fragment>
-                        <Divider />
-                        <MenuItems
+                    [<Divider key={0} />
+                        , <MenuItems key={1}
                             handleClose={handleClose}
                             logOut={logOut}
                             firstName={firstName || "P"}
-                        />
-                    </Fragment>
+                    />]
                 }
             </Menu>
-        </Fragment>
+        </>
     );
 }
 

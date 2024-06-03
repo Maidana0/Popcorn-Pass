@@ -32,6 +32,7 @@ const MovieCard = ({ id, nameMovie, imagePath, isComingSoon, handleClick, textSt
           src={imagePath || "/images/deadpool-3.jpg"}
           style={{ objectFit: "cover" }}
           sizes="(max-width: 600px) 100%"
+          loading="lazy"
         />
         <CardContent sx={{ padding: "7px", display: "flex", flexDirection: "column", justifyContent: "space-evenly", height: 120 }}>
           <Typography maxHeight={"40px"} maxWidth={"95%"} gutterBottom variant="caption" overflow={"hidden"} textOverflow={"ellipsis"} component="figcaption" color="var(--yellow)" fontWeight={700} fontSize={16} lineHeight={"20px"} m={0}>

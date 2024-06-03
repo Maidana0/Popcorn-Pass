@@ -27,20 +27,9 @@ const MenuItems: FC<Props> = ({ handleClose, firstName, logOut }) => {
                 <ListItemIcon>
 
                 </ListItemIcon>
-                Historial de compras
-            </MenuItem>
-            <MenuItem onClick={handleClose}>
-                <ListItemIcon>
-
-                </ListItemIcon>
-                Cambiar idioma
+                Mis comentarios
             </MenuItem>
             <Divider />
-            <MenuItem onClick={handleClose}>
-                <ListItemIcon>
-                </ListItemIcon>
-                Agregar otra cuenta
-            </MenuItem>
             <MenuItem onClick={() => {
                 handleClose()
                 logOut()

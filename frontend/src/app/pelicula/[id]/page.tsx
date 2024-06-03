@@ -1,6 +1,5 @@
 import BackButton from '@/components/atoms/BackButton'
 import MovieDetail from '@/components/organism/MovieDetail'
-import { Box, Container } from '@mui/material'
 import type { Metadata } from 'next'
 
 type Props = {
@@ -22,7 +21,7 @@ const Movie = ({ params }: Props) => {
     return <>
         <BackButton />
 
-        <MovieDetail />
+        <MovieDetail id={id}/>
     </>
 }
 
