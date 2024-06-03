@@ -1,6 +1,7 @@
 import { AppBar, Toolbar, Typography, Box } from "@mui/material"
 import Link from "next/link";
 import dynamic from "next/dynamic";
+import AccountMenu from "./AccountMenu";
 
 const SliderNavbar = dynamic(() => import("../molecules/SliderNavbar"), { ssr: false })
 const TabNavbar = dynamic(() => import("../molecules/TabNavbar"), { ssr: false })
@@ -21,6 +22,8 @@ const Header = () => {
                 </Box>
 
                 <TabNavbar />
+
+                <AccountMenu />
 
             </Toolbar>
         </AppBar>
