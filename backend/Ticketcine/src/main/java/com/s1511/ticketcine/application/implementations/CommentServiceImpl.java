@@ -1,5 +1,6 @@
 package com.s1511.ticketcine.application.implementations;
 import com.s1511.ticketcine.domain.entities.Movie;
+import com.s1511.ticketcine.domain.repository.TicketRepository;
 import jakarta.persistence.EntityExistsException;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
@@ -28,11 +29,20 @@ public class CommentServiceImpl implements CommentService {
     public final UserRepository userRepository;
     public final MovieRepository movieRepository;
     public final SelfValidation selfValidation;
+    public final TicketRepository ticketRepository;
 
     @Transactional
     @Override
     public ReadDtoComment createComment(CreateDtoComment createDtoComment) {
         selfValidation.checkSelfValidation(createDtoComment.userId());
+
+        Movie movieEntity = movieRepository.findById(createDtoComment.movieId())
+                .orElseThrow(() -> new EntityNotFoundException(createDtoComment.movieId()));
+        String movieName = movieEntity.getTitle();
+
+        ticketRepository.findByUserIdAndMovieName(createDtoComment.userId(), movieName)
+                .orElseThrow(() -> new EntityNotFoundException("¡No existe registro de que hayas visto esta película!"));
+
         var commentAlreadyExists = commentRepository.findByUserIdAndMovieId(createDtoComment.userId(),
                 createDtoComment.movieId());
         if(commentAlreadyExists.isPresent()){
@@ -41,8 +51,7 @@ public class CommentServiceImpl implements CommentService {
         Comment comment = this.commentMapper.createDtoToComment(createDtoComment);
         comment.setActive(Boolean.TRUE);
         comment.setDate(LocalDateTime.now());
-        Movie movieEntity = movieRepository.findById(comment.getMovieId())
-                .orElseThrow(() -> new EntityNotFoundException(comment.getMovieId()));
+
         Integer calification = comment.getUserRate();
         var calificationList = movieEntity.getUsersRating();
         calificationList.add(calification);
