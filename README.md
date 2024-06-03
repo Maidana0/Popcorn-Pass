@@ -4,9 +4,7 @@
 ## Miembros del Equipo
 ### Frontend
 - Maidana, Franco.
-- Díaz, Bruno.
 - Sosa, Bruno.
-- García, Jesús.
 
 ### Backend
 * Diván, Guillermo.

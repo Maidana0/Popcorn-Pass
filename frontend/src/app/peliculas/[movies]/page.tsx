@@ -3,6 +3,9 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import dynamic from "next/dynamic";
 import Loader from "@/components/atoms/Loader";
+import { fetchData } from "@/utils/fetchData";
+import { filteredListComingSoon, filteredListPlayingNow } from "@/utils/fc-movies";
+import { IMovie } from "@/common/interfaces";
 
 const MovieFilters = dynamic(() => import("@/components/organism/MovieFilters"), { ssr: false })
 const MoviePagination = dynamic(() => import("@/components/atoms/MoviePagination"), { ssr: false })
@@ -14,6 +17,8 @@ export const metadata: Metadata = {
     title: "Peliculas"
 };
 
+export const revalidate = 3600 * 24 * 14
+
 interface IProps {
     params: {
         movies: "en-pantalla" | "proximamente"
@@ -23,9 +28,20 @@ interface IProps {
     }
 }
 
-const Page = ({ params }: IProps) => {
+const getData = async (): Promise<{ inComingSoon: IMovie[], playingNow: IMovie[] }> => {
+    const res = await fetchData("movie/list")
+    console.log("ejecuntandose");
+    return {
+        inComingSoon: filteredListComingSoon(res),
+        playingNow: filteredListPlayingNow(res)
+    }
+    // return inComingSoon ? filteredListComingSoon(res) : filteredListPlayingNow(res)
+}
+
+const Page = async ({ params }: IProps) => {
     const { movies } = params
     const inComingSoon = movies == "proximamente"
+    const data = await getData()
 
     if (movies != "en-pantalla" && !inComingSoon) return <h1 style={{ margin: "auto", textAlign: "center" }}>404 - Not Found</h1>
 
@@ -53,12 +69,13 @@ const Page = ({ params }: IProps) => {
         </Box>
 
         {!inComingSoon && <MovieFilters />}
-
         <Box sx={{ display: "flex", flexWrap: "wrap", gap: { xs: "20px 0", sm: "16px" }, justifyContent: "space-evenly" }} mb="3.5rem" >
-            {inComingSoon ? <ComingSoon /> : <PlayingNow />}
+            {inComingSoon
+                ? <ComingSoon movies={data.inComingSoon} />
+                : <PlayingNow movies={data.playingNow} />}
         </Box>
 
-        {inComingSoon && <MoviePagination />}
+        <MoviePagination />
     </>)
 }
 

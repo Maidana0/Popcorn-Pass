@@ -1,5 +1,5 @@
 import BackButton from '@/components/atoms/BackButton'
-import { Container } from '@mui/material'
+import MovieDetail from '@/components/organism/MovieDetail'
 import type { Metadata } from 'next'
 
 type Props = {
@@ -18,12 +18,11 @@ export async function generateMetadata(
 
 const Movie = ({ params }: Props) => {
     const { id } = params
-    return (
-        <Container>
-            <BackButton />
-            <h1>{id}</h1>
-        </Container>
-    )
+    return <>
+        <BackButton />
+
+        <MovieDetail id={id}/>
+    </>
 }
 
 export default Movie
