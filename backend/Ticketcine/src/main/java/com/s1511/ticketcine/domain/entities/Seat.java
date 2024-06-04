@@ -1,5 +1,6 @@
 package com.s1511.ticketcine.domain.entities;
 
+import com.s1511.ticketcine.domain.utils.SeatEnum;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -18,26 +19,18 @@ public class Seat {
     private String id;
     private String seatNumber;
     private LocalDateTime reservationTime;
-
-    @Column(columnDefinition = "BOOLEAN")
-    private boolean reserved;
+    private Boolean occupied;
     private String functionDetailsId;
     @ManyToOne
     @JoinColumn(name = "ticket_id", referencedColumnName = "id")
     private Ticket ticket;
     @ManyToOne
-    @JoinColumn(name = "current_user_id")
+    @JoinColumn(name = "current_user_id", referencedColumnName = "id")
     private User currentUser;
     @ManyToOne
-    @JoinColumn(name = "previous_user_id")
+    @JoinColumn(name = "previous_user_id", referencedColumnName = "id")
     private User previousUser;
+    SeatEnum seatEnum;
 
-    @Enumerated(EnumType.STRING)
-    private Availability availability;
 
-    public enum Availability {
-        AVAILABLE,
-        OCCUPIED,
-        RESERVED
-    }
 }

@@ -1,10 +1,17 @@
 package com.s1511.ticketcine.application.implementations;
 
-import com.s1511.ticketcine.application.dto.seat.SeatDTO;
-import com.s1511.ticketcine.application.dto.seat.SeatReservationDTO;
+import com.s1511.ticketcine.application.dto.seat.RequestDtoSeat;
+import com.s1511.ticketcine.application.dto.seat.ResponseDtoSeat;
+import com.s1511.ticketcine.domain.entities.FunctionDetails;
+import com.s1511.ticketcine.domain.entities.Ticket;
 import com.s1511.ticketcine.domain.entities.User;
+import com.s1511.ticketcine.domain.repository.FunctionDetailsRepository;
+import com.s1511.ticketcine.domain.repository.TicketRepository;
 import com.s1511.ticketcine.domain.repository.UserRepository;
 
+import com.s1511.ticketcine.domain.utils.SeatEnum;
+import jakarta.persistence.EntityExistsException;
+import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -24,54 +31,13 @@ public class SeatServiceImpl implements SeatService {
 
     private final SeatRepository seatRepository;
     private final UserRepository userRepository;
+    private final TicketRepository ticketRepository;
     private final SeatMapper seatMapper;
-
-    @Override
-    public List<SeatDTO> findAllSeats() {
-        List<Seat> seats = seatRepository.findAll();
-        return seats.stream()
-                .map(seatMapper::toDTO)
-                .collect(Collectors.toList());
-    }
-
-    @Override
-    public SeatDTO findSeatById(String id) {
-        Seat seat = seatRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Seat not found"));
-        return seatMapper.toDTO(seat);
-    }
-
-    @Override
-    @Transactional
-    public Optional<Seat> seatReservation(String id, SeatReservationDTO seatReservationDTO) {
-        Optional<Seat> seatOptional = seatRepository.findById(id);
-
-        if (!seatOptional.isPresent()) {
-            return Optional.empty(); // Asiento no encontrado
-        }
-
-        Seat seat = seatOptional.get();
-        if (seat.getAvailability() != Seat.Availability.AVAILABLE) {
-            return Optional.empty(); // Asiento no disponible para reservar
-        }
-
-        Optional<User> userOptional = userRepository.findById(seatReservationDTO.userId());
-
-        if (!userOptional.isPresent()) {
-            return Optional.empty(); // Usuario no encontrado o no activo
-        }
-
-        User user = userOptional.get();
-        seat.setCurrentUser(user);
-        seat.setAvailability(Seat.Availability.OCCUPIED); // Actualizar a OCCUPIED al reservar
-        seatRepository.save(seat);
-        return Optional.of(seat); // Estado del asiento actualizado exitosamente
-    }
-
-    @Override
+    private final FunctionDetailsRepository functionDetailsRepository;
+    @Override//METODO INTERNO PARA CREAR LA SALA.
     public List<Seat> createSeatMatrix(String functionDetailsId) {
         List<Seat> seatsMatrix = new ArrayList();
-        for (int i = 0; i < 19; i++) {
+        for (int i = 1; i < 20; i++) {
             for (int j = 0; j <= 9; j++) {
                 String letter = "";
 
@@ -99,16 +65,97 @@ public class SeatServiceImpl implements SeatService {
 
                 var seat = new Seat();
                 seat.setSeatNumber(letter+i);
-                seat.setAvailability(Seat.Availability.AVAILABLE);
-                seat.setReserved(false);
+                seat.setSeatEnum(SeatEnum.AVAILABLE);
+                seat.setOccupied(false);
                 seat.setTicket(null);
                 seat.setFunctionDetailsId(functionDetailsId);
                 seat.setPreviousUser(null);
                 seat.setCurrentUser(null);
+                seatRepository.save(seat);
 
                 seatsMatrix.add(seat);
             }
         }
         return seatsMatrix;
     }
+
+    @Override
+    public ResponseDtoSeat findSeatById(String id) {
+        Seat seat = seatRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Asiento no encontrado"));
+        return seatMapper.toDTO(seat);
+    }
+
+    @Override
+    @Transactional
+    public ResponseDtoSeat seatReservation(String userId, String seatId) {
+
+        Seat seat = seatRepository.findById(seatId)
+                .orElseThrow(() -> new EntityNotFoundException("Asiento no encontrado"));
+
+        if (seat.getSeatEnum() != SeatEnum.AVAILABLE) {
+            throw  new EntityExistsException("Asiento no disponible para reservar"); // Asiento no disponible para reservar
+        }
+
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new EntityNotFoundException("Usuario no encontrado"));
+
+
+        seat.setCurrentUser(user);
+        seat.setSeatEnum(SeatEnum.RESERVED);
+        seatRepository.save(seat);
+        var response = seatMapper.toDTO(seat);
+        return response;
+    }
+
+
+    @Override
+    public Boolean returnSeat(String ticketId, List<String> returnedSeatsIds) {
+
+        Ticket ticket = ticketRepository.findById(ticketId)
+                .orElseThrow(() -> new EntityNotFoundException("El ticket no existe"));
+        var userId = ticket.getUserId();
+        var seatsIds = ticket.getSeatsIds();
+
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new EntityNotFoundException("El usuario no existe"));
+
+
+
+        for (Seat seat:seatsIds) {
+            if(returnedSeatsIds.contains(seat.getSeatNumber())){
+                seat.setSeatEnum(SeatEnum.AVAILABLE);
+                seat.setOccupied(false);
+                seat.setPreviousUser(user);
+                seat.setCurrentUser(null);
+                seatRepository.save(seat);
+            }
+            throw new EntityNotFoundException("El asiento no esta reservado");
+
+        }
+
+        boolean flag = true;
+
+        for (Seat seat:seatsIds){
+            if(seat.getOccupied()){
+                flag = false;
+                break;
+            }
+
+        }
+
+        if(flag){
+            ticket.setActive(false);
+            ticketRepository.save(ticket);
+        }
+
+
+    return true;
+    }
+
 }
+
+// cambiar entradaXpuntos y sumar-restarPuntos es el mismo metodo o son dos distintos?
+
+
+
