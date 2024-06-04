@@ -49,6 +49,10 @@ public class CommentController {
             @PathVariable String movieId, @PathVariable Boolean active){
         return ResponseEntity.ok(commentService.readAllCommentByMovieIdAndActive(movieId, active));
     }
+    @GetMapping("/{userId}/{movieName}")
+    public ResponseEntity<Boolean> userBuyedTicket(@PathVariable String userId, @PathVariable String movieName){
+        return ResponseEntity.ok(commentService.userBuyedTicket(userId, movieName));
+    }
 
 
     @Transactional

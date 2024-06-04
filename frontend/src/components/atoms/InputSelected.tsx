@@ -18,8 +18,7 @@ interface Props {
 const InputSelected: any = ({ register, valueAndName, optionsValue, listTo }: Props) => {
     const [selectedValue, setSelectedValue] = React.useState("empty")
     const { palette } = useTheme()
-    const handleChange = (event: SelectChangeEvent) => setSelectedValue(event.target.value);
-
+    const handleChange = (event: SelectChangeEvent) => setSelectedValue(event.target.value);    
 
     return (
         <FormControl sx={{

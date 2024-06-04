@@ -6,12 +6,10 @@ import FieldsLogin from "../molecules/FieldsLogin"
 import InputMui from "../atoms/InputMui"
 import { namesValidation, passwordValidation } from "@/data/commonFormValidation"
 import { fetchData } from "../../utils/fetchData"
-import { useState } from "react"
 import { useAuthStore } from "@/store/auth-store"
 import { shallow } from "zustand/shallow"
 
 const FormRegister = () => {
-    // const [message, setMessage] = useState({ value: false, message: "" })
     const { message, setMessage } = useAuthStore((state) => ({ message: state.message, setMessage: state.setMessage }), shallow)
 
     const { register, handleSubmit, reset, watch, formState: { errors } } = useForm()

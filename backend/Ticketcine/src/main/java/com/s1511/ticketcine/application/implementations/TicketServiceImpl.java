@@ -91,6 +91,12 @@ public class TicketServiceImpl implements TicketService {
         ResponseTicketDto responseDto = ticketMapper.ticketToResponseDto(ticket);
         return responseDto;
     }
+    @Override
+    public List<ResponseTicketDto> getAllTicketsByUserId(String userId) {
+        List<Ticket> ticketList = ticketRepository.getTicketsByUserId(userId);
+        List<ResponseTicketDto> ticketListDto = ticketMapper.ticketListToResponseDtoList(ticketList);
+        return ticketListDto;
+    }
 
     private double calculateTicketPrice(double unitPrice, int unitValue){
         return unitPrice * unitValue;

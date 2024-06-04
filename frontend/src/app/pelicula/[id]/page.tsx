@@ -1,6 +1,7 @@
 
 import BackButton from '@/components/atoms/BackButton'
 import MovieDetail from '@/components/organism/MovieDetail'
+import { fetchData } from '@/utils/fetchData'
 import type { Metadata } from 'next'
 import CommentList from '@/components/organism/commentList'
 
@@ -17,14 +18,18 @@ export async function generateMetadata(
         title: id,
     }
 }
+const getData = async (id: string) => {
+    const res = await fetchData(`movie/${id}`);
+    return res;
+};
 
-
-const Movie = ({ params }: Props) => {
+const Movie = async ({ params }: Props) => {
     const { id } = params
+    const movie = await getData(id)
     return <>
         <BackButton />
 
-        <MovieDetail id={id}/>
+        <MovieDetail movie={movie} />
     </>
 }
 

@@ -8,6 +8,7 @@ import com.s1511.ticketcine.domain.entities.Ticket;
 public interface TicketService {
     String createTicket(RequestTicketDto requestTicketDto);
     List<ResponseTicketDto> getAllTicketsByUserIdAndActive(String userId, Boolean active);
+    List<ResponseTicketDto> getAllTicketsByUserId(String userId);
     ResponseTicketDto getTicketById(String id);
 
 

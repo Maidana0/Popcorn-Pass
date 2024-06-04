@@ -1,5 +1,6 @@
 package com.s1511.ticketcine.application.implementations;
 import com.s1511.ticketcine.domain.entities.Movie;
+import com.s1511.ticketcine.domain.entities.Ticket;
 import com.s1511.ticketcine.domain.repository.TicketRepository;
 import jakarta.persistence.EntityExistsException;
 import jakarta.persistence.EntityNotFoundException;
@@ -112,5 +113,15 @@ public class CommentServiceImpl implements CommentService {
         comment.setActive(!comment.getActive());
         commentRepository.save(comment);
         return true;
+    }
+
+    @Override
+    public Boolean userBuyedTicket(String userId, String movieName) {
+        Ticket ticket = ticketRepository.findByUserIdAndMovieName(userId, movieName)
+                .orElseThrow(() -> new EntityNotFoundException("No se hallo el ticket"));
+        if(ticket != null){
+            return true;
+        }
+        return false;
     }
 }
