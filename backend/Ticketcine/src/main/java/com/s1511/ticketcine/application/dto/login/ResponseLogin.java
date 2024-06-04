@@ -6,6 +6,6 @@ public record ResponseLogin(
         String id,
         String firstName,
         String lastName,
-        Long moviePoints
+        Double moviePoints
 ) {
 }

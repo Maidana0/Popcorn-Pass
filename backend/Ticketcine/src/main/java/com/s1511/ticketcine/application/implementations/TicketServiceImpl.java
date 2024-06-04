@@ -92,7 +92,6 @@ public class TicketServiceImpl implements TicketService {
         return responseDto;
     }
 
-
     private double calculateTicketPrice(double unitPrice, int unitValue){
         return unitPrice * unitValue;
     }

@@ -18,4 +18,6 @@ public interface SeatService {
 
     List<Seat> createSeatMatrix(String functionDetailsId);
     Boolean returnSeat(String ticketId, List<String> returnedSeatsIds);
-}
+    void lookForPreviousUser(String ticketId);
+
+    }
