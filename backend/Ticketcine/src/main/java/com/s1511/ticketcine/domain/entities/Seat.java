@@ -17,7 +17,6 @@ public class Seat {
     @GeneratedValue(strategy = GenerationType.UUID)
     private String id;
     private String seatNumber;
-    private LocalDateTime reservationTime;
 
     @Column(columnDefinition = "BOOLEAN")
     private boolean reserved;
