@@ -7,6 +7,7 @@ export interface ILoginUser {
     id: string | undefined,
     firstName: string | undefined,
     lastName: string | undefined,
+    moviePoints?: number | undefined
 }
 
 export interface IAuthStore extends ILoginUser {
@@ -27,6 +28,7 @@ const initialState: IAuthStore = {
     firstName: undefined,
     lastName: undefined,
     isLogged: false,
+    moviePoints: undefined,
     message: ""
 }
 

@@ -29,6 +29,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         String token = "";
         String firstName = "";
         String lastName = "";
+        Double moviePoints = 0.0;
 
         var user = userRepository.findByEmail(data.email());
         if (user.isPresent()) {
@@ -37,6 +38,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
             token = jwtService.getToken(user.get());
             firstName = user.get().getFirstName();
             lastName = user.get().getLastName();
+            moviePoints = user.get().getMoviePoints();
         } else throw new EntityNotFoundException("No se puede encontrar el usuario con el email " + data.email());
 
 
@@ -44,7 +46,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
                 new UsernamePasswordAuthenticationToken(data.email(),
                         data.password()));
 
-        ResponseLogin responseLogin = new ResponseLogin(token, role, id, firstName, lastName);
+        ResponseLogin responseLogin = new ResponseLogin(token, role, id, firstName, lastName, moviePoints);
 
         return responseLogin;
     }

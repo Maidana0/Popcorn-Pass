@@ -1,11 +1,21 @@
-
+"use client"
 import HeaderDetail from "../molecules/MovieDetailHeader"
 import { Box } from "@mui/material"
 import MovieImageDetail from "../atoms/MovieImageDetail"
 import MovieDetailContent from "../molecules/MovieDetailContent"
+import { FC, useEffect } from "react"
+import { fetchData } from "@/utils/fetchData"
+
 const AVERAGE = 4.5
 
-const MovieDetail = () => {
+const MovieDetail: FC<{ id: string }> = ({ id }) => {
+    useEffect(() => {
+        const getMovieDetail = async () => {
+            const res = await fetchData("movie/02910fda-9c24-4f99-8813-9b62085f7dfc")
+            console.log(res);
+        }
+        getMovieDetail()
+    }, [])
 
     return (<>
         <Box margin="1.5rem auto">

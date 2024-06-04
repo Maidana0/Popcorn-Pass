@@ -29,15 +29,14 @@ const MovieFilters = () => {
 
   useEffect(() => {
     if (city == "empty" || cinema == "empty" || !cinema) return
-
-    // metodo para traer las peliculas relacionadas con ese cine en particular en fechas futuras:
-    // /getMoviesByCine/{cinema}
-    // mandar cinemaId
     // CAMBIAR UN ESTADO GLOBAL EN EL QUE ESTARÁN LAS PELICULAS SEGÚN EL CINE SELECCIONADO
-    console.log(cinema);
+    const moviesByCinema = async () => {
+      const moviesList = await fetchData(`cinema/getMoviesByCinema/${cinema}`, "GET")
+      console.log(moviesList);
+    }
+    moviesByCinema()
     // setMovies({ city, cinema })
   }, [cinema])
-
 
   useEffect(() => {
     const listFetch = async (): Promise<any> => {

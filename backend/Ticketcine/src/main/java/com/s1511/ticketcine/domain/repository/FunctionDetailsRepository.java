@@ -16,7 +16,7 @@ public interface FunctionDetailsRepository extends JpaRepository<FunctionDetails
 
     @Query("SELECT s FROM Screen s JOIN s.functionDetails fd WHERE s.cinema.id = :cinemaId AND fd.movieId = :movieId")
     List<Screen> findByCinemaIdAndMovieId(@Param("cinemaId") String cinemaId, @Param("movieId") String movieId);
-    List<String> findMovieIdByScreenId(String screenId);
+    List<FunctionDetails> findByScreenId(String screenId);
 
     Optional<FunctionDetails> findByIdAndActive(String functionDetailsId, Boolean active);
 
