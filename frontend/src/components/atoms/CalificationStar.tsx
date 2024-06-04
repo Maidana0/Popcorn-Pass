@@ -4,7 +4,7 @@ import { Rating } from "@mui/material";
 import { SyntheticEvent, useState } from "react";
 import { shallow } from "zustand/shallow";
 
-const CalificationStar = ({ vote_average}: { vote_average?: number | null, active : boolean }) => {
+const CalificationStar = ({ vote_average}: { vote_average?: number | null}) => {
     const [value, setValue] = useState<number | null>(vote_average || 7)
 
     const { isLogged } = useAuthStore(state => ({ isLogged: state.isLogged }), shallow)

@@ -10,7 +10,7 @@ import MovieDescriptionDetail from "../atoms/MovieDescriptionDetail"
 const AVERAGE = 4.5
 
 const MovieDetail: FC<{ movie: IMovie }> = ({ movie }) => {
-    console.log(movie);
+    // console.log(movie);
 
     return (<>
         <Box margin="1.5rem auto">
@@ -46,11 +46,6 @@ const MovieDetail: FC<{ movie: IMovie }> = ({ movie }) => {
 
                 </Box>
             </Box>
-<<<<<<< HEAD
-        
-        
-=======
->>>>>>> e8f6258b63676203c2b986ec487d247087464e95
         </Box>
         
 
