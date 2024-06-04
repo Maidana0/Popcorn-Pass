@@ -26,10 +26,9 @@ public class FunctionDetailsController {
         return ResponseEntity.ok(dto);
     }
 
-    @GetMapping("/createFunctionsForScreen/{screenId}")
-    public void createFunctionsForScreen(@PathVariable String screenId){
-
-        fdService.createFunctionsForScreen(screenId);
+    @GetMapping("/createFunctions")
+    public void createFunctionsForScreen(){
+        fdService.createFunctionsForScreen();
     }
 
 }
