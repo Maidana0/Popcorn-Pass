@@ -35,7 +35,7 @@ const CommentList: React.FC = () => {
           cols={50}
         />
         <br />
-      
+        <CalificationStar active/>
         <button type="submit">Agregar comentario</button>
       </form>
       <div>
