@@ -192,6 +192,7 @@ public class MovieServiceImpl implements MovieService {
         }
         Random random = new Random();
         int randomIndex = random.nextInt(allMovies.size());
+        System.out.println();
         return allMovies.get(randomIndex).getId();
     }
 
