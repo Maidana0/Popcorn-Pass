@@ -1,8 +1,11 @@
 package com.s1511.ticketcine.application.implementations;
 
+import com.s1511.ticketcine.application.dto.cinema.ReadDtoCinema;
 import com.s1511.ticketcine.application.dto.movie.ReadDtoMovie;
+import com.s1511.ticketcine.application.mapper.CinemaMapper;
 import com.s1511.ticketcine.application.mapper.MovieMapper;
 import com.s1511.ticketcine.domain.entities.Cinema;
+import com.s1511.ticketcine.domain.entities.FunctionDetails;
 import com.s1511.ticketcine.domain.entities.Movie;
 import com.s1511.ticketcine.domain.entities.Screen;
 import com.s1511.ticketcine.domain.repository.CinemaRepository;
@@ -24,6 +27,7 @@ public class CinemaServiceImpl implements CinemaService {
     private final MovieMapper movieMapper;
     private final MovieRepository movieRepository;
     private final ScreenRepository screenRepository;
+    private final CinemaMapper cinemaMapper;
 
     @Override
     public List<String> getCinemasCityName() {
@@ -39,20 +43,20 @@ public class CinemaServiceImpl implements CinemaService {
     }
 
     @Override
-    public List<Cinema> getCinemaListByCity(String city) {
-        return cinemaRepository.findByCityAndActive(city, true);
+    public List<ReadDtoCinema> getCinemaListByCity(String city) {
+        return cinemaMapper.ListToReadDtoList(cinemaRepository.findByCityAndActive(city, true));
     }
-        //TODO. DEVOLVER DTO, NO ENTIDAD, PERRI!!!
 
     @Override
     public List<ReadDtoMovie> getMoviesByCinema(String cinemaId) {
         List<Screen> cinemaScreens = screenRepository.findByCinemaId(cinemaId);
         List<String> allCinemaMoviesId = new ArrayList();
-
-        for (Screen Screen : cinemaScreens){
-            allCinemaMoviesId.add(functionDetailsRepository.findMovieIdByScreenId(Screen.getId()).toString());
+        for (Screen screen : cinemaScreens){
+           var funtionDetails = functionDetailsRepository.findByScreenId(screen.getId());
+           for (FunctionDetails functionDetail : funtionDetails){
+               allCinemaMoviesId.add(functionDetail.getMovieId());
+           }
         }
-
         Set<Movie> uniqueCinemaMovies = new HashSet<>();
 
         for (String movieId : allCinemaMoviesId) {
@@ -61,6 +65,5 @@ public class CinemaServiceImpl implements CinemaService {
                 uniqueCinemaMovies.add(movie);
             }
         }
-
         return movieMapper.movieListToReadDtoList(new ArrayList<>(uniqueCinemaMovies));
     }}

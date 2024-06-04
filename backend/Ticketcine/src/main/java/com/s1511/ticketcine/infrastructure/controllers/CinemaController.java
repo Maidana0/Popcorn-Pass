@@ -1,5 +1,6 @@
 package com.s1511.ticketcine.infrastructure.controllers;
 
+import com.s1511.ticketcine.application.dto.cinema.ReadDtoCinema;
 import com.s1511.ticketcine.application.dto.movie.ReadDtoMovie;
 import com.s1511.ticketcine.domain.entities.Cinema;
 import com.s1511.ticketcine.domain.services.CinemaService;
@@ -20,18 +21,18 @@ public class CinemaController {
 
     private final CinemaService cinemaService;
 
-    @GetMapping("/getCinemasCityName")
+    @GetMapping("/cities")
     private ResponseEntity<List<String>> getCinemasCityName(){
         return ResponseEntity.ok(cinemaService.getCinemasCityName());
     }
 
-    @GetMapping("/getCinemaListByCity/{city}")
-    private ResponseEntity<?> getCinemaListByCity(@PathVariable @NotNull String city){
+    @GetMapping("/cinemasByCity/{city}")
+    private ResponseEntity<List<ReadDtoCinema>> getCinemaListByCity(@PathVariable @NotNull String city){
         return ResponseEntity.ok(cinemaService.getCinemaListByCity(city));
     }
-    @GetMapping("/getMoviesByCine/{cinema}")
-    private ResponseEntity<List<ReadDtoMovie>> getMoviesByCine(@PathVariable @NotNull String cinema){
-        return ResponseEntity.ok(cinemaService.getMoviesByCinema(cinema));
+    @GetMapping("/moviesByCine/{cinemaId}")
+    private ResponseEntity<List<ReadDtoMovie>> getMoviesByCine(@PathVariable @NotNull String cinemaId){
+        return ResponseEntity.ok(cinemaService.getMoviesByCinema(cinemaId));
     }
 
 }
