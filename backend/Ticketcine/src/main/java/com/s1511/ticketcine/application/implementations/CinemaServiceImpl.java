@@ -51,10 +51,10 @@ public class CinemaServiceImpl implements CinemaService {
         List<Screen> cinemaScreens = screenRepository.findByCinemaId(cinemaId);
         List<String> allCinemaMoviesId = new ArrayList();
         System.out.println("movies 1;;;;");
-        for (Screen Screen : cinemaScreens){
-           allCinemaMoviesId.add(functionDetailsRepository.findMovieIdByScreenId(Screen.getId()));
+        for (Screen screen : cinemaScreens){
+           //allCinemaMoviesId.add(functionDetailsRepository.findMovieIdByScreenId(Screen.getId()));
 
-            System.out.println(allCinemaMoviesId+"movieId total");
+            System.out.println(screen+"movieId total");
         }
         System.out.println("movies 2;;;;");
         Set<Movie> uniqueCinemaMovies = new HashSet<>();
