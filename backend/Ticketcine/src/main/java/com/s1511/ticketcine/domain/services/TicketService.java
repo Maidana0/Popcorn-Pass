@@ -10,6 +10,7 @@ public interface TicketService {
     List<ResponseTicketDto> getAllTicketsByUserIdAndActive(String userId, Boolean active);
     List<ResponseTicketDto> getAllTicketsByUserId(String userId);
     ResponseTicketDto getTicketById(String id);
+    ResponseTicketDto buyTicketWithMoviePoints(double moviePoints, RequestTicketDto requestTicketDto);
 
 
 }
