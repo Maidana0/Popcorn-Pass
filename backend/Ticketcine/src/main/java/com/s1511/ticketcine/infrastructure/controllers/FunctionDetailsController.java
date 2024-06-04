@@ -25,6 +25,11 @@ public class FunctionDetailsController {
         ReadDtoMovie dto = fdService.getMovieById(idMovie);
         return ResponseEntity.ok(dto);
     }
-    
+
+    @GetMapping("/createFunctionsForScreen/{screenId}")
+    public void createFunctionsForScreen(@PathVariable String screenId){
+
+        fdService.createFunctionsForScreen(screenId);
+    }
 
 }

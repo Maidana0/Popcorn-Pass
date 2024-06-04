@@ -1,20 +1,15 @@
 "use client"
-import { Box, Drawer, ListItemText, List, ListItem, ListItemButton, useTheme, Button, useMediaQuery, Container } from "@mui/material"
+import { Box, Drawer, ListItemText, List, ListItem, ListItemButton, useTheme, useMediaQuery, Container } from "@mui/material"
 import { useMenuState } from '@/store/ui-store';
 import { shallow } from "zustand/shallow";
 import Link from "next/link";
 import BoxButtonSvg from "@/components/atoms/BoxButtonSvg";
 import routes from "@/data/routesData";
-import { useAuthStore } from "@/store/auth-store";
 import isLinkActive from "@/utils/isLinkActive";
+import { Fragment } from "react";
 
 
 const Navbar = () => {
-    const { logOut, isLogged } = useAuthStore(state => ({
-        logOut: state.logOut,
-        isLogged: state.isLogged
-    }), shallow)
-
     const theme = useTheme()
     const isMatch = useMediaQuery(theme.breakpoints.down("md"))
 
@@ -30,7 +25,7 @@ const Navbar = () => {
     const handleMenuState = () => isSideMenuOpen ? closeSideMenu() : openSideMenu()
 
     if (!isMatch) { return }
-    return (<>
+    return (<Fragment>
         <BoxButtonSvg
             alt="open-menu"
             handleClick={handleMenuState}
@@ -86,19 +81,6 @@ const Navbar = () => {
 
                 <Container sx={{ display: "flex", flexWrap: "wrap", flexDirection: "column", justifyContent: "center" }}>
 
-                    <Button variant="contained" color="warning" LinkComponent={Link}
-                        href="/usuario/iniciar-sesion" children="mi perfil" onClick={closeSideMenu}
-                        sx={{ width: "70%", minHeight: "2.5rem", margin: "auto" }}
-                    />
-
-
-                    {isLogged &&
-                        <Button variant="contained" type="button"
-                            sx={{ width: "70%", minHeight: "2.5rem", margin: "1.5rem auto" }}
-                            onClick={() => { logOut(); closeSideMenu() }}
-                            color="error" children="Cerrar sesión"
-                        />}
-
                     <ListItemText sx={{ color: "#fff9", p: 2 }}>
                         Que esperas para obtener tu entrada!
                     </ListItemText>
@@ -107,7 +89,7 @@ const Navbar = () => {
             </Box>
         </Drawer>
 
-    </>)
+    </Fragment>)
 }
 
 export default Navbar

@@ -37,29 +37,30 @@ public class SeatServiceImpl implements SeatService {
     @Override//METODO INTERNO PARA CREAR LA SALA.
     public List<Seat> createSeatMatrix(String functionDetailsId) {
         List<Seat> seatsMatrix = new ArrayList();
-        for (int i = 1; i < 20; i++) {
-            for (int j = 0; j <= 9; j++) {
+
+        for (int i = 0; i < 10; i++) {
+            for (int j = 1; j < 6; j++) {
                 String letter = "";
 
-                if (j == 0){
+                if (i == 0){
                     letter = "A";
-                } else if (j == 1){
+                } else if (i == 1){
                     letter = "B";
-                } else if (j == 2) {
+                } else if (i == 2) {
                     letter = "C";
-                } else if (j == 3) {
+                } else if (i == 3) {
                     letter = "D";
-                } else if (j == 4) {
+                } else if (i == 4) {
                     letter = "E";
-                } else if (j == 5) {
+                } else if (i == 5) {
                     letter = "F";
-                } else if (j == 6) {
+                } else if (i == 6) {
                     letter = "G";
-                } else if (j == 7) {
+                } else if (i == 7) {
                     letter = "H";
-                } else if (j == 8) {
+                } else if (i == 8) {
                     letter = "I";
-                } else if (j == 9) {
+                } else if (i == 9) {
                     letter = "J";
                 }
 

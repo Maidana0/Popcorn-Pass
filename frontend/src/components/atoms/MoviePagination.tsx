@@ -20,13 +20,16 @@ const MoviePagination = () => {
             "& .MuiPaginationItem-root": {
                 color: "white"
             },
-            "& .Mui-selected": {
+            "& .Mui-selected, .Mui-selected:hover": {
                 bgcolor: "var(--yellow)",
                 color: "var(--black)"
             },
             "& .MuiPaginationItem-ellipsis": {
                 display: { xs: "none", sm: "inline-block" }
-            }
+            },
+            "& .MuiPaginationItem-root:not(.Mui-selected):hover": {
+                bgcolor: "rgba(255, 255, 255, 0.2)"
+            },
         }
     }} size="large" count={totalPages} page={page} onChange={handleChangePage} />
 

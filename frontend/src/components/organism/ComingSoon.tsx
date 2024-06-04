@@ -1,46 +1,27 @@
 "use client"
-import { useEffect, useState } from "react";
+import { FC, useEffect } from "react";
 import MovieCard from "../molecules/MovieCard";
 import { useRouter } from "next/navigation";
-import { fetchData } from "@/utils/fetchData";
-import { filterMovies, convertGenre, convertImagePath, filterLastMovies } from "@/utils/fc-movies";
+import { convertGenre, convertImagePath } from "@/utils/fc-movies";
 import { useMoviesPagination } from "@/store/cspagination-store";
 import { shallow } from "zustand/shallow";
-import { demoMoviesState } from "@/store/movies-store";
+import { IMovie } from "@/common/interfaces";
 
 
-const ComingSoon = () => {
+const ComingSoon: FC<{ movies: IMovie[] }> = ({ movies }) => {
     const router = useRouter();
-    const { demoSetMovies } = demoMoviesState((state: any) => ({ demoSetMovies: state.setMovies }))
-
-    const { page, setTotalPages } = useMoviesPagination(state => (
-        { page: state.page, setTotalPages: state.setTotalPages }
+    const { page, setTotalPages, setPage } = useMoviesPagination(state => (
+        { page: state.page, setTotalPages: state.setTotalPages, setPage:state.setPage }
     ), shallow)
 
-    const [movies, setMovies] = useState([]);
-
-    const ITEMS_PER_PAGES = 15;
+    const ITEMS_PER_PAGES = 10;
     const handleClick = (id: string) => router.push("/pelicula/" + id);
 
     useEffect(() => {
-        const fetchDataAndSetState = async () => {
-            const res = await fetchData("movie/list", "GET");
-            const filteredMovies = filterMovies(res);
-
-            const totalMovies = filteredMovies.length;
-            const totalPages = Math.ceil(totalMovies / ITEMS_PER_PAGES);
-
-            setTotalPages(totalPages);
-            setMovies(filteredMovies);
-
-            //  LO DE ABAJO ES MOMENTANEO
-            const demoMovies: any = filterLastMovies(res)
-            console.log(demoMovies);
-
-            demoSetMovies(demoMovies)
-        };
-
-        fetchDataAndSetState();
+        const totalMovies = movies.length;
+        const totalPages = Math.ceil(totalMovies / ITEMS_PER_PAGES);
+        setTotalPages(totalPages);
+        setPage(1)
     }, []);
 
 
@@ -51,8 +32,11 @@ const ComingSoon = () => {
 
     return (
         <>
-            {currentMovies.map((data, i) => (
-                <MovieCard key={i} isComingSoon={true} handleClick={handleClick}
+            {currentMovies.map((data: IMovie) => (
+                <MovieCard
+                    key={data.id}
+                    isComingSoon={true}
+                    handleClick={handleClick}
                     id={data.id}
                     nameMovie={data.title}
                     textCalendar={data.releaseDate}
