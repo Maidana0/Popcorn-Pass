@@ -41,14 +41,14 @@ public class FunctionDetailsServiceImpl implements FunctionDetailsService {
 
     @Override
     @Transactional
-    public void createFunctionsForScreen(String screenId) {
+    public void createFunctionsForScreen() {
         var screens = screenRepository.findAll();
         LocalDateTime time = LocalDateTime.now().plusDays(14);
         for (Screen screen: screens) {
             for (int i = 0; i <= 2; i++) {
                 FunctionDetails functionDetail = new FunctionDetails();
                 functionDetailsRepository.save(functionDetail);
-                functionDetail.setScreenId(screenId);
+                functionDetail.setScreenId(screen.getId());
                 System.out.println("functionDetails ID cuando se crea el fd"+functionDetail.getId());
                 if (i == 0) {
                     functionDetail.setSchedule(time.with(LocalTime.of(18,0)));
