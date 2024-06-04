@@ -1,8 +1,8 @@
+
 import HeaderDetail from "../molecules/MovieDetailHeader"
 import { Box } from "@mui/material"
 import MovieImageDetail from "../atoms/MovieImageDetail"
 import MovieDetailContent from "../molecules/MovieDetailContent"
-
 const AVERAGE = 4.5
 
 const MovieDetail = () => {
@@ -37,10 +37,11 @@ const MovieDetail = () => {
 
                 </Box>
             </Box>
-
-
-
+        
+        
         </Box>
+        
+
     </>)
 }
 
