@@ -2,7 +2,7 @@
 import { FC, useEffect } from "react";
 import MovieCard from "../molecules/MovieCard";
 import { useRouter } from "next/navigation";
-import { convertGenre, convertImagePath } from "@/utils/fc-movies";
+import { convertGenre } from "@/utils/fc-movies";
 import { useMoviesPagination } from "@/store/cspagination-store";
 import { shallow } from "zustand/shallow";
 import { IMovie } from "@/common/interfaces";
@@ -41,7 +41,7 @@ const ComingSoon: FC<{ movies: IMovie[] }> = ({ movies }) => {
                     nameMovie={data.title}
                     textCalendar={data.releaseDate}
                     textVideo={convertGenre(data.genre)}
-                    imagePath={convertImagePath(data.description, data.image)}
+                    imagePath={data.image}
                 />
             ))}
         </>

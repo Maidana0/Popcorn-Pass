@@ -31,8 +31,11 @@ const MovieFilters = () => {
     if (city == "empty" || cinema == "empty" || !cinema) return
     // CAMBIAR UN ESTADO GLOBAL EN EL QUE ESTARÁN LAS PELICULAS SEGÚN EL CINE SELECCIONADO
     const moviesByCinema = async () => {
-      const moviesList = await fetchData(`cinema/getMoviesByCinema/${cinema}`, "GET")
-      console.log(moviesList);
+      const moviesList = await fetchData(`cinema/moviesByCine/${cinema}`, "GET")
+      console.log("LISTA DE PELICULAS: " + moviesList);
+      console.log("ID DEL CINE: " + cinema);
+      
+      
     }
     moviesByCinema()
     // setMovies({ city, cinema })
@@ -42,7 +45,7 @@ const MovieFilters = () => {
     const listFetch = async (): Promise<any> => {
       if (!city) {
         // PEDIR LISTA DE CIUDADES
-        const res = await fetchData("cinema/getCinemasCityName", "GET");
+        const res = await fetchData("cinema/cities", "GET");
         if (!res.error) setCitiesList(res)
         return
       }
@@ -50,7 +53,7 @@ const MovieFilters = () => {
 
       if (city !== "empty") {
         //  PEDIR LISTA DE CINES DEPENDIENDO DE LA CIUDAD SELECCIONADA
-        const res = await fetchData(`cinema/getCinemaListByCity/${city}`, "GET")
+        const res = await fetchData(`cinema/cinemasByCity/${city}`, "GET")
         const dtoMovies = res.map(({ id, name }: { id: string, name: string }) => ({ value: id, name }))
         setCinemaList(dtoMovies)
         return

@@ -42,3 +42,9 @@ const MovieInfoDetail: FC<IMovieInfoDetail> = (movieInfoDetail) => {
 }
 
 export default MovieInfoDetail
+
+
+/* 
+    { name: "subtitulada", value: threeD },
+    { name: "3D", value: subtitle },
+*/

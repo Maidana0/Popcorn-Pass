@@ -35,7 +35,8 @@ const InputMui: FC<IInputMuiProps> = ({ inputVariant, inputHelperText, inputErro
         ...inputSx,
         bgcolor: "var(--black)",
         "&:hover": { bgcolor: "var(--lightBlack)" },
-        "& > label": { color: "var(--gray-color)" }
+        "& > label": { color: "var(--gray-color)" },
+        "& > input": { color: "var(--white)" },
       }}
     />
   );
