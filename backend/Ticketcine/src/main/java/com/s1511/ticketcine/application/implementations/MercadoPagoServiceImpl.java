@@ -51,7 +51,7 @@ public class MercadoPagoServiceImpl implements MercadoPagoService {
         //Con la lista se hace la petición, que funciona como cuerpo del post a MP.
         Preference preferenceResponse = client.create(request); //Genera el link para pagar esto (la request).
 
-        return preferenceResponse.getInitPoint(); //Recupera el link que creó.
+        return preferenceResponse.getSandboxInitPoint(); //Recupera el link que creó.
     }
 
     @Override

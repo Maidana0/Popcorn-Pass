@@ -5,6 +5,7 @@ public record ResponseLogin(
         String role,
         String id,
         String firstName,
-        String lastName
+        String lastName,
+        Long moviePoints
 ) {
 }
