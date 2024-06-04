@@ -22,7 +22,11 @@ public class TicketController {
     public List<ResponseTicketDto> getAllTicketsByUserIdAndActive (@PathVariable String userId, @PathVariable Boolean active) {
         return ticketService.getAllTicketsByUserIdAndActive(userId, active);
     }
-
+    @GetMapping("/u/{userId}")
+    public List<ResponseTicketDto> getAllTicketsByUserId (@PathVariable String userId) {
+        return ticketService.getAllTicketsByUserId(userId);
+    }
+    
     @GetMapping("/{id}")
     public ResponseTicketDto getTicketById (@PathVariable String id) {
         return ticketService.getTicketById(id);

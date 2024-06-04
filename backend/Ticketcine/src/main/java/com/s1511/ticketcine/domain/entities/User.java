@@ -11,6 +11,7 @@ import com.s1511.ticketcine.domain.utils.RolesEnum;
 
 import java.util.Collection;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -27,7 +28,7 @@ public class User implements UserDetails {
     private String password;
     private String firstName;
     private String lastName;
-    private Long moviePoints;
+    private Double moviePoints;
     private RolesEnum role = RolesEnum.USER;
     private Boolean active = true;
 
