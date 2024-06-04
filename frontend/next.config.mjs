@@ -3,6 +3,10 @@ const nextConfig = {
     images: {
         domains: ["localhost","image.tmdb.org"], 
     },
+    env:{
+        DEV_API_PATH: "http://localhost:4000",
+        PROD_API_PATH: "https://s15-11-m-java-react-production.up.railway.app",
+    }
 };
 
 export default nextConfig;
