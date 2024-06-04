@@ -47,22 +47,26 @@ const Page = async ({ params }: IProps) => {
         <Box component="div" width="95%" m="2.5rem auto" display="flex" alignItems="center" gap="1rem"
             sx={{ flexDirection: { xs: "column", md: "row" }, justifyContent: { xs: "center", md: "space-between" } }}>
 
-            <Typography variant="h3" textAlign={{ xs: "center", md: "left" }} children="Peliculas" />
+            <Typography variant="h3" textAlign={{ xs: "center", md: "left" }}>
+                Peliculas
+            </Typography>
 
             <Box component="div" textAlign="center">
                 <Button color="warning" variant={!inComingSoon ? "contained" : "outlined"} LinkComponent={Link} href={inComingSoon ? "en-pantalla" : "#"}
-                    children="en pantalla"
                     sx={{
                         height: "53px", fontWeight: 700, borderRadius: "8px 0 0 8px",
                         color: !inComingSoon ? "var(--black)" : "",
-                    }} />
+                    }}>
+                    en pantalla
+                </Button>
 
                 <Button color="warning" variant={inComingSoon ? "contained" : "outlined"} LinkComponent={Link} href={!inComingSoon ? "proximamente" : "#"}
-                    children="proximamente"
                     sx={{
                         height: "53px", fontWeight: 700, borderRadius: "0 8px 8px 0",
                         color: inComingSoon ? "var(--black)" : "",
-                    }} />
+                    }}>
+                    proximamente
+                </Button>
             </Box>
         </Box>
 

@@ -18,7 +18,7 @@ interface Props {
 const InputSelected: any = ({ register, valueAndName, optionsValue, listTo }: Props) => {
     const [selectedValue, setSelectedValue] = React.useState("empty")
     const { palette } = useTheme()
-    const handleChange = (event: SelectChangeEvent) => setSelectedValue(event.target.value);    
+    const handleChange = (event: SelectChangeEvent) => setSelectedValue(event.target.value);
 
     return (
         <FormControl sx={{
@@ -61,14 +61,16 @@ const InputSelected: any = ({ register, valueAndName, optionsValue, listTo }: Pr
                     <em>{listTo}</em>
                 </MenuItem>
                 {
-                valueAndName
-                    ? valueAndName.map((value, i) => (
-                        <MenuItem key={i} value={value} children={value} />))
-                    :
-                    optionsValue && optionsValue.length > 0
-                        ? optionsValue.map(({ value, name }, i) => (
-                            <MenuItem key={i} value={value} children={name} />))
-                        : <MenuItem disabled children="Cargando opciones..." />
+                    valueAndName
+                        ? valueAndName.map((value, i) => (
+                            <MenuItem key={i} value={value}>{value}</MenuItem>))
+                        :
+                        optionsValue && optionsValue.length > 0
+                            ? optionsValue.map(({ value, name }, i) => (
+                                <MenuItem key={i} value={value}>{name}</MenuItem>))
+                            : <MenuItem disabled>
+                                Cargando opciones...
+                            </MenuItem>
                 }
 
 
