@@ -1,7 +1,7 @@
 package com.s1511.ticketcine.infrastructure.controllers;
 
-import com.s1511.ticketcine.application.dto.seat.SeatDTO;
-import com.s1511.ticketcine.application.dto.seat.SeatReservationDTO;
+import com.s1511.ticketcine.application.dto.seat.RequestDtoSeat;
+import com.s1511.ticketcine.application.dto.seat.ResponseDtoSeat;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,26 +16,23 @@ import java.util.List;
 public class SeatController {
 
     private final SeatService seatService;
-
-    @GetMapping("/all")
-    public List<SeatDTO> getAllSeats() {
-        return seatService.findAllSeats();
-    }
-
     @GetMapping("/{id}")
-    public SeatDTO getSeatById(@PathVariable String id) {
-        return seatService.findSeatById(id);
+    public ResponseEntity<ResponseDtoSeat> getSeatById(@PathVariable String id) {
+
+        return ResponseEntity.ok(seatService.findSeatById(id));
     }
 
-    @PostMapping("/{seatId}/reserve")
-    public ResponseEntity<?> reserveSeat(@PathVariable String seatId, @RequestBody SeatReservationDTO reservationDTO) {
-        // Llama a la función seatReservation del servicio de asientos
-        if (seatService.seatReservation(seatId, reservationDTO).isPresent()) {
-            return ResponseEntity.ok("Seat reserved successfully");
-        } else {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Failed to reserve seat");
-        }
+    @PostMapping("/reserve/{seatId}/{userId}")
+    public ResponseEntity<ResponseDtoSeat> seatReservation(@PathVariable String seatId,
+                                                           @PathVariable String userId) {
+        return ResponseEntity.ok(seatService.seatReservation(userId, seatId));
+
     }
+
+    @PostMapping("/return/{ticketId}")
+    public ResponseEntity<Boolean> returnSeat(@PathVariable String ticketId,
+                                              @RequestBody List<String> returnedSeatsIds){
+        return ResponseEntity.ok(seatService.returnSeat(ticketId, returnedSeatsIds));
+    }
+
 }
-
-

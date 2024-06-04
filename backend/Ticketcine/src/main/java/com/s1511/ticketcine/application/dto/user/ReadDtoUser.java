@@ -5,6 +5,6 @@ public record ReadDtoUser(
         String email,
         String firstName,
         String lastName,
-        Long moviePoints
+        Double moviePoints
 ) {
 }

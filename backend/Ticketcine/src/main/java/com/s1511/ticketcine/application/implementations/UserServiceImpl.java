@@ -86,4 +86,12 @@ public class UserServiceImpl implements UserService {
         userRepository.save(userEntity);
         return true;
     }
+
+    @Override
+    public void claimMoviePoints(Double moviePoints, String userId){
+        User user = userRepository.findByIdAndActive(userId, true)
+                .orElseThrow(() -> new EntityNotFoundException("No se puede encontrar el usuario con el id " + userId));
+        user.setMoviePoints(moviePoints);
+    }
+
 }
