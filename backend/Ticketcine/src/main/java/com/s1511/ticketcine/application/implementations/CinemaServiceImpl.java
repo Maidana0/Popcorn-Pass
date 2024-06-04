@@ -5,6 +5,7 @@ import com.s1511.ticketcine.application.dto.movie.ReadDtoMovie;
 import com.s1511.ticketcine.application.mapper.CinemaMapper;
 import com.s1511.ticketcine.application.mapper.MovieMapper;
 import com.s1511.ticketcine.domain.entities.Cinema;
+import com.s1511.ticketcine.domain.entities.FunctionDetails;
 import com.s1511.ticketcine.domain.entities.Movie;
 import com.s1511.ticketcine.domain.entities.Screen;
 import com.s1511.ticketcine.domain.repository.CinemaRepository;
@@ -50,13 +51,12 @@ public class CinemaServiceImpl implements CinemaService {
     public List<ReadDtoMovie> getMoviesByCinema(String cinemaId) {
         List<Screen> cinemaScreens = screenRepository.findByCinemaId(cinemaId);
         List<String> allCinemaMoviesId = new ArrayList();
-        System.out.println("movies 1;;;;");
         for (Screen screen : cinemaScreens){
-           //allCinemaMoviesId.add(functionDetailsRepository.findMovieIdByScreenId(Screen.getId()));
-
-            System.out.println(screen+"movieId total");
+           var funtionDetails = functionDetailsRepository.findByScreenId(screen.getId());
+           for (FunctionDetails functionDetail : funtionDetails){
+               allCinemaMoviesId.add(functionDetail.getMovieId());
+           }
         }
-        System.out.println("movies 2;;;;");
         Set<Movie> uniqueCinemaMovies = new HashSet<>();
 
         for (String movieId : allCinemaMoviesId) {
@@ -65,6 +65,5 @@ public class CinemaServiceImpl implements CinemaService {
                 uniqueCinemaMovies.add(movie);
             }
         }
-        System.out.println("movies 3;;;;");
         return movieMapper.movieListToReadDtoList(new ArrayList<>(uniqueCinemaMovies));
     }}
