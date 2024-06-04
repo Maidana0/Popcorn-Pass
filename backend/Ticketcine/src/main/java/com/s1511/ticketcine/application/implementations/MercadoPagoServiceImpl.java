@@ -13,6 +13,7 @@ import com.s1511.ticketcine.application.dto.mercadopago.RequestTicketDto;
 import com.s1511.ticketcine.domain.entities.Ticket;
 import com.s1511.ticketcine.domain.repository.TicketRepository;
 import com.s1511.ticketcine.domain.services.MercadoPagoService;
+import com.s1511.ticketcine.domain.services.SeatService;
 import com.s1511.ticketcine.domain.services.TicketService;
 
 import jakarta.persistence.EntityNotFoundException;
@@ -27,6 +28,7 @@ import java.util.List;
 public class MercadoPagoServiceImpl implements MercadoPagoService {
     public final TicketService ticketService;
     public final TicketRepository ticketRepository;
+    public final SeatService seatService;
 
     @Override
     public String createPayment(RequestTicketDto requestTicketDto)
@@ -68,8 +70,9 @@ public class MercadoPagoServiceImpl implements MercadoPagoService {
             ticket.setActive(true);
             Ticket savedTicket = ticketRepository.save(ticket);
         }
-        //TODO. Corroborar estado de reventa de butacas.
-    }
+        seatService.lookForPreviousUser(ticketId);
+
+        }
 }
 /* Nota de Guille hasta que esto esté en prod: Cada vez que se apaga el ngrok hay que
 correr el comando  ngrok http http://localhost:8080/   de nuevo. =D */

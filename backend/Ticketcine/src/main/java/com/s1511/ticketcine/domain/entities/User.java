@@ -28,7 +28,7 @@ public class User implements UserDetails {
     private String password;
     private String firstName;
     private String lastName;
-    private Long moviePoints;
+    private Double moviePoints;
     private RolesEnum role = RolesEnum.USER;
     private Boolean active = true;
 

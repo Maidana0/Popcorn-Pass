@@ -29,7 +29,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         String token = "";
         String firstName = "";
         String lastName = "";
-        Long moviePoints = 0L;
+        Double moviePoints = 0.0;
 
         var user = userRepository.findByEmail(data.email());
         if (user.isPresent()) {

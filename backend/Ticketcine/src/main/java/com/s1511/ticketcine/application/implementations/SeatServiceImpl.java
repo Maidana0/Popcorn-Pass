@@ -9,6 +9,7 @@ import com.s1511.ticketcine.domain.repository.FunctionDetailsRepository;
 import com.s1511.ticketcine.domain.repository.TicketRepository;
 import com.s1511.ticketcine.domain.repository.UserRepository;
 
+import com.s1511.ticketcine.domain.services.UserService;
 import com.s1511.ticketcine.domain.utils.SeatEnum;
 import jakarta.persistence.EntityExistsException;
 import jakarta.persistence.EntityNotFoundException;
@@ -34,6 +35,8 @@ public class SeatServiceImpl implements SeatService {
     private final TicketRepository ticketRepository;
     private final SeatMapper seatMapper;
     private final FunctionDetailsRepository functionDetailsRepository;
+    private final UserService userService;
+
     @Override//METODO INTERNO PARA CREAR LA SALA.
     public List<Seat> createSeatMatrix(String functionDetailsId) {
         List<Seat> seatsMatrix = new ArrayList();
@@ -154,9 +157,19 @@ public class SeatServiceImpl implements SeatService {
     return true;
     }
 
+    public void lookForPreviousUser(String ticketId){
+        Ticket ticket = ticketRepository.findById(ticketId)
+                .orElseThrow(() -> new EntityNotFoundException("El ticket no existe"));
+
+        Double moviePoints = ticket.getValue() / ticket.getSeatsIds().toArray().length;
+
+        for (Seat seat:ticket.getSeatsIds()) {
+            if(seat.getPreviousUser()!= null){
+               userService.claimMoviePoints(moviePoints, seat.getPreviousUser().getId());
+                seat.setPreviousUser(null);
+            }
+        }
+    }
 }
-
-// cambiar entradaXpuntos y sumar-restarPuntos es el mismo metodo o son dos distintos?
-
 
 
