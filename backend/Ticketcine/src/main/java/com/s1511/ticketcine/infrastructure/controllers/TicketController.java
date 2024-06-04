@@ -26,6 +26,7 @@ public class TicketController {
     public List<ResponseTicketDto> getAllTicketsByUserId (@PathVariable String userId) {
         return ticketService.getAllTicketsByUserId(userId);
     }
+    
     @GetMapping("/{id}")
     public ResponseTicketDto getTicketById (@PathVariable String id) {
         return ticketService.getTicketById(id);
