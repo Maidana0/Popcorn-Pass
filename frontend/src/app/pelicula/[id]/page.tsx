@@ -31,7 +31,7 @@ const Movie = async ({ params }: Props) => {
 
         <MovieDetail movie={movie} />
 
-        <CommentList/>
+        <CommentList id={id}/>
     </>
 }
 
