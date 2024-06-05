@@ -5,15 +5,16 @@ import { fetchData } from '../../utils/fetchData';
 import { useAuthStore } from "@/store/auth-store"; // Ajusta la ruta según tu estructura de proyecto
 
 const CommentList: React.FC<{ id: string }> = ({ id }) => {
-  const [comments, setComments] = useState<{ comment: string, rating: number }[]>([]);
+  const [comments, setComments] = useState<{ comment: string, userRate: number }[]>([]);
   const [newComment, setNewComment] = useState<string>('');
   const [newRating, setNewRating] = useState<number>(0);
   const [isClient, setIsClient] = useState(false);
 
   // Recupera el token y el estado de autenticación desde el store
-  const { jwt, isLogged } = useAuthStore(state => ({
+  const { jwt, isLogged, userId } = useAuthStore(state => ({
     jwt: state.jwt,
-    isLogged: state.isLogged
+    isLogged: state.isLogged,
+    userId: state.id
   }));
 
   useEffect(() => {
@@ -41,8 +42,17 @@ const CommentList: React.FC<{ id: string }> = ({ id }) => {
   const handleCommentSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     if (newComment.trim() !== '') {
-      const commentData = { text: newComment, rating: newRating };
-      const data = await fetchData('comment/create', 'POST', commentData, jwt);
+      //userId, movieId,Comment,UserRate
+
+      const commentData = {
+        userId,
+        movieId: id, 
+        comment: newComment,
+        userRate: newRating,
+      };
+
+      console.log("CommentData--->", commentData);
+      const data = await fetchData(`comment/create`, 'POST', commentData, jwt);
       if (data.success) {
         setComments([...comments, data.comment]);
         setNewComment('');
@@ -80,7 +90,7 @@ const CommentList: React.FC<{ id: string }> = ({ id }) => {
       <div>
         {comments.map((comment, index) => (
           <div key={index}>
-            {comment.comment} - {comment.rating} estrellas
+            {comment.comment} - {comment.userRate} estrellas
           </div>
         ))}
       </div>
