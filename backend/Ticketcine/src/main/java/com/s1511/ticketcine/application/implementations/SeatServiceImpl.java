@@ -92,7 +92,7 @@ public class SeatServiceImpl implements SeatService {
 
     @Override
     @Transactional
-    public ResponseDtoSeat seatReservation(String userId, String seatId) {
+    public Seat seatReservation(String userId, String seatId) {
 
         Seat seat = seatRepository.findById(seatId)
                 .orElseThrow(() -> new EntityNotFoundException("Asiento no encontrado"));
@@ -107,10 +107,8 @@ public class SeatServiceImpl implements SeatService {
         seat.setCurrentUser(user);
         seat.setSeatEnum(SeatEnum.RESERVED);
         seatRepository.save(seat);
-        var response = seatMapper.toDTO(seat);
-        return response;
+        return seat;
     }
-
 
     @Override
     public Boolean returnSeat(String ticketId, List<String> returnedSeatsIds) {

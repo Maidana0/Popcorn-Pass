@@ -3,6 +3,8 @@ package com.s1511.ticketcine.application.implementations;
 import com.s1511.ticketcine.application.dto.ticket.ResponseTicketDto;
 import com.s1511.ticketcine.application.mapper.TicketMapper;
 import com.s1511.ticketcine.domain.services.FunctionDetailsService;
+import com.s1511.ticketcine.domain.services.SeatService;
+import com.s1511.ticketcine.domain.utils.SeatEnum;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -26,6 +28,7 @@ public class TicketServiceImpl implements TicketService {
     public final MovieRepository movieRepository;
     public final SeatRepository seatRepository;
     public final TicketMapper ticketMapper;
+    public final SeatService seatService;
 
     public String createTicket(RequestTicketDto requestDto){
         User user = userRepository.findByIdAndActive(requestDto.userId(), true)
@@ -56,9 +59,11 @@ public class TicketServiceImpl implements TicketService {
         List<Seat> seatEntityList = new ArrayList<>();
         List<String> seatsList = requestDto.seatsIds();
         for (String id : seatsList) {
-            Seat seat = seatRepository.findById(id)
+            Seat seat = seatService.seatReservation(user.getId(), id);
+           /* Seat seat = seatRepository.findById(id)
                     .orElseThrow(() -> new EntityNotFoundException(
                             "El asiento " + id + " no se encuentra disponible."));
+                            TODO. SI PARA 07/06 ESTO ANDA, BORRAR ESTE COMENTARIO. */
             seatEntityList.add(seat);
         }
 
@@ -120,9 +125,7 @@ public class TicketServiceImpl implements TicketService {
         List<Seat> seatEntityList = new ArrayList<>();
         List<String> seatsList = requestTicketDto.seatsIds();
         for (String id : seatsList) {
-           var seat = seatRepository.findByIdAndOccupied(id, false)
-                    .orElseThrow(() -> new EntityNotFoundException(
-                            "El asiento " + id + " no se encuentra disponible."));
+            Seat seat = seatService.seatReservation(user.getId(), id);
             seatEntityList.add(seat);
         }
 
@@ -133,6 +136,7 @@ public class TicketServiceImpl implements TicketService {
             userRepository.save(user);
             for (Seat seat : seatEntityList){
                 seat.setOccupied(true);
+                seat.setSeatEnum(SeatEnum.OCCUPIED);
                 seatRepository.save(seat);
             }
         }else throw new RuntimeException("El usuario no dispone de movie points suficientes para realizar la compra");

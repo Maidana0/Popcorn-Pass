@@ -11,11 +11,8 @@ import java.util.Optional;
 @Service
 public interface SeatService {
 
-
     ResponseDtoSeat findSeatById(String id);
-
-    ResponseDtoSeat seatReservation(String userId, String seatId);
-
+    Seat seatReservation(String userId, String seatId);
     List<Seat> createSeatMatrix(String functionDetailsId);
     Boolean returnSeat(String ticketId, List<String> returnedSeatsIds);
     void lookForPreviousUser(String ticketId);

@@ -20,13 +20,6 @@ public class SeatController {
         return ResponseEntity.ok(seatService.findSeatById(id));
     }
 
-    @PostMapping("/reserve/{seatId}/{userId}")
-    public ResponseEntity<ResponseDtoSeat> seatReservation(@PathVariable String seatId,
-                                                           @PathVariable String userId) {
-        return ResponseEntity.ok(seatService.seatReservation(userId, seatId));
-
-    }
-
     @PostMapping("/return/{ticketId}")
     public ResponseEntity<Boolean> returnSeat(@PathVariable String ticketId,
                                               @RequestBody List<String> returnedSeatsIds){
