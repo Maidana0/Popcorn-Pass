@@ -68,7 +68,7 @@ public class SeatServiceImpl implements SeatService {
                 }
 
                 var seat = new Seat();
-                seat.setSeatNumber(letter+i);
+                seat.setSeatNumber(letter+j);
                 seat.setSeatEnum(SeatEnum.AVAILABLE);
                 seat.setOccupied(false);
                 seat.setTicket(null);
