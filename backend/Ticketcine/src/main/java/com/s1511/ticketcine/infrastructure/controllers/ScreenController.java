@@ -1,40 +1,20 @@
 package com.s1511.ticketcine.infrastructure.controllers;
-import com.s1511.ticketcine.application.dto.screen.CreateDtoScreen;
+
 import com.s1511.ticketcine.application.dto.screen.ReadDtoScreen;
 import com.s1511.ticketcine.application.dto.screen.UpdateDtoScreen;
 import com.s1511.ticketcine.domain.services.ScreenService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import com.s1511.ticketcine.domain.entities.Screen;
-import com.s1511.ticketcine.domain.services.ScreenService;
 
 import java.util.List;
 
 @RestController
 @RequestMapping("/screens")
+@RequiredArgsConstructor
 public class ScreenController {
-    @Autowired
-    private ScreenService screenService;
 
-    @PostMapping("/create")
-    public ResponseEntity<ReadDtoScreen> createScreen(@RequestBody CreateDtoScreen createDtoScreen) {
-        ReadDtoScreen createdScreen = screenService.createScreen(createDtoScreen);
-        return ResponseEntity.ok(createdScreen);
-    }
-
-    @GetMapping("/{id}")
-    public ResponseEntity<ReadDtoScreen> getScreenById(@PathVariable String id) {
-        ReadDtoScreen screen = screenService.getScreenByIdAndActive(id);
-        return ResponseEntity.ok(screen);
-    }
-
-    @GetMapping("/all")
-    public ResponseEntity<List<ReadDtoScreen>> getAllScreens() {
-        List<ReadDtoScreen> screens = screenService.getAllScreens();
-        return ResponseEntity.ok(screens);
-    }
+    private final ScreenService screenService;
 
     @PutMapping("/{id}")
     public ResponseEntity<ReadDtoScreen> updateScreen(@PathVariable String id, @RequestBody UpdateDtoScreen updateDtoScreen) {
