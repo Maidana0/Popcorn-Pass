@@ -8,7 +8,7 @@ public record ReadDtoSeat(
         String id,
         String seatNumber,
         LocalDateTime reservationTime,
-        Boolean reserved,
+        Boolean occupied,
         SeatEnum seatEnum
 ) {
 }
