@@ -4,7 +4,7 @@ import { Rating } from "@mui/material";
 import { SyntheticEvent, useState } from "react";
 import { shallow } from "zustand/shallow";
 
-const CalificationStar = ({ vote_average }: { vote_average?: number | null }) => {
+const CalificationStar = ({ vote_average, active}: { vote_average?: number | null, active ?: boolean}) => {
     const [value, setValue] = useState<number | null>(vote_average || 7)
 
     const { isLogged } = useAuthStore(state => ({ isLogged: state.isLogged }), shallow)
@@ -12,13 +12,13 @@ const CalificationStar = ({ vote_average }: { vote_average?: number | null }) =>
 
     const handleChange = (event: SyntheticEvent, newValue: number | null) => setValue(newValue)
 
-    // if (isLogged) return <Rating
-    //     name="half-rating"
-    //     value={value}
-    //     size="large"
-    //     precision={0.5} 
-    //     onChange={handleChange}
-    // />
+    if (isLogged && active) return <Rating
+        name="half-rating"
+        value={value}
+        size="large"
+        precision={0.5} 
+        onChange={handleChange}
+    />
 
     return <Rating name="half-rating-read" size="large" precision={0.5} value={value} readOnly sx={{
         '& .MuiRating-iconEmpty': {

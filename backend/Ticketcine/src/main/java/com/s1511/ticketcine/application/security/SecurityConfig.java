@@ -64,7 +64,8 @@ public class SecurityConfig {
             "/mp/**",
             "/seat/**",
             "/screen/**",
-            "/ticket/**"
+            "/ticket/**",
+            "/movie/saveLatestMovies"
     };
 
     @Bean
