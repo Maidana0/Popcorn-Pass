@@ -113,19 +113,19 @@ public class TicketServiceImpl implements TicketService {
         Screen screen = screenRepository.findByIdAndActive(screenId, true)
                 .orElseThrow(() -> new EntityNotFoundException(
                         "No se puede encontrar la sala con el id " + screenId));
-
         String cinemaName = screen.getCinema().getName();
 
         Movie movie = movieRepository.findByIdAndActive(movieId, true)
                 .orElseThrow(() -> new EntityNotFoundException(
                         "No se puede encontrar la película con el id " + movieId));
-
         String movieName = movie.getTitle();
 
         List<Seat> seatEntityList = new ArrayList<>();
         List<String> seatsList = requestTicketDto.seatsIds();
         for (String id : seatsList) {
             Seat seat = seatService.seatReservation(user.getId(), id);
+            seat.setSeatEnum(SeatEnum.AVAILABLE);
+            seatRepository.save(seat);
             seatEntityList.add(seat);
         }
 
@@ -152,6 +152,12 @@ public class TicketServiceImpl implements TicketService {
         ticket.setActive(true);
 
         Ticket savedTicket = ticketRepository.save(ticket);
+
+        for (Seat seat : seatEntityList){
+            seat.setTicket(ticket);
+            seatRepository.save(seat);
+        }
+
         return ticketMapper.ticketToResponseDto(savedTicket);
     }
 
