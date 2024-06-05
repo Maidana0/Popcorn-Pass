@@ -1,7 +1,7 @@
 package com.s1511.ticketcine.domain.services;
 
-import com.s1511.ticketcine.application.dto.seat.SeatDTO;
-import com.s1511.ticketcine.application.dto.seat.SeatReservationDTO;
+import com.s1511.ticketcine.application.dto.seat.RequestDtoSeat;
+import com.s1511.ticketcine.application.dto.seat.ResponseDtoSeat;
 import org.springframework.stereotype.Service;
 import com.s1511.ticketcine.domain.entities.Seat;
 
@@ -11,8 +11,13 @@ import java.util.Optional;
 @Service
 public interface SeatService {
 
-    List<SeatDTO> findAllSeats();
-    SeatDTO findSeatById(String id);
-    Optional<Seat> seatReservation(String id, SeatReservationDTO seatReservationDTO);
+
+    ResponseDtoSeat findSeatById(String id);
+
+    ResponseDtoSeat seatReservation(String userId, String seatId);
+
     List<Seat> createSeatMatrix(String functionDetailsId);
-}
+    Boolean returnSeat(String ticketId, List<String> returnedSeatsIds);
+    void lookForPreviousUser(String ticketId);
+
+    }

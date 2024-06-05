@@ -92,6 +92,71 @@ public class TicketServiceImpl implements TicketService {
         return responseDto;
     }
 
+    @Override
+    public ResponseTicketDto buyTicketWithMoviePoints(double moviePoints, RequestTicketDto requestTicketDto) {
+        User user = userRepository.findByIdAndActive(requestTicketDto.userId(),true)
+                .orElseThrow(() -> new EntityNotFoundException("No se encuentra usuario con ese id"));
+        double userMoviePoints = user.getMoviePoints();
+        if(userMoviePoints >= moviePoints){
+            userMoviePoints -= moviePoints;
+            user.setMoviePoints(userMoviePoints);
+            userRepository.save(user);
+        }else throw new RuntimeException("El usuario no dispone de movie points suficientes para realizar la compra");
+
+
+
+
+        FunctionDetails functionDetails = functionDetailsRepository.findByIdAndActive(requestTicketDto.functionDetailsId(), true)
+                .orElseThrow(() -> new EntityNotFoundException(
+                        "No se puede encontrar la función con el id " + requestTicketDto.functionDetailsId()));
+
+        String screenId = functionDetails.getScreenId();
+        String movieId = functionDetails.getMovieId();
+        LocalDateTime functionDate = functionDetails.getSchedule();
+
+        Screen screen = screenRepository.findByIdAndActive(screenId, true)
+                .orElseThrow(() -> new EntityNotFoundException(
+                        "No se puede encontrar la sala con el id " + screenId));
+
+        String cinemaName = screen.getCinema().getId();
+
+        Movie movie = movieRepository.findByIdAndActive(movieId, true)
+                .orElseThrow(() -> new EntityNotFoundException(
+                        "No se puede encontrar la película con el id " + movieId));
+
+        String movieName = movie.getTitle();
+
+
+        List<Seat> seatEntityList = new ArrayList<>();
+        List<String> seatsList = requestTicketDto.seatsIds();
+        for (String id : seatsList) {
+            Seat seat = seatRepository.findById(id)
+                    .orElseThrow(() -> new EntityNotFoundException(
+                            "El asiento " + id + " no se encuentra disponible."));
+            seatEntityList.add(seat);
+        }
+
+        Ticket ticket = new Ticket();
+        ticket.setUserId(user.getId());
+        ticket.setCinemaName(cinemaName);
+        ticket.setScreenName(screen.getName());
+        ticket.setSeatsIds(seatEntityList);
+        ticket.setMovieName(movieName);
+        ticket.setValue(moviePoints);
+        ticket.setFunctionDate(functionDate);
+        ticket.setActive(true);
+
+        Ticket savedTicket = ticketRepository.save(ticket);
+        return ticketMapper.ticketToResponseDto(savedTicket);
+    }
+
+
+    @Override
+    public List<ResponseTicketDto> getAllTicketsByUserId(String userId) {
+        List<Ticket> ticketList = ticketRepository.getTicketsByUserId(userId);
+        List<ResponseTicketDto> ticketListDto = ticketMapper.ticketListToResponseDtoList(ticketList);
+        return ticketListDto;
+    }
 
     private double calculateTicketPrice(double unitPrice, int unitValue){
         return unitPrice * unitValue;

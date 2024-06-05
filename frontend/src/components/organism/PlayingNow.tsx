@@ -2,7 +2,7 @@
 import MovieCard from "../molecules/MovieCard"
 import { useRouter } from "next/navigation"
 import { useEffect } from "react"
-import { convertGenre, convertImagePath } from "@/utils/fc-movies"
+import { convertGenre } from "@/utils/fc-movies"
 import { IMovie } from "@/common/interfaces"
 import { useMoviesPagination } from "@/store/cspagination-store"
 import { shallow } from "zustand/shallow"
@@ -32,7 +32,7 @@ const PlayingNow = ({ movies }: { movies: IMovie[] }) => {
                 id={data.id}
                 nameMovie={data.title}
                 textVideo={convertGenre(data.genre)}
-                imagePath={convertImagePath(data.description, data.image)}
+                imagePath={data.image}
             />
         ))}
     </>

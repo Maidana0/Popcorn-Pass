@@ -30,12 +30,10 @@ interface IProps {
 
 const getData = async (): Promise<{ inComingSoon: IMovie[], playingNow: IMovie[] }> => {
     const res = await fetchData("movie/list")
-    console.log("ejecuntandose");
     return {
         inComingSoon: filteredListComingSoon(res),
         playingNow: filteredListPlayingNow(res)
     }
-    // return inComingSoon ? filteredListComingSoon(res) : filteredListPlayingNow(res)
 }
 
 const Page = async ({ params }: IProps) => {

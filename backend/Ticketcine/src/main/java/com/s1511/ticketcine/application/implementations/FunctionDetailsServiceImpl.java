@@ -1,5 +1,7 @@
 package com.s1511.ticketcine.application.implementations;
 
+import com.s1511.ticketcine.application.dto.functionDetails.ReadDtoFunctionDetails;
+import com.s1511.ticketcine.application.mapper.FunctionDetailsMapper;
 import com.s1511.ticketcine.domain.entities.FunctionDetails;
 import com.s1511.ticketcine.domain.entities.Screen;
 import com.s1511.ticketcine.domain.repository.ScreenRepository;
@@ -21,6 +23,7 @@ import lombok.RequiredArgsConstructor;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -33,6 +36,7 @@ public class FunctionDetailsServiceImpl implements FunctionDetailsService {
     private final MovieService movieService;
     private final ScreenRepository screenRepository;
     private final SeatService seatService;
+    private final FunctionDetailsMapper functionDetailsMapper;
 
     @Override
     public ReadDtoMovie getMovieById(String idMovie) {
@@ -41,14 +45,14 @@ public class FunctionDetailsServiceImpl implements FunctionDetailsService {
 
     @Override
     @Transactional
-    public void createFunctionsForScreen(String screenId) {
+    public void createFunctionsForScreen() {
         var screens = screenRepository.findAll();
         LocalDateTime time = LocalDateTime.now().plusDays(14);
         for (Screen screen: screens) {
             for (int i = 0; i <= 2; i++) {
                 FunctionDetails functionDetail = new FunctionDetails();
                 functionDetailsRepository.save(functionDetail);
-                functionDetail.setScreenId(screenId);
+                functionDetail.setScreenId(screen.getId());
                 System.out.println("functionDetails ID cuando se crea el fd"+functionDetail.getId());
                 if (i == 0) {
                     functionDetail.setSchedule(time.with(LocalTime.of(18,0)));
@@ -64,6 +68,28 @@ public class FunctionDetailsServiceImpl implements FunctionDetailsService {
             }
         }
 
+    }
+
+    @Override
+    public List<ReadDtoFunctionDetails> getFunctionsDetailsByCinemaIdAndMovieId(String cinemaId, String movieId) {
+    var screens = screenRepository.findByCinemaId(cinemaId);
+    var functionsDetails = functionDetailsRepository.findByMovieId(movieId);
+    List<FunctionDetails> movieFunctionsDetails = new ArrayList<>();
+
+    for (Screen screen : screens){
+
+        for (FunctionDetails functionDetail : functionsDetails){
+            if (functionDetail.getScreenId().equals(screen.getId()) && functionDetail.getMovieId().equals(movieId)) {
+        movieFunctionsDetails.add(functionDetail);
+            }
+        }
+    }
+        return functionDetailsMapper.functionDetailsListToDtoList(movieFunctionsDetails);
+    }
+
+    @Override
+    public List<ReadDtoFunctionDetails> getFunctionsDetailsByMovieId(String movieId) {
+        return functionDetailsMapper.functionDetailsListToDtoList(functionDetailsRepository.findByMovieId(movieId));
     }
 
 }

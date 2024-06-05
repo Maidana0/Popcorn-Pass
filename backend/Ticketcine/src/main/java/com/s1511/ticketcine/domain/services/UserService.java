@@ -10,4 +10,6 @@ public interface UserService {
     ReadDtoUser readUserByEmail(String email, Boolean active);
     ReadDtoUser updateUser(UpdateDtoUser updateDtoUser);
     Boolean toggleUser(String id);
-}
+    void claimMoviePoints(Double moviePoints, String userId);
+
+    }
