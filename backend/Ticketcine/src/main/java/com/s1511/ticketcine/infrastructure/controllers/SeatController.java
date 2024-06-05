@@ -1,9 +1,7 @@
 package com.s1511.ticketcine.infrastructure.controllers;
 
-import com.s1511.ticketcine.application.dto.seat.RequestDtoSeat;
 import com.s1511.ticketcine.application.dto.seat.ResponseDtoSeat;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import com.s1511.ticketcine.domain.services.SeatService;

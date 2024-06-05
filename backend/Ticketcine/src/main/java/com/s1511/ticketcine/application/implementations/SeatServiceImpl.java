@@ -104,7 +104,6 @@ public class SeatServiceImpl implements SeatService {
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new EntityNotFoundException("Usuario no encontrado"));
 
-
         seat.setCurrentUser(user);
         seat.setSeatEnum(SeatEnum.RESERVED);
         seatRepository.save(seat);

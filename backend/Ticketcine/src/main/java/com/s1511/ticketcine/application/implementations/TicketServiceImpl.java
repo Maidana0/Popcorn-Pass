@@ -44,7 +44,7 @@ public class TicketServiceImpl implements TicketService {
                 .orElseThrow(() -> new EntityNotFoundException(
                         "No se puede encontrar la sala con el id " + screenId));
 
-        String cinemaName = screen.getCinema().getId();
+        String cinemaName = screen.getCinema().getName();
 
         Movie movie = movieRepository.findByIdAndActive(movieId, true)
                 .orElseThrow(() -> new EntityNotFoundException(
@@ -74,7 +74,7 @@ public class TicketServiceImpl implements TicketService {
         ticket.setFunctionDate(functionDate);
         ticket.setActive(false);
 
-        Ticket savedTicket = ticketRepository.save(null);
+        Ticket savedTicket = ticketRepository.save(ticket);
         return savedTicket.getId();
     }
 
@@ -96,15 +96,6 @@ public class TicketServiceImpl implements TicketService {
     public ResponseTicketDto buyTicketWithMoviePoints(double moviePoints, RequestTicketDto requestTicketDto) {
         User user = userRepository.findByIdAndActive(requestTicketDto.userId(),true)
                 .orElseThrow(() -> new EntityNotFoundException("No se encuentra usuario con ese id"));
-        double userMoviePoints = user.getMoviePoints();
-        if(userMoviePoints >= moviePoints){
-            userMoviePoints -= moviePoints;
-            user.setMoviePoints(userMoviePoints);
-            userRepository.save(user);
-        }else throw new RuntimeException("El usuario no dispone de movie points suficientes para realizar la compra");
-
-
-
 
         FunctionDetails functionDetails = functionDetailsRepository.findByIdAndActive(requestTicketDto.functionDetailsId(), true)
                 .orElseThrow(() -> new EntityNotFoundException(
@@ -118,7 +109,7 @@ public class TicketServiceImpl implements TicketService {
                 .orElseThrow(() -> new EntityNotFoundException(
                         "No se puede encontrar la sala con el id " + screenId));
 
-        String cinemaName = screen.getCinema().getId();
+        String cinemaName = screen.getCinema().getName();
 
         Movie movie = movieRepository.findByIdAndActive(movieId, true)
                 .orElseThrow(() -> new EntityNotFoundException(
@@ -126,15 +117,25 @@ public class TicketServiceImpl implements TicketService {
 
         String movieName = movie.getTitle();
 
-
         List<Seat> seatEntityList = new ArrayList<>();
         List<String> seatsList = requestTicketDto.seatsIds();
         for (String id : seatsList) {
-            Seat seat = seatRepository.findById(id)
+           var seat = seatRepository.findByIdAndOccupied(id, false)
                     .orElseThrow(() -> new EntityNotFoundException(
                             "El asiento " + id + " no se encuentra disponible."));
             seatEntityList.add(seat);
         }
+
+        double userMoviePoints = user.getMoviePoints();
+        if(userMoviePoints >= moviePoints){
+            userMoviePoints -= moviePoints;
+            user.setMoviePoints(userMoviePoints);
+            userRepository.save(user);
+            for (Seat seat : seatEntityList){
+                seat.setOccupied(true);
+                seatRepository.save(seat);
+            }
+        }else throw new RuntimeException("El usuario no dispone de movie points suficientes para realizar la compra");
 
         Ticket ticket = new Ticket();
         ticket.setUserId(user.getId());

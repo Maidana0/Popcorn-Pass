@@ -19,7 +19,7 @@ public class Seat {
     private String id;
     private String seatNumber;
     private LocalDateTime reservationTime;
-    private Boolean occupied;
+    private Boolean occupied = false;
     private String functionDetailsId;
     @ManyToOne
     @JoinColumn(name = "ticket_id", referencedColumnName = "id")
