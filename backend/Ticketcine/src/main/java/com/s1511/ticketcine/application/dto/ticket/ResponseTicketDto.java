@@ -7,7 +7,7 @@ public record ResponseTicketDto(
         String id,
         String userId,
         String cinemaName,
-        String screenId,
+        String screenName,
         String movieName,
         List<String> seatsIds,
         LocalDateTime functionDate,
