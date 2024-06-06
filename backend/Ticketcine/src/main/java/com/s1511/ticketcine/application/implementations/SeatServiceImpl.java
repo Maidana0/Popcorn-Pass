@@ -127,6 +127,7 @@ public class SeatServiceImpl implements SeatService {
         }
         List<String> returned = returnedSeatsIds.returnedSeatsIds();
 
+        boolean notPurchased = true;
         for (String returnedId : returned) {
             for (String ticketSeat : ticketSeats) {
                 if (returnedId.equals(ticketSeat)){
@@ -137,11 +138,12 @@ public class SeatServiceImpl implements SeatService {
                     seat.setPreviousUser(user);
                     seat.setCurrentUser(null);
                     seatRepository.save(seat);
-                } else {
-                    throw new EntityNotFoundException("El asiento no esta reservado");
+                    notPurchased = false;
                 }
             }
         }
+
+        if (notPurchased) { throw new EntityNotFoundException("El asiento no esta reservado por este usuario"); }
 
         var actualSeatIds = ticket.getSeatsIds();
         boolean flag = true;
