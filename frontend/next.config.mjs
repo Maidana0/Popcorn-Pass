@@ -1,9 +1,21 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
     images: {
-        domains: ["localhost","image.tmdb.org"], 
+        remotePatterns: [
+            {
+                protocol: "http",
+                hostname: "localhost",
+                port: "4000",
+                pathname: "/(.*)"
+            },
+            {
+                protocol: "https",
+                hostname: "image.tmdb.org",
+                port: "",
+                pathname: "/t/p/**"
+            }],
     },
-    env:{
+    env: {
         DEV_API_PATH: "http://localhost:4000",
         PROD_API_PATH: "https://s15-11-m-java-react-production.up.railway.app",
     }

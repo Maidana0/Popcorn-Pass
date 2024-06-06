@@ -21,7 +21,7 @@ export const revalidate = 3600 * 24 * 14
 
 interface IProps {
     params: {
-        movies: "en-pantalla" | "proximamente"
+        movies: "en-pantalla" | "en-estreno"
     },
     searchParams: {
         title: string
@@ -36,9 +36,12 @@ const getData = async (): Promise<{ inComingSoon: IMovie[], playingNow: IMovie[]
     }
 }
 
+export const getCities = async (): Promise<string[]> => await fetchData("cinema/cities", "GET");
+
 const Page = async ({ params }: IProps) => {
     const { movies } = params
-    const inComingSoon = movies == "proximamente"
+    const inComingSoon = movies == "en-estreno"
+    const cities = !inComingSoon && await getCities()
     const data = await getData()
 
     if (movies != "en-pantalla" && !inComingSoon) return <h1 style={{ margin: "auto", textAlign: "center" }}>404 - Not Found</h1>
@@ -48,7 +51,7 @@ const Page = async ({ params }: IProps) => {
             sx={{ flexDirection: { xs: "column", md: "row" }, justifyContent: { xs: "center", md: "space-between" } }}>
 
             <Typography variant="h3" textAlign={{ xs: "center", md: "left" }}>
-                Peliculas
+                Peliculas Disponibles
             </Typography>
 
             <Box component="div" textAlign="center">
@@ -60,17 +63,17 @@ const Page = async ({ params }: IProps) => {
                     en pantalla
                 </Button>
 
-                <Button color="warning" variant={inComingSoon ? "contained" : "outlined"} LinkComponent={Link} href={!inComingSoon ? "proximamente" : "#"}
+                <Button color="warning" variant={inComingSoon ? "contained" : "outlined"} LinkComponent={Link} href={!inComingSoon ? "en-estreno" : "#"}
                     sx={{
                         height: "53px", fontWeight: 700, borderRadius: "0 8px 8px 0",
                         color: inComingSoon ? "var(--black)" : "",
                     }}>
-                    proximamente
+                    en estreno
                 </Button>
             </Box>
         </Box>
 
-        {!inComingSoon && <MovieFilters />}
+        {!inComingSoon && <MovieFilters cities={cities || ["empty"]} />}
         <Box sx={{ display: "flex", flexWrap: "wrap", gap: { xs: "20px 0", sm: "16px" }, justifyContent: "space-evenly" }} mb="3.5rem" >
             {inComingSoon
                 ? <ComingSoon movies={data.inComingSoon} />

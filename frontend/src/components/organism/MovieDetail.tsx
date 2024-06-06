@@ -1,4 +1,3 @@
-"use client"
 import HeaderDetail from "../molecules/MovieDetailHeader"
 import { Box } from "@mui/material"
 import MovieImageDetail from "../atoms/MovieImageDetail"
@@ -10,8 +9,6 @@ import MovieDescriptionDetail from "../atoms/MovieDescriptionDetail"
 const AVERAGE = 4.5
 
 const MovieDetail: FC<{ movie: IMovie }> = ({ movie }) => {
-    console.log(movie);
-
     return (<>
         <Box margin="1.5rem auto">
             <Box sx={{
@@ -59,4 +56,7 @@ ME FALTA OBTENER:
     -runtime
     -vote_average
     -vote_count
+
+      .url("https://api.themoviedb.org/3/movie/{movie_id}/release_dates")
+
 */

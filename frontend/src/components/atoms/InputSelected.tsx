@@ -9,17 +9,20 @@ export interface IOptionsValue {
 }
 
 interface Props {
-    register: UseFormRegisterReturn,
+    register?: UseFormRegisterReturn,
     valueAndName?: string[],
-    optionsValue: IOptionsValue[] | false,
-    listTo: string
+    optionsValue?: IOptionsValue[] | false,
+    listTo?: string,
+    currentValue?: any,
+    currentName?: any,
+    localDisabled?: boolean
 }
 
-const InputSelected: any = ({ register, valueAndName, optionsValue, listTo }: Props) => {
+const InputSelected: any = ({ localDisabled, register, currentValue, currentName, valueAndName, optionsValue, listTo }: Props) => {
     const [selectedValue, setSelectedValue] = React.useState("empty")
     const { palette } = useTheme()
     const handleChange = (event: SelectChangeEvent) => setSelectedValue(event.target.value);
-
+    React.useEffect(() => currentValue && setSelectedValue(currentValue))
     return (
         <FormControl sx={{
             width: 280, textTransform: "uppercase",
@@ -60,19 +63,26 @@ const InputSelected: any = ({ register, valueAndName, optionsValue, listTo }: Pr
                 <MenuItem value="empty" disabled>
                     <em>{listTo}</em>
                 </MenuItem>
-                {
-                    valueAndName
-                        ? valueAndName.map((value, i) => (
-                            <MenuItem key={i} value={value}>{value}</MenuItem>))
-                        :
-                        optionsValue && optionsValue.length > 0
-                            ? optionsValue.map(({ value, name }, i) => (
-                                <MenuItem key={i} value={value}>{name}</MenuItem>))
-                            : <MenuItem disabled>
-                                Cargando opciones...
-                            </MenuItem>
-                }
 
+                {
+                    localDisabled
+                        ?
+                        <MenuItem value={currentValue} disabled>
+                            <em>{currentName || currentValue}</em>
+                        </MenuItem>
+                        : valueAndName
+                            ? valueAndName.map((value, i) => (
+                                <MenuItem key={i} value={value}>
+                                    {value}
+                                </MenuItem>))
+                            :
+                            optionsValue && optionsValue.length > 0
+                                ? optionsValue.map(({ value, name }, i) => (
+                                    <MenuItem key={i} value={value}>{name}</MenuItem>))
+                                : <MenuItem disabled>Cargando opciones...</MenuItem>
+
+
+                }
 
             </Select>
         </FormControl >
