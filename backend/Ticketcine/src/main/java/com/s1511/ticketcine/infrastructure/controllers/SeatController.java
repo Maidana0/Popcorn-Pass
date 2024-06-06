@@ -1,9 +1,8 @@
 package com.s1511.ticketcine.infrastructure.controllers;
 
-import com.s1511.ticketcine.application.dto.seat.RequestDtoSeat;
 import com.s1511.ticketcine.application.dto.seat.ResponseDtoSeat;
+import com.s1511.ticketcine.application.dto.seat.ReturnedSeatsDto;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import com.s1511.ticketcine.domain.services.SeatService;
@@ -22,16 +21,9 @@ public class SeatController {
         return ResponseEntity.ok(seatService.findSeatById(id));
     }
 
-    @PostMapping("/reserve/{seatId}/{userId}")
-    public ResponseEntity<ResponseDtoSeat> seatReservation(@PathVariable String seatId,
-                                                           @PathVariable String userId) {
-        return ResponseEntity.ok(seatService.seatReservation(userId, seatId));
-
-    }
-
     @PostMapping("/return/{ticketId}")
     public ResponseEntity<Boolean> returnSeat(@PathVariable String ticketId,
-                                              @RequestBody List<String> returnedSeatsIds){
+                                              @RequestBody ReturnedSeatsDto returnedSeatsIds){
         return ResponseEntity.ok(seatService.returnSeat(ticketId, returnedSeatsIds));
     }
 

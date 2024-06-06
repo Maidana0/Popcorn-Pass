@@ -12,7 +12,7 @@ import java.util.Optional;
 public interface SeatRepository extends JpaRepository<Seat, String> {
 
     List<Seat> findByFunctionDetailsId(String functionDetails);
-    Optional<Seat> findBySeatNumberAndOccupied(String seatNumber, Boolean occupied);
+    Optional<Seat> findByIdAndOccupied(String Id, Boolean occupied);
 
 
 }
