@@ -30,6 +30,7 @@ public class TicketServiceImpl implements TicketService {
     public final TicketMapper ticketMapper;
     public final SeatService seatService;
 
+    @Override
     public String createTicket(RequestTicketDto requestDto){
         User user = userRepository.findByIdAndActive(requestDto.userId(), true)
                 .orElseThrow(() -> new EntityNotFoundException(
@@ -60,10 +61,6 @@ public class TicketServiceImpl implements TicketService {
         List<String> seatsList = requestDto.seatsIds();
         for (String id : seatsList) {
             Seat seat = seatService.seatReservation(user.getId(), id);
-           /* Seat seat = seatRepository.findById(id)
-                    .orElseThrow(() -> new EntityNotFoundException(
-                            "El asiento " + id + " no se encuentra disponible."));
-                            TODO. SI PARA 07/06 ESTO ANDA, BORRAR ESTE COMENTARIO. */
             seatEntityList.add(seat);
         }
 
@@ -90,6 +87,14 @@ public class TicketServiceImpl implements TicketService {
         return ticketListDto;
     }
 
+    @Override
+    public List<ResponseTicketDto> getAllTicketsByUserId(String userId) {
+        List<Ticket> ticketList = ticketRepository.getTicketsByUserId(userId);
+        List<ResponseTicketDto> ticketListDto = ticketMapper.ticketListToResponseDtoList(ticketList);
+        return ticketListDto;
+    }
+
+    @Override
     public ResponseTicketDto getTicketById(String id) {
         var ticket = ticketRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("No se encuentra ticket con el id " + id));
@@ -159,14 +164,6 @@ public class TicketServiceImpl implements TicketService {
         }
 
         return ticketMapper.ticketToResponseDto(savedTicket);
-    }
-
-
-    @Override
-    public List<ResponseTicketDto> getAllTicketsByUserId(String userId) {
-        List<Ticket> ticketList = ticketRepository.getTicketsByUserId(userId);
-        List<ResponseTicketDto> ticketListDto = ticketMapper.ticketListToResponseDtoList(ticketList);
-        return ticketListDto;
     }
 
     private double calculateTicketPrice(double unitPrice, int unitValue){

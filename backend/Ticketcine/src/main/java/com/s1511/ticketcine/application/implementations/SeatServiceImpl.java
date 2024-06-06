@@ -2,6 +2,7 @@ package com.s1511.ticketcine.application.implementations;
 
 import com.s1511.ticketcine.application.dto.seat.RequestDtoSeat;
 import com.s1511.ticketcine.application.dto.seat.ResponseDtoSeat;
+import com.s1511.ticketcine.application.dto.seat.ReturnedSeatsDto;
 import com.s1511.ticketcine.domain.entities.FunctionDetails;
 import com.s1511.ticketcine.domain.entities.Ticket;
 import com.s1511.ticketcine.domain.entities.User;
@@ -111,45 +112,47 @@ public class SeatServiceImpl implements SeatService {
     }
 
     @Override
-    public Boolean returnSeat(String ticketId, List<String> returnedSeatsIds) {
+    public Boolean returnSeat(String ticketId, ReturnedSeatsDto returnedSeatsIds) {
 
         Ticket ticket = ticketRepository.findById(ticketId)
                 .orElseThrow(() -> new EntityNotFoundException("El ticket no existe"));
         var userId = ticket.getUserId();
-        var seatsIds = ticket.getSeatsIds();
-
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new EntityNotFoundException("El usuario no existe"));
+        var seatsIds = ticket.getSeatsIds();
+        List<String> ticketSeats = new ArrayList<>();
+        for (Seat seat : seatsIds){
+            String ticketSeat = seat.getId();
+            ticketSeats.add(ticketSeat);
+        }
+        List<String> returned = returnedSeatsIds.returnedSeatsIds();
 
-
-
-        for (Seat seat:seatsIds) {
-            if(returnedSeatsIds.contains(seat.getSeatNumber())){
-                seat.setSeatEnum(SeatEnum.AVAILABLE);
-                seat.setOccupied(false);
-                seat.setPreviousUser(user);
-                seat.setCurrentUser(null);
-                seatRepository.save(seat);
+        for (String returnedId : returned) {
+            for (String ticketSeat : ticketSeats) {
+                if (returnedId.equals(ticketSeat)){
+                    Seat seat = seatRepository.findById(ticketSeat)
+                            .orElseThrow(() -> new EntityNotFoundException("El asiento no existe"));
+                    seat.setSeatEnum(SeatEnum.AVAILABLE);
+                    seat.setOccupied(false);
+                    seat.setPreviousUser(user);
+                    seat.setCurrentUser(null);
+                    seatRepository.save(seat);
+                } else {
+                    throw new EntityNotFoundException("El asiento no esta reservado");
+                }
             }
-            throw new EntityNotFoundException("El asiento no esta reservado");
-
         }
 
+        var actualSeatIds = ticket.getSeatsIds();
         boolean flag = true;
-
-        for (Seat seat:seatsIds){
-            if(seat.getOccupied()){
-                flag = false;
-                break;
-            }
-
+        for (Seat seat : actualSeatIds){
+            if (!seat.getOccupied()) { flag = false; }
         }
 
-        if(flag){
+        if (flag) {
             ticket.setActive(false);
             ticketRepository.save(ticket);
         }
-
 
     return true;
     }

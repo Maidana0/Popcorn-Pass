@@ -65,7 +65,7 @@ public class CommentServiceImpl implements CommentService {
     @Override
     public ReadDtoComment readCommentByCommentId(String id, Boolean active) {
         Comment comment = commentRepository.findByIdAndActive(id, active)
-                .orElseThrow(() -> new EntityNotFoundException(id));
+                .orElseThrow(() -> new EntityNotFoundException("No existe comentario con ese id"));
 
         return commentMapper.commentToReadDto(comment);
     }
@@ -92,10 +92,14 @@ public class CommentServiceImpl implements CommentService {
         selfValidation.checkSelfValidation(updateDtoComment.userId());
 
         Comment comment = commentRepository.findByIdAndActive(updateDtoComment.id(), true)
-                .orElseThrow(() -> new EntityNotFoundException(updateDtoComment.id()));
+                .orElseThrow(() -> new EntityNotFoundException("No existe comentario con el id " + updateDtoComment.id()));
 
             if (updateDtoComment.comment() != null){
                 comment.setComment(updateDtoComment.comment());
+            }
+
+            if (updateDtoComment.userRate() != null){
+                comment.setUserRate(updateDtoComment.userRate());
             }
 
         comment.setDate(LocalDateTime.now());
@@ -118,7 +122,7 @@ public class CommentServiceImpl implements CommentService {
     @Override
     public Boolean userBuyedTicket(String userId, String movieName) {
         Ticket ticket = ticketRepository.findByUserIdAndMovieName(userId, movieName)
-                .orElseThrow(() -> new EntityNotFoundException("No se hallo el ticket"));
+                .orElseThrow(() -> new EntityNotFoundException("No se encontró el ticket"));
         if(ticket != null){
             return true;
         }
