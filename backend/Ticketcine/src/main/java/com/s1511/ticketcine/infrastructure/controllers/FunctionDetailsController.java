@@ -40,4 +40,7 @@ public class FunctionDetailsController {
     public ResponseEntity<List<ReadDtoFunctionDetails>> getFunctionsDetailsByMovieId(@PathVariable @NotNull String movieId){
         return ResponseEntity.ok(functionDetailsService.getFunctionsDetailsByMovieId(movieId));
     }
+
+
+    //TO DO: TRAER TODAS LAS FUNCIONES PARA PRUEBA COMENTARIOS
 }
