@@ -30,10 +30,10 @@ public class CinemaServiceImpl implements CinemaService {
     private final CinemaMapper cinemaMapper;
 
     @Override
-    public List<String> getCinemasCityName() {
+    public HashSet<String> getCinemasCityName() {
 
         List<Cinema> cinemas = cinemaRepository.findAll();
-        List<String> cities = new ArrayList<String>();
+        HashSet<String> cities = new HashSet<>();
 
         for (Cinema cinema : cinemas){
             cities.add(cinema.getCity());

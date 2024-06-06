@@ -44,6 +44,8 @@ const MovieDetail: FC<{ movie: IMovie }> = ({ movie }) => {
                 </Box>
             </Box>
         </Box>
+        
+
     </>)
 }
 

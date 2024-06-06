@@ -1,8 +1,12 @@
+import BackButton from '@/components/atoms/BackButton'
+import MovieDetail from '@/components/organism/MovieDetail'
 import { fetchData } from '@/utils/fetchData'
 import { Button, Container } from '@mui/material'
 import type { Metadata } from 'next'
 import dynamic from 'next/dynamic'
 import Link from 'next/link'
+import CommentList from '@/components/organism/CommentList'
+
 
 const BackButton = dynamic(() => import('@/components/atoms/BackButton'), { ssr: false })
 const MovieDetail = dynamic(() => import('@/components/organism/MovieDetail'), { ssr: true })
@@ -33,6 +37,7 @@ const Movie = async ({ params }: Props) => {
             </Button>
         </Container>
 
+        <CommentList id={id}/>
     </>
 }
 
