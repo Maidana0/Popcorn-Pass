@@ -19,9 +19,7 @@ public class FunctionDetailsController {
     private FunctionDetailsService functionDetailsService;
 
 
-
-    //TRAE FUNCTIONDETAILS PARA MOVIE CON ID
-    @GetMapping("getScreenByMovieId/{idMovie}")
+    @GetMapping("screenByMovieId/{idMovie}")
     public ResponseEntity<ReadDtoMovie> getScreenByMovieId(@PathVariable String idMovie){
         ReadDtoMovie dto = functionDetailsService.getMovieById(idMovie);
         return ResponseEntity.ok(dto);
@@ -32,11 +30,11 @@ public class FunctionDetailsController {
         functionDetailsService.createFunctionsForScreen();
     }
 
-    @GetMapping("/FunctionsDetailsByCinemaIdAndMovieId/{cinemaId}/{movieId}")
+    @GetMapping("/functionDetailsByCinemaIdAndMovieId/{cinemaId}/{movieId}")
     public ResponseEntity<List<ReadDtoFunctionDetails>> getFunctionsDetailsByCinemaIdAndMovieId(@PathVariable String cinemaId,@PathVariable String movieId){
         return ResponseEntity.ok(functionDetailsService.getFunctionsDetailsByCinemaIdAndMovieId(cinemaId,movieId));
     }
-    @GetMapping("/getFunctionsDetailsByMovieId/{movieId}")
+    @GetMapping("/functionDetailsByMovieId/{movieId}")
     public ResponseEntity<List<ReadDtoFunctionDetails>> getFunctionsDetailsByMovieId(@PathVariable @NotNull String movieId){
         return ResponseEntity.ok(functionDetailsService.getFunctionsDetailsByMovieId(movieId));
     }

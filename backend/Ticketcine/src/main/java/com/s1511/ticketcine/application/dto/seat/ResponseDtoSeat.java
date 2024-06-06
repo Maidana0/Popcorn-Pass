@@ -10,7 +10,7 @@ public record ResponseDtoSeat(
         String id,
         String seatNumber,
         LocalDateTime reservationTime,
-        Boolean reserved,
+        Boolean occupied,
         String functionDetailsId,
         Ticket ticket,
         User currentUser,
