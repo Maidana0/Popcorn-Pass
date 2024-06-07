@@ -36,21 +36,6 @@ VALUES
     (14, 1, 'Screen 14', 4, 'Screening 14'),
     (15, 1, 'Screen 15', 4, 'Screening 15');
 
--- Inserts para la tabla 'seat' con IDs numéricos
-INSERT INTO ticketcine.seat (id, availability, reserved, seat_number, screen_id, cinema_id, ticket_id)
-VALUES
-    -- Asientos para Screen 1
-    (1, 1, 0, 'Fila 1, Asiento 1', 1, 1, NULL),
-    (2, 1, 0, 'Fila 2, Asiento 2', 1, 1, NULL),
-    (3, 1, 0, 'Fila 3, Asiento 3', 1, 1, NULL),
-    -- Asientos para Screen 2
-    (4, 1, 0, 'Fila 1, Asiento 1', 2, 1, NULL),
-    (5, 1, 0, 'Fila 2, Asiento 2', 2, 1, NULL),
-    (6, 1, 0, 'Fila 3, Asiento 3', 2, 1, NULL),
-    -- Asientos para Screen 3
-    (7, 1, 0, 'Fila 1, Asiento 1', 3, 1, NULL),
-    (8, 1, 0, 'Fila 2, Asiento 2', 3, 1, NULL),
-    (9, 1, 0, 'Fila 3, Asiento 3', 3, 1, NULL);
 
 
 ALTER TABLE movie MODIFY COLUMN description VARCHAR(10000); -- Ajusta el tamaño según sea necesario
