@@ -6,6 +6,7 @@ import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.*;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
@@ -20,7 +21,6 @@ import com.s1511.ticketcine.domain.services.MovieService;
 import com.s1511.ticketcine.domain.utils.GenreCombert;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.*;
 
 @Service
@@ -33,20 +33,20 @@ public class MovieServiceImpl implements MovieService {
     private static final Logger logger = LoggerFactory.getLogger(MovieServiceImpl.class);
 
     @Transactional
+    @Scheduled(cron = "0 0 0 * * *")
     public ResponseEntity<?> saveLastestMovies() {
-        LocalDate today = LocalDate.now().minusDays(7);
-        String urlTemplate = "https://api.themoviedb.org/3/discover/movie?page=%d&primary_release_date.gte=%s&primary_release_date.lte=2024-06-13&sort_by=primary_release_date.asc";
+        LocalDate today = LocalDate.now();
+        String urlTemplate = "https://api.themoviedb.org/3/discover/movie?page=%d&primary_release_date.gte=%s&primary_release_date.lte=%s&sort_by=primary_release_date.asc";
         HttpHeaders headers = new HttpHeaders();
         HttpEntity<String> entity;
         RestTemplate restTemplate = new RestTemplate();
         List<CreateDtoMovie> movieDtos = new ArrayList<>();
 
-        // Iterar a través de las páginas
         int page = 1;
         boolean hasMorePages = true;
 
         while (hasMorePages) {
-            String url = String.format(urlTemplate, page, today.toString());
+            String url = String.format(urlTemplate, page, today.plusDays(8).toString(), today.plusDays(8).toString());
 
             headers.setAccept(Collections.singletonList(MediaType.APPLICATION_JSON));
             headers.setBearerAuth(apiKey);
@@ -236,6 +236,7 @@ public class MovieServiceImpl implements MovieService {
 
 
     @Override
+    @Scheduled(cron = "0 0 0 * * *")
     public void outdateMovie() {
         List<Movie> allMovies = movieRepository.findAll();
         LocalDate expirationDay = LocalDate.now().minusDays(13);

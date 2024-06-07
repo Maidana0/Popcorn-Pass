@@ -16,8 +16,6 @@ const SeatComponent: React.FC<SeatProps> = ({ seat, onClick, isSelected }) => {
         return 'green';
       case SeatStatus.Occupied:
         return 'red';
-      default:
-        return 'gray';
     }
   };
 
