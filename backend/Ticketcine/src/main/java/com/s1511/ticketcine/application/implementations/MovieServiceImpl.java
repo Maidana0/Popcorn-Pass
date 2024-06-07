@@ -34,8 +34,8 @@ public class MovieServiceImpl implements MovieService {
 
     @Transactional
     public ResponseEntity<?> saveLastestMovies() {
-        LocalDate today = LocalDate.now();
-        String urlTemplate = "https://api.themoviedb.org/3/discover/movie?page=%d&primary_release_date.gte=%s&primary_release_date.lte=2024-06-07&sort_by=primary_release_date.asc";
+        LocalDate today = LocalDate.now().minusDays(7);
+        String urlTemplate = "https://api.themoviedb.org/3/discover/movie?page=%d&primary_release_date.gte=%s&primary_release_date.lte=2024-06-13&sort_by=primary_release_date.asc";
         HttpHeaders headers = new HttpHeaders();
         HttpEntity<String> entity;
         RestTemplate restTemplate = new RestTemplate();
@@ -69,7 +69,7 @@ public class MovieServiceImpl implements MovieService {
         for (CreateDtoMovie dto : movieDtos) {
             if ((dto.original_language().equals("en") || dto.original_language().equals("es")) &&
                     dto.overview() != null && !dto.overview().isEmpty() &&
-                    dto.poster_path() != null && !dto.poster_path().isEmpty()) {
+                    dto.poster_path() != null && !dto.poster_path().isEmpty() && dto.popularity()>19.0) {
 
                 Movie movie = new Movie();
                 movie.setImage("https://image.tmdb.org/t/p/w220_and_h330_face"+dto.poster_path());
@@ -87,8 +87,7 @@ public class MovieServiceImpl implements MovieService {
                 movie.setComment(null);
                 movie.setRate(null);
                 movie.setGenre(assignGenre(dto.genre_ids()));
-                //
-                System.out.println("movie individual ya guardada en objeto movie" + movie);
+
             movies.add(movie);
             }
         }
@@ -119,7 +118,7 @@ public class MovieServiceImpl implements MovieService {
     }
 
     @Override
-    public List<ReadDtoMovie> findByReleaseDate(LocalDateTime time) {
+    public List<ReadDtoMovie> findByReleaseDate(LocalDate time) {
         List<Movie> movieList = movieRepository.findByReleaseDateAndActive(time, true);
 
         return movieMapper.movieListToReadDtoList(movieList);
@@ -185,15 +184,68 @@ public class MovieServiceImpl implements MovieService {
     }
 
     @Override
-    public String getRandomMovieId() {
+    public String getRandomMovieId(Integer i) {
         List<Movie> allMovies = movieRepository.findByActive(true);
+        List<Movie> sellectedMovies = new ArrayList<>();
         if (allMovies.isEmpty()) {
             throw new RuntimeException("No movies found in the database");
         }
+        if(i == 2) {
+            for(Movie movie: allMovies) {
+                if(movie.getReleaseDate().isBefore(LocalDate.now())){
+                    sellectedMovies.add(movie);
+                }
+            }
+        }else if(i == 1) {
+            for(Movie movie: allMovies) {
+                if(movie.getReleaseDate().isAfter(LocalDate.now())){
+                    sellectedMovies.add(movie);
+                }
+            }
+        } else if(i == 0){
+            for(Movie movie: allMovies) {
+                if(movie.getReleaseDate().isAfter(LocalDate.now().plusDays(6))){
+                    sellectedMovies.add(movie);
+                }
+            }
+        }
+
         Random random = new Random();
-        int randomIndex = random.nextInt(allMovies.size());
-        System.out.println();
+        int randomIndex = random.nextInt(sellectedMovies.size());
         return allMovies.get(randomIndex).getId();
+    }
+
+    //metodo para las primeras funciones de la base de datos
+    public String getRandomMovieId2() {
+        List<Movie> allMovies = movieRepository.findByActive(true);
+        List<Movie> sellectedMovies = new ArrayList<>();
+
+        if (allMovies.isEmpty()) {
+            throw new RuntimeException("No movies found in the database");
+        }
+            for(Movie movie: allMovies) {
+                if(movie.getReleaseDate().isBefore(LocalDate.now())){
+                    sellectedMovies.add(movie);
+                }
+            }
+
+        Random random = new Random();
+        int randomIndex = random.nextInt(sellectedMovies.size());
+        return allMovies.get(randomIndex).getId();
+    }
+
+
+    @Override
+    public void outdateMovie() {
+        List<Movie> allMovies = movieRepository.findAll();
+        LocalDate expirationDay = LocalDate.now().minusDays(13);
+
+        for (Movie movie: allMovies){
+            if(movie.getReleaseDate().isBefore(expirationDay)){
+            movie.setActive(false);
+            movieRepository.save(movie);
+            }
+        }
     }
 
 
