@@ -1,11 +1,9 @@
 package com.s1511.ticketcine.application.implementations;
 
-import com.s1511.ticketcine.application.dto.seat.RequestDtoSeat;
 import com.s1511.ticketcine.application.dto.seat.ResponseDtoSeat;
-import com.s1511.ticketcine.domain.entities.FunctionDetails;
+import com.s1511.ticketcine.application.dto.seat.ReturnedSeatsDto;
 import com.s1511.ticketcine.domain.entities.Ticket;
 import com.s1511.ticketcine.domain.entities.User;
-import com.s1511.ticketcine.domain.repository.FunctionDetailsRepository;
 import com.s1511.ticketcine.domain.repository.TicketRepository;
 import com.s1511.ticketcine.domain.repository.UserRepository;
 
@@ -23,8 +21,6 @@ import com.s1511.ticketcine.domain.services.SeatService;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
-import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @Service
@@ -34,15 +30,14 @@ public class SeatServiceImpl implements SeatService {
     private final UserRepository userRepository;
     private final TicketRepository ticketRepository;
     private final SeatMapper seatMapper;
-    private final FunctionDetailsRepository functionDetailsRepository;
     private final UserService userService;
 
     @Override//METODO INTERNO PARA CREAR LA SALA.
     public List<Seat> createSeatMatrix(String functionDetailsId) {
         List<Seat> seatsMatrix = new ArrayList();
 
-        for (int i = 0; i < 10; i++) {
-            for (int j = 1; j < 6; j++) {
+        for (int i = 0; i < 6; i++) {
+            for (int j = 1; j < 8; j++) {
                 String letter = "";
 
                 if (i == 0){
@@ -68,7 +63,7 @@ public class SeatServiceImpl implements SeatService {
                 }
 
                 var seat = new Seat();
-                seat.setSeatNumber(letter+i);
+                seat.setSeatNumber(letter+j);
                 seat.setSeatEnum(SeatEnum.AVAILABLE);
                 seat.setOccupied(false);
                 seat.setTicket(null);
@@ -92,7 +87,7 @@ public class SeatServiceImpl implements SeatService {
 
     @Override
     @Transactional
-    public ResponseDtoSeat seatReservation(String userId, String seatId) {
+    public Seat seatReservation(String userId, String seatId) {
 
         Seat seat = seatRepository.findById(seatId)
                 .orElseThrow(() -> new EntityNotFoundException("Asiento no encontrado"));
@@ -104,55 +99,56 @@ public class SeatServiceImpl implements SeatService {
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new EntityNotFoundException("Usuario no encontrado"));
 
-
         seat.setCurrentUser(user);
         seat.setSeatEnum(SeatEnum.RESERVED);
         seatRepository.save(seat);
-        var response = seatMapper.toDTO(seat);
-        return response;
+        return seat;
     }
 
-
     @Override
-    public Boolean returnSeat(String ticketId, List<String> returnedSeatsIds) {
+    public Boolean returnSeat(String ticketId, ReturnedSeatsDto returnedSeatsIds) {
 
         Ticket ticket = ticketRepository.findById(ticketId)
                 .orElseThrow(() -> new EntityNotFoundException("El ticket no existe"));
         var userId = ticket.getUserId();
-        var seatsIds = ticket.getSeatsIds();
-
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new EntityNotFoundException("El usuario no existe"));
+        var seatsIds = ticket.getSeatsIds();
+        List<String> ticketSeats = new ArrayList<>();
+        for (Seat seat : seatsIds){
+            String ticketSeat = seat.getId();
+            ticketSeats.add(ticketSeat);
+        }
+        List<String> returned = returnedSeatsIds.returnedSeatsIds();
 
-
-
-        for (Seat seat:seatsIds) {
-            if(returnedSeatsIds.contains(seat.getSeatNumber())){
-                seat.setSeatEnum(SeatEnum.AVAILABLE);
-                seat.setOccupied(false);
-                seat.setPreviousUser(user);
-                seat.setCurrentUser(null);
-                seatRepository.save(seat);
+        boolean notPurchased = true;
+        for (String returnedId : returned) {
+            for (String ticketSeat : ticketSeats) {
+                if (returnedId.equals(ticketSeat)){
+                    Seat seat = seatRepository.findById(ticketSeat)
+                            .orElseThrow(() -> new EntityNotFoundException("El asiento no existe"));
+                    seat.setSeatEnum(SeatEnum.AVAILABLE);
+                    seat.setOccupied(false);
+                    seat.setPreviousUser(user);
+                    seat.setCurrentUser(null);
+                    seatRepository.save(seat);
+                    notPurchased = false;
+                }
             }
-            throw new EntityNotFoundException("El asiento no esta reservado");
-
         }
 
+        if (notPurchased) { throw new EntityNotFoundException("El asiento no esta reservado por este usuario"); }
+
+        var actualSeatIds = ticket.getSeatsIds();
         boolean flag = true;
-
-        for (Seat seat:seatsIds){
-            if(seat.getOccupied()){
-                flag = false;
-                break;
-            }
-
+        for (Seat seat : actualSeatIds){
+            if (!seat.getOccupied()) { flag = false; }
         }
 
-        if(flag){
+        if (flag) {
             ticket.setActive(false);
             ticketRepository.save(ticket);
         }
-
 
     return true;
     }

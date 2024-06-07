@@ -30,10 +30,10 @@ public class CinemaServiceImpl implements CinemaService {
     private final CinemaMapper cinemaMapper;
 
     @Override
-    public List<String> getCinemasCityName() {
+    public HashSet<String> getCinemasCityName() {
 
         List<Cinema> cinemas = cinemaRepository.findAll();
-        List<String> cities = new ArrayList<String>();
+        HashSet<String> cities = new HashSet<>();
 
         for (Cinema cinema : cinemas){
             cities.add(cinema.getCity());
@@ -52,7 +52,7 @@ public class CinemaServiceImpl implements CinemaService {
         List<Screen> cinemaScreens = screenRepository.findByCinemaId(cinemaId);
         List<String> allCinemaMoviesId = new ArrayList();
         for (Screen screen : cinemaScreens){
-           var funtionDetails = functionDetailsRepository.findByScreenId(screen.getId());
+           var funtionDetails = functionDetailsRepository.findByScreenIdAndActive(screen.getId(),true);
            for (FunctionDetails functionDetail : funtionDetails){
                allCinemaMoviesId.add(functionDetail.getMovieId());
            }

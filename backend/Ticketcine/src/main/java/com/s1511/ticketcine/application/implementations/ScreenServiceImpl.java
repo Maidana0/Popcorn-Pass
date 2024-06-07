@@ -3,7 +3,6 @@ import com.s1511.ticketcine.domain.entities.FunctionDetails;
 import com.s1511.ticketcine.domain.repository.MovieRepository;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.s1511.ticketcine.application.dto.screen.CreateDtoScreen;
@@ -65,7 +64,7 @@ public class ScreenServiceImpl implements ScreenService {
     @Override
     public List<ReadDtoScreen> selectScreenByCinemaIdAndMovieId(String cinemaId, String movieId) {
         
-        List<Screen> screens = fdr.findByCinemaIdAndMovieId(cinemaId, movieId);
+        List<Screen> screens = fdr.findByCinemaIdAndMovieIdAndActive(cinemaId, movieId,true);
         return screenMapper.screenListToReadDtoList(screens);
     }
 

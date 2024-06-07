@@ -12,6 +12,7 @@ import com.s1511.ticketcine.application.implementations.MovieServiceImpl;
 import com.s1511.ticketcine.domain.entities.Movie;
 import com.s1511.ticketcine.domain.services.MovieService;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @RequiredArgsConstructor
@@ -38,27 +39,27 @@ public class MovieController {
     public ResponseEntity<?> getMovieById(@PathVariable @NotNull String id){
         return ResponseEntity.ok(movieService.getMovieById(id));
     }
-    @GetMapping("/getByTitle/{title}")
+    @GetMapping("/byTitle/{title}")
     public ResponseEntity<?> getMovieByTitle(@PathVariable @NotNull String title){
         return ResponseEntity.ok(movieService.getMovieByTitle(title));
     }
-    @GetMapping("/getByReleaseDate/{releaseDate}")
-    public ResponseEntity<?> findByReleaseDate(@PathVariable @NotNull LocalDateTime releaseDate){
+    @GetMapping("/byReleaseDate/{releaseDate}")
+    public ResponseEntity<?> findByReleaseDate(@PathVariable @NotNull LocalDate releaseDate){
         return ResponseEntity.ok(movieService.findByReleaseDate(releaseDate));
     }
-    @GetMapping("/getByAge/{agePlus18}")
+    @GetMapping("/byAge/{agePlus18}")
     public ResponseEntity<?> getMovieByAge(@PathVariable @NotNull Boolean agePlus18){
         return ResponseEntity.ok(movieService.getMovieByAge(agePlus18));
     }
-    @GetMapping("/getByThreeD/{threeD}")
+    @GetMapping("/byThreeD/{threeD}")
     public ResponseEntity<?> getMovieByThreeD(@PathVariable @NotNull Boolean threeD){
         return ResponseEntity.ok(movieService.getMovieByThreeD(threeD));
     }
-    /*@GetMapping("/getByGendre/{gendre}")
+    /*@GetMapping("/byGendre/{gendre}")
     public ResponseEntity<?> getMovieByGenre(@PathVariable @NotNull String genre){
         return ResponseEntity.ok(movieService.getMovieByGenre(genre));
     }*/
-    @GetMapping("/getBySubtitle/{subtitle}")
+    @GetMapping("/bySubtitle/{subtitle}")
     public ResponseEntity<?> filterMoviesByLenguage(@PathVariable @NotNull Boolean subtitle){
         return ResponseEntity.ok(movieService.findBySubtitleAndActive(subtitle));
     }

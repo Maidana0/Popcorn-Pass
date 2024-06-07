@@ -3,6 +3,8 @@ package com.s1511.ticketcine.application.implementations;
 import com.s1511.ticketcine.application.dto.ticket.ResponseTicketDto;
 import com.s1511.ticketcine.application.mapper.TicketMapper;
 import com.s1511.ticketcine.domain.services.FunctionDetailsService;
+import com.s1511.ticketcine.domain.services.SeatService;
+import com.s1511.ticketcine.domain.utils.SeatEnum;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -26,7 +28,9 @@ public class TicketServiceImpl implements TicketService {
     public final MovieRepository movieRepository;
     public final SeatRepository seatRepository;
     public final TicketMapper ticketMapper;
+    public final SeatService seatService;
 
+    @Override
     public String createTicket(RequestTicketDto requestDto){
         User user = userRepository.findByIdAndActive(requestDto.userId(), true)
                 .orElseThrow(() -> new EntityNotFoundException(
@@ -44,7 +48,7 @@ public class TicketServiceImpl implements TicketService {
                 .orElseThrow(() -> new EntityNotFoundException(
                         "No se puede encontrar la sala con el id " + screenId));
 
-        String cinemaName = screen.getCinema().getId();
+        String cinemaName = screen.getCinema().getName();
 
         Movie movie = movieRepository.findByIdAndActive(movieId, true)
                 .orElseThrow(() -> new EntityNotFoundException(
@@ -52,13 +56,10 @@ public class TicketServiceImpl implements TicketService {
 
         String movieName = movie.getTitle();
 
-
         List<Seat> seatEntityList = new ArrayList<>();
         List<String> seatsList = requestDto.seatsIds();
         for (String id : seatsList) {
-            Seat seat = seatRepository.findById(id)
-                    .orElseThrow(() -> new EntityNotFoundException(
-                            "El asiento " + id + " no se encuentra disponible."));
+            Seat seat = seatService.seatReservation(user.getId(), id);
             seatEntityList.add(seat);
         }
 
@@ -74,7 +75,7 @@ public class TicketServiceImpl implements TicketService {
         ticket.setFunctionDate(functionDate);
         ticket.setActive(false);
 
-        Ticket savedTicket = ticketRepository.save(null);
+        Ticket savedTicket = ticketRepository.save(ticket);
         return savedTicket.getId();
     }
 
@@ -85,6 +86,14 @@ public class TicketServiceImpl implements TicketService {
         return ticketListDto;
     }
 
+    @Override
+    public List<ResponseTicketDto> getAllTicketsByUserId(String userId) {
+        List<Ticket> ticketList = ticketRepository.getTicketsByUserId(userId);
+        List<ResponseTicketDto> ticketListDto = ticketMapper.ticketListToResponseDtoList(ticketList);
+        return ticketListDto;
+    }
+
+    @Override
     public ResponseTicketDto getTicketById(String id) {
         var ticket = ticketRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("No se encuentra ticket con el id " + id));
@@ -96,15 +105,6 @@ public class TicketServiceImpl implements TicketService {
     public ResponseTicketDto buyTicketWithMoviePoints(double moviePoints, RequestTicketDto requestTicketDto) {
         User user = userRepository.findByIdAndActive(requestTicketDto.userId(),true)
                 .orElseThrow(() -> new EntityNotFoundException("No se encuentra usuario con ese id"));
-        double userMoviePoints = user.getMoviePoints();
-        if(userMoviePoints >= moviePoints){
-            userMoviePoints -= moviePoints;
-            user.setMoviePoints(userMoviePoints);
-            userRepository.save(user);
-        }else throw new RuntimeException("El usuario no dispone de movie points suficientes para realizar la compra");
-
-
-
 
         FunctionDetails functionDetails = functionDetailsRepository.findByIdAndActive(requestTicketDto.functionDetailsId(), true)
                 .orElseThrow(() -> new EntityNotFoundException(
@@ -117,24 +117,33 @@ public class TicketServiceImpl implements TicketService {
         Screen screen = screenRepository.findByIdAndActive(screenId, true)
                 .orElseThrow(() -> new EntityNotFoundException(
                         "No se puede encontrar la sala con el id " + screenId));
-
-        String cinemaName = screen.getCinema().getId();
+        String cinemaName = screen.getCinema().getName();
 
         Movie movie = movieRepository.findByIdAndActive(movieId, true)
                 .orElseThrow(() -> new EntityNotFoundException(
                         "No se puede encontrar la película con el id " + movieId));
-
         String movieName = movie.getTitle();
-
 
         List<Seat> seatEntityList = new ArrayList<>();
         List<String> seatsList = requestTicketDto.seatsIds();
         for (String id : seatsList) {
-            Seat seat = seatRepository.findById(id)
-                    .orElseThrow(() -> new EntityNotFoundException(
-                            "El asiento " + id + " no se encuentra disponible."));
+            Seat seat = seatService.seatReservation(user.getId(), id);
+            seat.setSeatEnum(SeatEnum.AVAILABLE);
+            seatRepository.save(seat);
             seatEntityList.add(seat);
         }
+
+        double userMoviePoints = user.getMoviePoints();
+        if(userMoviePoints >= moviePoints){
+            userMoviePoints -= moviePoints;
+            user.setMoviePoints(userMoviePoints);
+            userRepository.save(user);
+            for (Seat seat : seatEntityList){
+                seat.setOccupied(true);
+                seat.setSeatEnum(SeatEnum.OCCUPIED);
+                seatRepository.save(seat);
+            }
+        }else throw new RuntimeException("El usuario no dispone de movie points suficientes para realizar la compra");
 
         Ticket ticket = new Ticket();
         ticket.setUserId(user.getId());
@@ -147,15 +156,13 @@ public class TicketServiceImpl implements TicketService {
         ticket.setActive(true);
 
         Ticket savedTicket = ticketRepository.save(ticket);
+
+        for (Seat seat : seatEntityList){
+            seat.setTicket(ticket);
+            seatRepository.save(seat);
+        }
+
         return ticketMapper.ticketToResponseDto(savedTicket);
-    }
-
-
-    @Override
-    public List<ResponseTicketDto> getAllTicketsByUserId(String userId) {
-        List<Ticket> ticketList = ticketRepository.getTicketsByUserId(userId);
-        List<ResponseTicketDto> ticketListDto = ticketMapper.ticketListToResponseDtoList(ticketList);
-        return ticketListDto;
     }
 
     private double calculateTicketPrice(double unitPrice, int unitValue){

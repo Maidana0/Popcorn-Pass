@@ -47,22 +47,21 @@ public class FunctionDetailsServiceImpl implements FunctionDetailsService {
     @Transactional
     public void createFunctionsForScreen() {
         var screens = screenRepository.findAll();
-        LocalDateTime time = LocalDateTime.now().plusDays(14);
+        LocalDateTime time = LocalDateTime.now().plusDays(7);
         for (Screen screen: screens) {
             for (int i = 0; i <= 2; i++) {
                 FunctionDetails functionDetail = new FunctionDetails();
                 functionDetailsRepository.save(functionDetail);
                 functionDetail.setScreenId(screen.getId());
-                System.out.println("functionDetails ID cuando se crea el fd"+functionDetail.getId());
-                if (i == 0) {
+                if (i == 2) {
                     functionDetail.setSchedule(time.with(LocalTime.of(18,0)));
                 } else if (i == 1) {
                     functionDetail.setSchedule(time.with(LocalTime.of(21,0)));
-                } else if (i == 2) {
+                } else if (i == 0) {
                     functionDetail.setSchedule(time.plusDays(1).with(LocalTime.of(0, 0)));
                 }
                 functionDetail.setSeatsList(seatService.createSeatMatrix(functionDetail.getId()));
-                functionDetail.setMovieId(movieService.getRandomMovieId());
+                functionDetail.setMovieId(movieService.getRandomMovieId(i));
                 functionDetail.setActive(true);
                 functionDetailsRepository.save(functionDetail);
             }
@@ -70,10 +69,39 @@ public class FunctionDetailsServiceImpl implements FunctionDetailsService {
 
     }
 
+    //metodo para las primeras funciones en la base de datos
+    @Override
+    @Transactional
+    public void createFirstFunctionsForScreen() {
+        var screens = screenRepository.findAll();
+        for (int j = 0; j < 6; j++) {
+        LocalDateTime time = LocalDateTime.now().plusDays(j);
+
+        for (Screen screen: screens) {
+            for (int i = 0; i <= 2; i++) {
+                FunctionDetails functionDetail = new FunctionDetails();
+                functionDetailsRepository.save(functionDetail);
+                functionDetail.setScreenId(screen.getId());
+                if (i == 2) {
+                    functionDetail.setSchedule(time.with(LocalTime.of(18,0)));
+                } else if (i == 1) {
+                    functionDetail.setSchedule(time.with(LocalTime.of(21,0)));
+                } else if (i == 0) {
+                    functionDetail.setSchedule(time.plusDays(1).with(LocalTime.of(0, 0)));
+                }
+                functionDetail.setSeatsList(seatService.createSeatMatrix(functionDetail.getId()));
+                functionDetail.setMovieId(movieService.getRandomMovieId2());
+                functionDetail.setActive(true);
+                functionDetailsRepository.save(functionDetail);
+            }
+        }
+        }
+    }
+
     @Override
     public List<ReadDtoFunctionDetails> getFunctionsDetailsByCinemaIdAndMovieId(String cinemaId, String movieId) {
     var screens = screenRepository.findByCinemaId(cinemaId);
-    var functionsDetails = functionDetailsRepository.findByMovieId(movieId);
+    var functionsDetails = functionDetailsRepository.findByMovieIdAndActive(movieId,true);
     List<FunctionDetails> movieFunctionsDetails = new ArrayList<>();
 
     for (Screen screen : screens){
@@ -89,7 +117,7 @@ public class FunctionDetailsServiceImpl implements FunctionDetailsService {
 
     @Override
     public List<ReadDtoFunctionDetails> getFunctionsDetailsByMovieId(String movieId) {
-        return functionDetailsMapper.functionDetailsListToDtoList(functionDetailsRepository.findByMovieId(movieId));
+        return functionDetailsMapper.functionDetailsListToDtoList(functionDetailsRepository.findByMovieIdAndActive(movieId,true));
     }
 
 }
