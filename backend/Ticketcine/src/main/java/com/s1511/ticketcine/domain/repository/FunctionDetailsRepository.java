@@ -21,5 +21,5 @@ public interface FunctionDetailsRepository extends JpaRepository<FunctionDetails
     List<FunctionDetails> findByMovieIdAndCinemaIdAndActive(@Param("cinemaId") String cinemaId, @Param("movieId") String movieId,@Param("active") Boolean active);
     List<FunctionDetails> findByMovieIdAndActive(String movieId, Boolean active);
     Optional<FunctionDetails> findByIdAndActive(String functionDetailsId, Boolean active);
-
+    List<FunctionDetails> findByActive(Boolean active);
 }
