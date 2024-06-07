@@ -33,7 +33,5 @@ VALUES
     (14, 1, 'Screen 14', 4, 'Screening 14'),
     (15, 1, 'Screen 15', 4, 'Screening 15');
 
--- Inserts para la tabla 'seat' con IDs numérico
-
 
 ALTER TABLE movie MODIFY COLUMN description VARCHAR(10000); -- Ajusta el tamaño según sea necesario

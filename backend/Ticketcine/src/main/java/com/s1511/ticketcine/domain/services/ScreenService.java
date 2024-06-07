@@ -8,9 +8,6 @@ import org.springframework.data.repository.query.Param;
 
 
 public interface ScreenService {
-    ReadDtoScreen createScreen(CreateDtoScreen createDtoScreen);
-    ReadDtoScreen getScreenByIdAndActive(String id);
-    List<ReadDtoScreen> getAllScreens();
     ReadDtoScreen updateScreen(String id, UpdateDtoScreen updateDtoScreen);
     void deleteScreen(String id);
 /*     List<SeatDTO> selectTypeScreen(String idCinema, String typeScreen, String idScreen);

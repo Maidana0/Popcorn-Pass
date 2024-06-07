@@ -1,8 +1,8 @@
 package com.s1511.ticketcine.application.implementations;
 import com.s1511.ticketcine.domain.entities.FunctionDetails;
 import com.s1511.ticketcine.domain.repository.MovieRepository;
+import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.s1511.ticketcine.application.dto.screen.CreateDtoScreen;
@@ -29,31 +29,6 @@ public class ScreenServiceImpl implements ScreenService {
     private SeatMapper seatMapper;
     private FunctionDetailsRepository fdr;
     private MovieRepository movieRepository;
-
-    @Override //todo. ver si es necesario.
-    public ReadDtoScreen createScreen(CreateDtoScreen createDtoScreen) {
-        Screen screen = screenMapper.createDtoToScreen(createDtoScreen);
-        Screen savedScreen = screenRepository.save(screen);
-        return screenMapper.screenToReadDto(savedScreen);
-    }
-    @Override
-    public ReadDtoScreen getScreenByIdAndActive(String id){
-        Screen screen = screenRepository.findByIdAndActive(id,true).orElseThrow(() -> new RuntimeException("Screen not found"));
-        if (!screen.getActive()) {
-            throw new RuntimeException("Screen is inactive");
-        }
-        return screenMapper.screenToReadDto(screen);
-    }
-
-    @Override
-    public List<ReadDtoScreen> getAllScreens() {
-        List<Screen> screenList = screenRepository.findAll()
-                .stream()
-                .filter(Screen::getActive)
-                .collect(Collectors.toList());
-
-        return screenMapper.screenListToReadDtoList(screenList);
-    }
 
     @Override //todo. ver si es necesario. FACU DICE QUE SÍ PORQUE CAMBIA FUNCTION DETAILS!!!
     public ReadDtoScreen updateScreen(String id, UpdateDtoScreen updateDtoScreen) {
@@ -89,7 +64,7 @@ public class ScreenServiceImpl implements ScreenService {
     @Override
     public List<ReadDtoScreen> selectScreenByCinemaIdAndMovieId(String cinemaId, String movieId) {
         
-        List<Screen> screens = fdr.findByCinemaIdAndMovieId(cinemaId, movieId);
+        List<Screen> screens = fdr.findByCinemaIdAndMovieIdAndActive(cinemaId, movieId,true);
         return screenMapper.screenListToReadDtoList(screens);
     }
 
