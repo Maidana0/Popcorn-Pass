@@ -10,12 +10,15 @@ import com.mercadopago.resources.payment.Payment;
 import com.mercadopago.resources.preference.Preference;
 import com.s1511.ticketcine.application.dto.mercadopago.MercadoPagoResponse;
 import com.s1511.ticketcine.application.dto.mercadopago.RequestTicketDto;
+import com.s1511.ticketcine.domain.entities.Seat;
 import com.s1511.ticketcine.domain.entities.Ticket;
+import com.s1511.ticketcine.domain.repository.SeatRepository;
 import com.s1511.ticketcine.domain.repository.TicketRepository;
 import com.s1511.ticketcine.domain.services.MercadoPagoService;
 import com.s1511.ticketcine.domain.services.SeatService;
 import com.s1511.ticketcine.domain.services.TicketService;
 
+import com.s1511.ticketcine.domain.utils.SeatEnum;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -29,6 +32,7 @@ public class MercadoPagoServiceImpl implements MercadoPagoService {
     public final TicketService ticketService;
     public final TicketRepository ticketRepository;
     public final SeatService seatService;
+    public final SeatRepository seatRepository;
 
     @Override
     public String createPayment(RequestTicketDto requestTicketDto)
@@ -49,7 +53,7 @@ public class MercadoPagoServiceImpl implements MercadoPagoService {
 
         PreferenceRequest request =
                 PreferenceRequest.builder().items(items).externalReference(ticketId)
-                        .notificationUrl("https://52d3-2803-9800-9885-50d3-18bb-17b6-36fa-2a0e.ngrok-free.app/mp/response?source_news=webhooks").build();
+                        .notificationUrl("https://7332-2803-9800-9885-50d3-ddab-e829-9479-23f0.ngrok-free.app/mp/response?source_news=webhooks").build();
         //Con la lista se hace la petición, que funciona como cuerpo del post a MP.
         Preference preferenceResponse = client.create(request); //Genera el link para pagar esto (la request).
 
@@ -68,6 +72,14 @@ public class MercadoPagoServiceImpl implements MercadoPagoService {
                     .orElseThrow(() -> new EntityNotFoundException(
                             "No se encuentra ticket con el id " + ticketId));
             ticket.setActive(true);
+
+            for (Seat seat : ticket.getSeatsIds()){
+                seat.setOccupied(true);
+                seat.setSeatEnum(SeatEnum.OCCUPIED);
+                seat.setTicket(ticket);
+                seatRepository.save(seat);
+            }
+
             Ticket savedTicket = ticketRepository.save(ticket);
         }
         seatService.lookForPreviousUser(ticketId);
