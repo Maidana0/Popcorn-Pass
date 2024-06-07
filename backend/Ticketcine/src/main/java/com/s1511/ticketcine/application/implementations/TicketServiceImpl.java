@@ -56,7 +56,6 @@ public class TicketServiceImpl implements TicketService {
 
         String movieName = movie.getTitle();
 
-
         List<Seat> seatEntityList = new ArrayList<>();
         List<String> seatsList = requestDto.seatsIds();
         for (String id : seatsList) {
