@@ -32,6 +32,7 @@ public class MovieServiceImpl implements MovieService {
     public ResponseEntity<?> saveLastestMovies() {
         String today = LocalDate.now().plusDays(7).toString();
         String urlTemplate = "https://api.themoviedb.org/3/discover/movie?page=%d&primary_release_date.gte=" + today + "&primary_release_date.lte=" + today + "&sort_by=primary_release_date.asc";
+
         HttpHeaders headers = new HttpHeaders();
         HttpEntity<String> entity;
         RestTemplate restTemplate = new RestTemplate();
