@@ -38,4 +38,8 @@ public class FunctionDetailsController {
     public ResponseEntity<List<ReadDtoFunctionDetails>> getFunctionsDetailsByMovieId(@PathVariable @NotNull String movieId){
         return ResponseEntity.ok(functionDetailsService.getFunctionsDetailsByMovieId(movieId));
     }
+    @GetMapping("/firsCreateFunctions")
+    public void createFirstFunctionsForScreen(){
+        functionDetailsService.createFirstFunctionsForScreen();
+    }
 }
