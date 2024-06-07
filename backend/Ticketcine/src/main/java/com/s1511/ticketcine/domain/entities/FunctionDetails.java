@@ -24,5 +24,3 @@ public class FunctionDetails {
     private List<Seat> seatsList;
     private Boolean active;
 }
-
-// TODO. VER DTOS Y MÉTODOS PERTINENTES.

@@ -12,6 +12,7 @@ import com.s1511.ticketcine.application.implementations.MovieServiceImpl;
 import com.s1511.ticketcine.domain.entities.Movie;
 import com.s1511.ticketcine.domain.services.MovieService;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @RequiredArgsConstructor
@@ -43,7 +44,7 @@ public class MovieController {
         return ResponseEntity.ok(movieService.getMovieByTitle(title));
     }
     @GetMapping("/byReleaseDate/{releaseDate}")
-    public ResponseEntity<?> findByReleaseDate(@PathVariable @NotNull LocalDateTime releaseDate){
+    public ResponseEntity<?> findByReleaseDate(@PathVariable @NotNull LocalDate releaseDate){
         return ResponseEntity.ok(movieService.findByReleaseDate(releaseDate));
     }
     @GetMapping("/byAge/{agePlus18}")
@@ -54,7 +55,7 @@ public class MovieController {
     public ResponseEntity<?> getMovieByThreeD(@PathVariable @NotNull Boolean threeD){
         return ResponseEntity.ok(movieService.getMovieByThreeD(threeD));
     }
-    /*@GetMapping("/getByGendre/{gendre}")
+    /*@GetMapping("/byGendre/{gendre}")
     public ResponseEntity<?> getMovieByGenre(@PathVariable @NotNull String genre){
         return ResponseEntity.ok(movieService.getMovieByGenre(genre));
     }*/
