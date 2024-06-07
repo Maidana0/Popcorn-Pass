@@ -1,13 +1,11 @@
-import CineSelected from "../molecules/CineSelected"
+import { Box } from "@mui/material"
 
 const SelectScreen = () => {
 
     return (
-        <div>
-            <CineSelected
-            localDisabled={true}
-            />
-        </div>
+        <Box sx={{}}>
+
+        </Box>
     )
 }
 

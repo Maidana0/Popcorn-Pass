@@ -18,12 +18,13 @@ export const useCinemaStore = createWithEqualityFn<ICinemaState>()(
             currentCity: "empty",
             setCurrentCity: (newValue) => {
                 const { currentCity } = get()
-                if (newValue == currentCity) return;
+                if (newValue == currentCity && newValue == "empty") return;
                 set(() => ({ currentCity: newValue }))
             },
 
             currentCinema: "empty",
             setCurrentCinema: (newValue) => {
+
                 const { currentCinema } = get()
                 if (newValue == currentCinema) return;
                 set(() => ({ currentCinema: newValue }))

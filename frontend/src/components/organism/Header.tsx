@@ -25,7 +25,7 @@ const Header = () => {
                         height={48}
                     />
                     <Typography variant="h5" component={Link} href="/"  >
-                        CinemApp
+                        PopcornPass
                     </Typography>
                 </Box>
 

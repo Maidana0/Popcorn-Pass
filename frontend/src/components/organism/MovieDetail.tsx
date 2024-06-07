@@ -26,6 +26,7 @@ const MovieDetail: FC<{ movie: IMovie }> = ({ movie }) => {
                         releaseDate={movie.releaseDate || "26.7.2024"}
                         title={movie.title || "Deadpool And Wolverine"}
                         runtime="1h30m"
+                        threeD={movie.threeD ? "3D" : false}
                         vote_average={AVERAGE}
                         vote_count={1.612}
                     />
@@ -33,8 +34,8 @@ const MovieDetail: FC<{ movie: IMovie }> = ({ movie }) => {
                     <MovieDetailContent
                         genre={movie.genre || ["acción", "comedia"]}
                         censorship={undefined}
-                        certification={undefined}
-                        original_language={undefined}
+                        certification={movie.adult ? "+18" : "ATP"}
+                        original_language={movie.subtitle ? "INGLÉS" : "ESPAÑOL"}
                     />
 
                     <MovieDescriptionDetail
@@ -44,7 +45,7 @@ const MovieDetail: FC<{ movie: IMovie }> = ({ movie }) => {
                 </Box>
             </Box>
         </Box>
-        
+
 
     </>)
 }

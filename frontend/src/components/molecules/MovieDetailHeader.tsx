@@ -4,10 +4,9 @@ import { Box, Button, Typography, useMediaQuery, useTheme } from '@mui/material'
 import Image from 'next/image'
 import CalificationStar from '../atoms/CalificationStar'
 
-// width={{ xs: "100%",sm:"43%", md: 290 }}
 
 
-const HeaderDetail = ({ title, runtime, releaseDate, vote_average, vote_count }: IMovieHeaderDetail) => {
+const HeaderDetail = ({ title, runtime, releaseDate, vote_average, vote_count, threeD }: IMovieHeaderDetail) => {
   const theme = useTheme()
   const isMatch = useMediaQuery(theme.breakpoints.down("md"))
 
@@ -23,7 +22,7 @@ const HeaderDetail = ({ title, runtime, releaseDate, vote_average, vote_count }:
         </Typography>
         <Typography variant="body2" marginTop={1} lineHeight={"21px"} fontSize={16} fontWeight={400}
           color={"var(--light-gray-color)"}>
-          {runtime} ● {releaseDate}
+          {threeD?? runtime} ● {releaseDate}
         </Typography>
       </Box>
 

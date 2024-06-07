@@ -9,7 +9,7 @@ const inter = Inter({ subsets: ["latin"] });
 export const metadata: Metadata = {
   generator: "Next.js",
   referrer: "origin-when-cross-origin",
-  title: "CinemApp",
+  title: "PopcornPass",
   description: "Proyecto en proceso...",
   keywords: "cines, cine, cartelera, estrenos, estreno, horarios, horario, preventas, próximos estrenos, proximos estrenos, eventos, compra online, compra candy online, candy, concesión, cine fan, complejos, argentina, PREMIUM, COMFORT, 2D, 3D, 4D, XD, DBOX",
   authors: [{ name: "Maidana Franco" }, { name: "Nordinelli Franco" }],
