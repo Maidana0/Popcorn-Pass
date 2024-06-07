@@ -5,7 +5,6 @@ import { getCities } from '@/app/peliculas/[movies]/page'
 import dynamic from 'next/dynamic'
 const BackButton = dynamic(() => import('@/components/atoms/BackButton'), { ssr: false })
 const SelectCine = dynamic(() => import('@/components/molecules/SelectCine'), { ssr: false })
-const SelectScreen = dynamic(() => import('@/components/organism/SelectScreen'), { ssr: false })
 
 type Props = { params: { id: string } }
 
@@ -31,7 +30,6 @@ const Movie = async ({ params }: Props) => {
             <h2>{(movie.title).toUpperCase()}</h2>
 
             <SelectCine cities={cities} />
-            <SelectScreen />
 
         </Container>
     </>

@@ -17,12 +17,14 @@ public interface MovieService {
     ReadDtoMovie getMovieById(String id);
     List<ReadDtoMovie> getActiveMovieList();
     ReadDtoMovie getMovieByTitle(String title);
-    List<ReadDtoMovie> findByReleaseDate(LocalDateTime time);
+    List<ReadDtoMovie> findByReleaseDate(LocalDate time);
    // List<ReadDtoMovie> getMovieByGenre(String gendre);
     List<ReadDtoMovie> getMovieByAge(Boolean agePlus18);
     List<ReadDtoMovie> getMovieByThreeD(Boolean threeD);
     List<String> assignGenre(List<Integer> genre);
     List<Movie> findBySubtitleAndActive(Boolean subtitle);
     Double findAvgRateByMovieId(String movieId);
-    String getRandomMovieId();
+    String getRandomMovieId(Integer i);
+    String getRandomMovieId2();//metodo para las primeras funciones
+    void outdateMovie();
 }

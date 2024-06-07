@@ -4,6 +4,8 @@ import type { Metadata } from 'next'
 import dynamic from 'next/dynamic'
 import Link from 'next/link'
 import CommentList from '@/components/organism/commentList'
+import SeatSelector from '@/components/molecules/SeatSelector'
+import { Seat, SeatStatus } from '@/utils/types'
 
 
 const BackButton = dynamic(() => import('@/components/atoms/BackButton'), { ssr: false })
@@ -25,6 +27,22 @@ export const getData = async (id: string) => {
 const Movie = async ({ params }: Props) => {
     const { id } = params
     const movie = await getData(id)
+    const seats: Seat[] = [
+        { id: 1, seatNumber: "asd", status: SeatStatus.Available },
+        { id: 2, seatNumber: "asd", status: SeatStatus.Available },
+        { id: 3, seatNumber: "asd", status: SeatStatus.Occupied },
+        { id: 4, seatNumber: "asd", status: SeatStatus.Available },
+        { id: 5, seatNumber: "asd", status: SeatStatus.Available },
+        { id: 6, seatNumber: "asd", status: SeatStatus.Available },
+        { id: 7, seatNumber: "asd", status: SeatStatus.Available },
+        { id: 8, seatNumber: "asd", status: SeatStatus.Occupied },
+        { id: 9, seatNumber: "asd", status: SeatStatus.Available },
+        { id: 15, seatNumber: "asd", status: SeatStatus.Available },
+        { id: 11, seatNumber: "asd", status: SeatStatus.Available },
+        { id: 12, seatNumber: "asd", status: SeatStatus.Available },
+        { id: 13, seatNumber: "asd", status: SeatStatus.Occupied },
+        { id: 14, seatNumber: "asd", status: SeatStatus.Available },
+        { id: 25, seatNumber: "asd", status: SeatStatus.Available }];
     return <>
         <BackButton />
 
@@ -36,6 +54,7 @@ const Movie = async ({ params }: Props) => {
         </Container>
 
         <CommentList id={id}/>
+        <SeatSelector seats={seats} />
     </>
 }
 

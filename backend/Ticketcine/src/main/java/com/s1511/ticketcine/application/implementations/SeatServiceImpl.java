@@ -1,12 +1,9 @@
 package com.s1511.ticketcine.application.implementations;
 
-import com.s1511.ticketcine.application.dto.seat.RequestDtoSeat;
 import com.s1511.ticketcine.application.dto.seat.ResponseDtoSeat;
 import com.s1511.ticketcine.application.dto.seat.ReturnedSeatsDto;
-import com.s1511.ticketcine.domain.entities.FunctionDetails;
 import com.s1511.ticketcine.domain.entities.Ticket;
 import com.s1511.ticketcine.domain.entities.User;
-import com.s1511.ticketcine.domain.repository.FunctionDetailsRepository;
 import com.s1511.ticketcine.domain.repository.TicketRepository;
 import com.s1511.ticketcine.domain.repository.UserRepository;
 
@@ -24,8 +21,6 @@ import com.s1511.ticketcine.domain.services.SeatService;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
-import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @Service
@@ -35,15 +30,14 @@ public class SeatServiceImpl implements SeatService {
     private final UserRepository userRepository;
     private final TicketRepository ticketRepository;
     private final SeatMapper seatMapper;
-    private final FunctionDetailsRepository functionDetailsRepository;
     private final UserService userService;
 
     @Override//METODO INTERNO PARA CREAR LA SALA.
     public List<Seat> createSeatMatrix(String functionDetailsId) {
         List<Seat> seatsMatrix = new ArrayList();
 
-        for (int i = 0; i < 10; i++) {
-            for (int j = 1; j < 6; j++) {
+        for (int i = 0; i < 6; i++) {
+            for (int j = 1; j < 8; j++) {
                 String letter = "";
 
                 if (i == 0){
