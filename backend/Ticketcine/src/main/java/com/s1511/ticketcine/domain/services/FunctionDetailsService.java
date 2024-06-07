@@ -9,9 +9,9 @@ import java.util.List;
 
 public interface FunctionDetailsService {
 
-    ReadDtoMovie getMovieById(String idMovie);
     void createFunctionsForScreen();
+
     List<ReadDtoFunctionDetails> getFunctionsDetailsByCinemaIdAndMovieId(String cinemaId, String movieId);
+
     List<ReadDtoFunctionDetails> getFunctionsDetailsByMovieId(String movieId);
-    void createFirstFunctionsForScreen();
 }

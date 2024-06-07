@@ -25,6 +25,5 @@ public interface MovieService {
     List<Movie> findBySubtitleAndActive(Boolean subtitle);
     Double findAvgRateByMovieId(String movieId);
     String getRandomMovieId(Integer i);
-    String getRandomMovieId2();//metodo para las primeras funciones
     void outdateMovie();
 }
