@@ -20,7 +20,7 @@ public class FunctionDetailsController {
 
 
     @GetMapping("screenByMovieId/{idMovie}")
-    public ResponseEntity<ReadDtoMovie> getScreenByMovieId(@PathVariable String idMovie){
+    public ResponseEntity<ReadDtoMovie> getScreenByMovieId(@PathVariable @NotNull String idMovie){
         ReadDtoMovie dto = functionDetailsService.getMovieById(idMovie);
         return ResponseEntity.ok(dto);
     }
@@ -31,7 +31,7 @@ public class FunctionDetailsController {
     }
 
     @GetMapping("/functionDetailsByCinemaIdAndMovieId/{cinemaId}/{movieId}")
-    public ResponseEntity<List<ReadDtoFunctionDetails>> getFunctionsDetailsByCinemaIdAndMovieId(@PathVariable String cinemaId,@PathVariable String movieId){
+    public ResponseEntity<List<ReadDtoFunctionDetails>> getFunctionsDetailsByCinemaIdAndMovieId(@PathVariable @NotNull String cinemaId,@PathVariable String movieId){
         return ResponseEntity.ok(functionDetailsService.getFunctionsDetailsByCinemaIdAndMovieId(cinemaId,movieId));
     }
     @GetMapping("/functionDetailsByMovieId/{movieId}")

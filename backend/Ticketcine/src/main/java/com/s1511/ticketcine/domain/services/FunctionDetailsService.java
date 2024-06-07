@@ -13,4 +13,5 @@ public interface FunctionDetailsService {
     void createFunctionsForScreen();
     List<ReadDtoFunctionDetails> getFunctionsDetailsByCinemaIdAndMovieId(String cinemaId, String movieId);
     List<ReadDtoFunctionDetails> getFunctionsDetailsByMovieId(String movieId);
+    void createFirstFunctionsForScreen();
 }
