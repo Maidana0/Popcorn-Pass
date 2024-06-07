@@ -97,10 +97,6 @@ public class ScreenServiceImpl implements ScreenService {
     public List<FunctionDetails> findMoviesNamesByCinemaId(String cinemaId) {
         var cinemaFunctionDetails = screenRepository.findFunctionDetailsByCinemaId(cinemaId);
         List<String> cinemaMovieNames = movieRepository.findTitleByIdAndActive(cinemaFunctionDetails.iterator().next().getMovieId(),true);
-
-
-
-
         return null;
     }
 
