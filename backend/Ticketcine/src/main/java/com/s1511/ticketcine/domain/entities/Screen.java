@@ -27,6 +27,6 @@ public class Screen {
     @JoinColumn(name = "cinemaId", referencedColumnName = "id")
     private Cinema cinema;
 
-    private Boolean active;
+    private boolean active;
 
 }

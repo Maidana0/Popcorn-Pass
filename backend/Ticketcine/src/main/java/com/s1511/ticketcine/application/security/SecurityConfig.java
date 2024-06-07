@@ -47,7 +47,7 @@ public class SecurityConfig {
             "/login",
             // MOVIE
             "/movie/**",
-            // MP
+            // MERCADO PAGO
             "/mp/response",
             //CINES Y SALAS
             "/screens/**",
