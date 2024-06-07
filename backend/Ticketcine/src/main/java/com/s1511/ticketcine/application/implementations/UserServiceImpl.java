@@ -88,10 +88,12 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    @Transactional
     public void claimMoviePoints(Double moviePoints, String userId){
-        User user = userRepository.findByIdAndActive(userId, true)
-                .orElseThrow(() -> new EntityNotFoundException("No se puede encontrar el usuario con el id " + userId));
-        user.setMoviePoints(moviePoints);
+            User user = userRepository.findByIdAndActive(userId, true)
+                    .orElseThrow(() -> new EntityNotFoundException("No se puede encontrar el usuario con el id " + userId));
+            user.setMoviePoints(user.getMoviePoints() + moviePoints);
+            userRepository.save(user);
     }
 
 }

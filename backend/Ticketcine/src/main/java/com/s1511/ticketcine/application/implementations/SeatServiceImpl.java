@@ -106,6 +106,7 @@ public class SeatServiceImpl implements SeatService {
     }
 
     @Override
+    @Transactional
     public Boolean returnSeat(String ticketId, ReturnedSeatsDto returnedSeatsIds) {
 
         Ticket ticket = ticketRepository.findById(ticketId)
@@ -157,12 +158,13 @@ public class SeatServiceImpl implements SeatService {
         Ticket ticket = ticketRepository.findById(ticketId)
                 .orElseThrow(() -> new EntityNotFoundException("El ticket no existe"));
 
-        Double moviePoints = ticket.getValue() / ticket.getSeatsIds().toArray().length;
+        Double moviePoints = (ticket.getValue() / ticket.getSeatsIds().toArray().length) * 0.9;
 
         for (Seat seat:ticket.getSeatsIds()) {
             if(seat.getPreviousUser()!= null){
                userService.claimMoviePoints(moviePoints, seat.getPreviousUser().getId());
-                seat.setPreviousUser(null);
+               seat.setPreviousUser(null);
+               seatRepository.save(seat);
             }
         }
     }
