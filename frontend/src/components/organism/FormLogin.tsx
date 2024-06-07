@@ -33,8 +33,7 @@ const FormLogin = () => {
             router.replace("/")
         }
     }, [isLogged, router])
-    // EN PROCESO
-    if(isLogged) return
+    if (isLogged) return
     return (
         <Box
             component="form"
@@ -43,7 +42,9 @@ const FormLogin = () => {
 
             <FieldsLogin register={register} errors={errors} />
 
-            {message && <Typography textAlign="center" children={message} color={"darkred"} />}
+            {message && <Typography textAlign="center" color={"darkred"}>
+                {message}
+            </Typography>}
 
             <Divider sx={{ bgcolor: "var(--gray-color)", margin: "12px 0" }} />
 
@@ -55,7 +56,9 @@ const FormLogin = () => {
                 Registrarme
             </Button>
 
-            <Button variant="text" LinkComponent={Link} href="#" children="Recuperar mi cuenta" color="primary" />
+            <Button variant="text" LinkComponent={Link} href="#" color="primary">
+                Recuperar mi cuenta
+            </Button>
         </Box>
     )
 }

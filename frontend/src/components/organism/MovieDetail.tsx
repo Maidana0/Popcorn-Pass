@@ -1,4 +1,3 @@
-"use client"
 import HeaderDetail from "../molecules/MovieDetailHeader"
 import { Box } from "@mui/material"
 import MovieImageDetail from "../atoms/MovieImageDetail"
@@ -10,8 +9,6 @@ import MovieDescriptionDetail from "../atoms/MovieDescriptionDetail"
 const AVERAGE = 4.5
 
 const MovieDetail: FC<{ movie: IMovie }> = ({ movie }) => {
-    // console.log(movie);
-
     return (<>
         <Box margin="1.5rem auto">
             <Box sx={{
@@ -29,6 +26,7 @@ const MovieDetail: FC<{ movie: IMovie }> = ({ movie }) => {
                         releaseDate={movie.releaseDate || "26.7.2024"}
                         title={movie.title || "Deadpool And Wolverine"}
                         runtime="1h30m"
+                        threeD={movie.threeD ? "3D" : false}
                         vote_average={AVERAGE}
                         vote_count={1.612}
                     />
@@ -36,8 +34,8 @@ const MovieDetail: FC<{ movie: IMovie }> = ({ movie }) => {
                     <MovieDetailContent
                         genre={movie.genre || ["acción", "comedia"]}
                         censorship={undefined}
-                        certification={undefined}
-                        original_language={undefined}
+                        certification={movie.adult ? "+18" : "ATP"}
+                        original_language={movie.subtitle ? "INGLÉS" : "ESPAÑOL"}
                     />
 
                     <MovieDescriptionDetail
@@ -47,7 +45,7 @@ const MovieDetail: FC<{ movie: IMovie }> = ({ movie }) => {
                 </Box>
             </Box>
         </Box>
-        
+
 
     </>)
 }
@@ -61,4 +59,7 @@ ME FALTA OBTENER:
     -runtime
     -vote_average
     -vote_count
+
+      .url("https://api.themoviedb.org/3/movie/{movie_id}/release_dates")
+
 */

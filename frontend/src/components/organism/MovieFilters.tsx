@@ -1,11 +1,13 @@
 "use client"
 import { useForm } from "react-hook-form"
-import { Container, SxProps, Box } from "@mui/material"
+import { Container, SxProps } from "@mui/material"
 import FilterModal from "../atoms/FilterModal"
-import InputSelected, { IOptionsValue } from "../atoms/InputSelected"
+import { IOptionsValue } from "../atoms/InputSelected"
 import { useEffect, useState } from "react"
 import { fetchData } from "@/utils/fetchData"
-import { useMoviesState } from "@/store/movies-store"
+import { useCinemaStore } from "@/store/cinema-store"
+import CineSelected from "../molecules/SelectCine"
+import SelectCine from "../molecules/SelectCine"
 
 
 const styleContainer: SxProps = {
@@ -17,65 +19,27 @@ const styleContainer: SxProps = {
   flexWrap: "wrap",
 }
 
+const moviesByCinema = async (cinemaId: string) => {
+  // const moviesList = await fetchData(`cinema/moviesByCine/${cinemaId}`)
+  console.log("ID DEL CINE: " + cinemaId);
+  console.log("LISTA DE PELICULAS: ");
+  // console.log(moviesList);
+}
 
-
-
-const MovieFilters = () => {
-  const [citiesList, setCitiesList] = useState<string[] | false>(false)
-  const [cinemaList, setCinemaList] = useState<IOptionsValue[] | false>(false)
-  // const { setMovies } = useMoviesState(state => ({ setMovies: state.setMovies }))
-  const { register, watch } = useForm()
-  const { city, cinema } = watch()
-
+const MovieFilters = ({ cities }: { cities: string[] }) => {
+  const { currentCinema } = useCinemaStore(state => ({
+    currentCinema: state.currentCinema
+  }))
   useEffect(() => {
-    if (city == "empty" || cinema == "empty" || !cinema) return
+    if (currentCinema == "empty" || !currentCinema) return
     // CAMBIAR UN ESTADO GLOBAL EN EL QUE ESTARÁN LAS PELICULAS SEGÚN EL CINE SELECCIONADO
-    const moviesByCinema = async () => {
-      const moviesList = await fetchData(`cinema/moviesByCine/${cinema}`, "GET")
-      console.log("LISTA DE PELICULAS: " + moviesList);
-      console.log("ID DEL CINE: " + cinema);
-      
-      
-    }
-    moviesByCinema()
-    // setMovies({ city, cinema })
-  }, [cinema])
-
-  useEffect(() => {
-    const listFetch = async (): Promise<any> => {
-      if (!city) {
-        // PEDIR LISTA DE CIUDADES
-        const res = await fetchData("cinema/cities", "GET");
-        if (!res.error) setCitiesList(res)
-        return
-      }
-
-
-      if (city !== "empty") {
-        //  PEDIR LISTA DE CINES DEPENDIENDO DE LA CIUDAD SELECCIONADA
-        const res = await fetchData(`cinema/cinemasByCity/${city}`, "GET")
-        const dtoMovies = res.map(({ id, name }: { id: string, name: string }) => ({ value: id, name }))
-        setCinemaList(dtoMovies)
-        return
-      }
-    }
-    listFetch()
-  }, [city])
+    moviesByCinema(currentCinema)
+  }, [currentCinema])
 
   return (
     <Container sx={styleContainer}>
-      <Box display="flex" justifyContent="space-between" alignItems="center" gap="1rem"
-        flexDirection={{ xs: "column", sm: "row" }}>
+      <SelectCine cities={cities} />
 
-        {citiesList && <InputSelected listTo={"Ciudades"}
-          valueAndName={citiesList} register={{ ...register("city") }}
-        />}
-
-        {cinemaList && (
-          <InputSelected listTo={"Cines"} optionsValue={cinemaList}
-            register={{ ...register("cinema") }} />)}
-
-      </Box>
       <FilterModal />
     </Container>
   )
