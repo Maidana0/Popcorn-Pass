@@ -29,14 +29,12 @@ public class MovieServiceImpl implements MovieService {
     private final String apiKey = "eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIxNTM3ZDM1NTI0NDRhOWFkNDY0YTRkMGFiZmE2NDU2OCIsInN1YiI6IjY2NGFiZDZhZGQ5ZDQyN2M0MTkzMjM0NSIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.PaUBAej7XojVla0L2N6Lo-eDbXQMrpPvnOgdKMk3H7E";
     private final MovieMapper movieMapper;
     private final MovieRepository movieRepository;
-    private final AppConfig appConfig;
-    private static final Logger logger = LoggerFactory.getLogger(MovieServiceImpl.class);
 
     @Transactional
     @Scheduled(cron = "0 0 0 * * *")
     public ResponseEntity<?> saveLastestMovies() {
-        LocalDate today = LocalDate.now();
-        String urlTemplate = "https://api.themoviedb.org/3/discover/movie?page=%d&primary_release_date.gte=%s&primary_release_date.lte=%s&sort_by=primary_release_date.asc";
+        String today = LocalDate.now().plusDays(7).toString();
+        String urlTemplate = "https://api.themoviedb.org/3/discover/movie?page=%d&primary_release_date.gte="+today+"&primary_release_date.lte="+today+"&sort_by=primary_release_date.asc";
         HttpHeaders headers = new HttpHeaders();
         HttpEntity<String> entity;
         RestTemplate restTemplate = new RestTemplate();
@@ -46,7 +44,7 @@ public class MovieServiceImpl implements MovieService {
         boolean hasMorePages = true;
 
         while (hasMorePages) {
-            String url = String.format(urlTemplate, page, today.plusDays(8).toString(), today.plusDays(8).toString());
+            String url = String.format(urlTemplate, page);
 
             headers.setAccept(Collections.singletonList(MediaType.APPLICATION_JSON));
             headers.setBearerAuth(apiKey);
@@ -215,27 +213,8 @@ public class MovieServiceImpl implements MovieService {
         return allMovies.get(randomIndex).getId();
     }
 
-    //metodo para las primeras funciones de la base de datos
-    public String getRandomMovieId2() {
-        List<Movie> allMovies = movieRepository.findByActive(true);
-        List<Movie> sellectedMovies = new ArrayList<>();
-
-        if (allMovies.isEmpty()) {
-            throw new RuntimeException("No movies found in the database");
-        }
-            for(Movie movie: allMovies) {
-                if(movie.getReleaseDate().isBefore(LocalDate.now())){
-                    sellectedMovies.add(movie);
-                }
-            }
-
-        Random random = new Random();
-        int randomIndex = random.nextInt(sellectedMovies.size());
-        return allMovies.get(randomIndex).getId();
-    }
-
-
     @Override
+    @Transactional
     @Scheduled(cron = "0 0 0 * * *")
     public void outdateMovie() {
         List<Movie> allMovies = movieRepository.findAll();
