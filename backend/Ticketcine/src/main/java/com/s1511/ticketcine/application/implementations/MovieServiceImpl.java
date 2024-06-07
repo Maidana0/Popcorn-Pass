@@ -46,7 +46,7 @@ public class MovieServiceImpl implements MovieService {
         boolean hasMorePages = true;
 
         while (hasMorePages) {
-            String url = String.format(urlTemplate, page, today.plusDays(8).toString(), today.plusDays(8).toString());
+            String url = String.format(urlTemplate, page, today.minusDays(6).toString(), today.plusDays(7).toString());
 
             headers.setAccept(Collections.singletonList(MediaType.APPLICATION_JSON));
             headers.setBearerAuth(apiKey);
