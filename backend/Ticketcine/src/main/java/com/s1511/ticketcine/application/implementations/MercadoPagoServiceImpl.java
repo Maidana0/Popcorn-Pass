@@ -20,6 +20,7 @@ import com.s1511.ticketcine.domain.services.TicketService;
 
 import com.s1511.ticketcine.domain.utils.SeatEnum;
 import jakarta.persistence.EntityNotFoundException;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import java.math.BigDecimal;
@@ -35,6 +36,7 @@ public class MercadoPagoServiceImpl implements MercadoPagoService {
     public final SeatRepository seatRepository;
 
     @Override
+    @Transactional
     public String createPayment(RequestTicketDto requestTicketDto)
             throws MPException, MPApiException {
         String ticketId = ticketService.createTicket(requestTicketDto);
