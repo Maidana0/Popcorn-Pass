@@ -13,7 +13,8 @@ const PlayingNow = ({ movies }: { movies: IMovie[] }) => {
     const { page, setTotalPages } = useMoviesPagination(state => (
         { page: state.page, setTotalPages: state.setTotalPages }
     ), shallow)
-
+    console.log(movies);
+    
     useEffect(() => {
         const totalMovies = movies.length;
         const totalPages = Math.ceil(totalMovies / ITEMS_PER_PAGES);

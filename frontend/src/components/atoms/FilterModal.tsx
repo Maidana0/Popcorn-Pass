@@ -21,9 +21,9 @@ const style: SxProps = {
 };
 const styleButton: SxProps = {
     bgcolor: "var(--lightBlack)", borderColor: "transparent",
-    width:"fit-content",
+    width: "fit-content",
     color: "var(--gray-color)",
-    marginLeft:"auto",
+    marginLeft: "auto",
     "&:hover": {
         borderColor: "var(--gray-color)",
         bgcolor: "#000"
@@ -39,8 +39,9 @@ const FilterModal = () => {
 
     return (
         <>
-            <Button sx={styleButton} color="inherit" variant="outlined" onClick={handleOpen}
-                children={isMatch ? "Filtrar" : "Filtrar por categoría"} />
+            <Button sx={styleButton} color="inherit" variant="outlined" onClick={handleOpen}>
+                {isMatch ? "Filtrar" : "Filtrar por categoría"}
+            </Button>
             <Modal
                 keepMounted
                 open={open}
@@ -57,8 +58,12 @@ const FilterModal = () => {
                     </Typography>
 
                     <Container sx={{ marginTop: "1.5rem", textAlign: "center", }}>
-                        <Button children="filtrar" variant="contained" sx={{ marginRight: "1rem" }} onClick={handleClose} />
-                        <Button children="cerrar" variant="contained" color="error" onClick={handleClose} />
+                        <Button variant="contained" sx={{ marginRight: "1rem" }} onClick={handleClose}>
+                            filtrar
+                        </Button>
+                        <Button variant="contained" color="error" onClick={handleClose}>
+                            cerrar
+                        </Button>
                     </Container>
                 </Box>
             </Modal>

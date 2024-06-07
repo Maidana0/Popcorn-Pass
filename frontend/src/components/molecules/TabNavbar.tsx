@@ -4,17 +4,18 @@ import Link from "next/link";
 import routes from "@/data/routesData";
 import isLinkActive from "@/utils/isLinkActive";
 import { Fragment } from "react";
+import { usePathname } from "next/navigation";
 
 const TabNavbar = () => {
     const theme = useTheme()
     const isMatch = useMediaQuery(theme.breakpoints.down("md"))
-
-    const linkActive = isLinkActive()
+    const pathName = usePathname()
+    const isActive = isLinkActive(pathName)
 
     if (isMatch) { return }
     return <Fragment>
         <Tabs component={"ul"}
-            value={linkActive !== -1 ? linkActive : false}
+            value={isActive !== -1 ? isActive : false}
             textColor="inherit"
             indicatorColor="secondary"
             sx={{

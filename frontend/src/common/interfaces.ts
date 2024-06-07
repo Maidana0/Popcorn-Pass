@@ -5,6 +5,7 @@ export interface IMovieHeaderDetail {
     runtime?: string,
     vote_average?: number,
     vote_count?: number,
+    threeD?: boolean | "3D",
 }
 export interface IMovieImage {
     description?: string | undefined,
@@ -22,6 +23,9 @@ export interface IMovieDescription {
 }
 
 export interface IMovieContentDetail extends IMovieInfoDetail, IMovieDescription {
+    // DATOS QUE SI LLEGAN DEL BACKEND (JAVA)
+    subtitle: boolean,
+    adult: boolean,
 
 }
 
