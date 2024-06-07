@@ -12,6 +12,11 @@ const BackButton = dynamic(() => import('@/components/atoms/BackButton'), { ssr:
 const MovieDetail = dynamic(() => import('@/components/organism/MovieDetail'), { ssr: true })
 type Props = { params: { id: string } }
 
+export const getData = async (id: string) => {
+    const res = await fetchData(`movie/${id}`);
+    return res;
+};
+
 export const generateMetadata = async (
     { params }: Props): Promise<Metadata> => {
     const { id } = params
@@ -19,10 +24,7 @@ export const generateMetadata = async (
     return { title: title + " - " + releaseDate.split("-")[0] }
 }
 
-export const getData = async (id: string) => {
-    const res = await fetchData(`movie/${id}`);
-    return res;
-};
+
 
 const Movie = async ({ params }: Props) => {
     const { id } = params
