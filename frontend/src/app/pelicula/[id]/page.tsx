@@ -3,9 +3,9 @@ import { Button, Container } from '@mui/material'
 import type { Metadata } from 'next'
 import dynamic from 'next/dynamic'
 import Link from 'next/link'
-import CommentList from '@/components/organism/commentList'
 import SeatSelector from '@/components/molecules/SeatSelector'
 import { Seat, SeatStatus } from '@/utils/types'
+import CommentList from '@/components/organism/CommentList'
 
 
 const BackButton = dynamic(() => import('@/components/atoms/BackButton'), { ssr: false })
