@@ -1,13 +1,14 @@
 import { fetchData } from '@/utils/fetchData'
-import { Button, Container } from '@mui/material'
+import { Button, Container, Typography } from '@mui/material'
 import type { Metadata } from 'next'
 import dynamic from 'next/dynamic'
 import Link from 'next/link'
 import CommentList from '@/components/organism/commentList'
 import SeatSelector from '@/components/molecules/SeatSelector'
 import { Seat, SeatStatus } from '@/utils/types'
+import { getCities } from '@/app/peliculas/[movies]/page'
 
-
+const SelectCine = dynamic(() => import('@/components/molecules/SelectCine'), { ssr: false })
 const BackButton = dynamic(() => import('@/components/atoms/BackButton'), { ssr: false })
 const MovieDetail = dynamic(() => import('@/components/organism/MovieDetail'), { ssr: true })
 type Props = { params: { id: string } }
@@ -28,6 +29,7 @@ export const generateMetadata = async (
 
 const Movie = async ({ params }: Props) => {
     const { id } = params
+    const cities = await getCities()
     const movie = await getData(id)
     const seats: Seat[] = [
         { id: 1, seatNumber: "asd", status: SeatStatus.Available },
@@ -47,7 +49,12 @@ const Movie = async ({ params }: Props) => {
         { id: 25, seatNumber: "asd", status: SeatStatus.Available }];
     return <>
         <BackButton />
-
+        <Container sx={{ display: "flex", justifyContent: "space-between", alignItems:"center", flexDirection:{ xs: "column", md: "row" }, gap:"1.4rem"}}>
+            <Typography variant="h4" component="h1" textAlign={{ xs: "center", md: "left" }}>
+                Consigue tu Entrada
+            </Typography>
+            <SelectCine cities={cities} />
+        </Container>
         <MovieDetail movie={movie} />
         <Container sx={{ mt: 2, mb: 5, width: "fit-content" }}>
             <Button variant="contained" color="warning" size="large" LinkComponent={Link} href={id + '/comprar-entrada'}>
@@ -57,6 +64,7 @@ const Movie = async ({ params }: Props) => {
 
         <CommentList id={id}/>
         <SeatSelector seats={seats} />
+
     </>
 }
 

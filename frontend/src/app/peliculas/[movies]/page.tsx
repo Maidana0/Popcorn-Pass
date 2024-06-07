@@ -50,7 +50,7 @@ const Page = async ({ params }: IProps) => {
         <Box component="div" width="95%" m="2.5rem auto" display="flex" alignItems="center" gap="1rem"
             sx={{ flexDirection: { xs: "column", md: "row" }, justifyContent: { xs: "center", md: "space-between" } }}>
 
-            <Typography variant="h3" textAlign={{ xs: "center", md: "left" }}>
+            <Typography variant="h3" component="h1" textAlign={{ xs: "center", md: "left" }}>
                 Peliculas Disponibles
             </Typography>
 
