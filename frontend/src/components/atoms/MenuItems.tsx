@@ -11,8 +11,9 @@ const MenuItems: FC<Props> = ({ handleClose, firstName, logOut }) => {
     return (
         <Fragment>
             <MenuItem onClick={handleClose}>
-                <Avatar sx={{ bgcolor: "var(--black)", color: "var(--gray-color)" }}
-                    children={firstName.charAt(0)} />
+                <Avatar sx={{ bgcolor: "var(--black)", color: "var(--gray-color)" }}>
+                    {firstName.charAt(0)}
+                </Avatar>
                 Editar perfil
             </MenuItem>
 

@@ -32,9 +32,13 @@ const MovieInfoDetail: FC<IMovieInfoDetail> = (movieInfoDetail) => {
           }}
         >
           <Typography component={"span"} variant="subtitle1" color="var(--light-gray-color)"
-            fontWeight={400} children={`${item.name}:`} />
+            fontWeight={400}>
+            {item.name}:
+          </Typography>
           <Typography component={"span"} variant="body1" color="var(--light-white-color)"
-            fontWeight={700} children={item.value} />
+            fontWeight={700}>
+            {item.value}
+          </Typography>
         </Box>
       ))}
     </Box >

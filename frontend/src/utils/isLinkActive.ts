@@ -1,10 +1,7 @@
 import routes from "@/data/routesData";
-import { usePathname } from "next/navigation";
 
 
-const isLinkActive = () => {
-    const pathName = usePathname()
-
+const isLinkActive = (pathName:string) => {
    const indexLinkActive=  routes.findIndex(route => {
         const splitRoute = route.path.split('/');
         if ((splitRoute.length - 1) == 1) {

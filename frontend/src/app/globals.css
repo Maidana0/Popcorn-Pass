@@ -19,7 +19,7 @@ body {
   background-color: var(--black);
   color: var(--white);
   min-height: 100vh;
-  min-width: 100vw;
+  max-width: 100vw;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -32,16 +32,19 @@ a {
 
 
 /* SCROLL DESIGN */
-body::-webkit-scrollbar {
+body::-webkit-scrollbar,
+.MuiDrawer-paper::-webkit-scrollbar {
   width: 7px;
   scroll-behavior: smooth;
 }
 
-body::-webkit-scrollbar-track {
-  background: var(--black);
+body::-webkit-scrollbar-track,
+.MuiDrawer-paper::-webkit-scrollbar-track {
+  background: #000;
 }
 
-body::-webkit-scrollbar-thumb {
+body::-webkit-scrollbar-thumb,
+.MuiDrawer-paper::-webkit-scrollbar-thumb {
   background-color: var(--yellow);
   border-radius: 5px;
 }

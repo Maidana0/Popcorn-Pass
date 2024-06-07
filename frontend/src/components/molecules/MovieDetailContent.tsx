@@ -7,7 +7,7 @@ const MovieDetailContent: FC<IMovieInfoDetail> = ({ genre, censorship, certifica
         <MovieInfoDetail
             genre={genre}
             censorship={censorship ?? "+16"}
-            certification={certification ?? "+16"}
+            certification={certification}
             original_language={original_language ?? "ingés"}
         />
     )
