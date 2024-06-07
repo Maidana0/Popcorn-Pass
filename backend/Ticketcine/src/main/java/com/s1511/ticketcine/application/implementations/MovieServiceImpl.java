@@ -36,7 +36,7 @@ public class MovieServiceImpl implements MovieService {
     @Scheduled(cron = "0 0 0 * * *")
     public ResponseEntity<?> saveLastestMovies() {
         LocalDate today = LocalDate.now();
-        String urlTemplate = "https://api.themoviedb.org/3/discover/movie?page=%d&primary_release_date.gte=%s&primary_release_date.lte=%s&sort_by=primary_release_date.asc";
+        String urlTemplate = "https://api.themoviedb.org/3/discover/movie?page=%d&primary_release_date.gte=%s&primary_release_date.lte=2024-06-13&sort_by=primary_release_date.asc";
         HttpHeaders headers = new HttpHeaders();
         HttpEntity<String> entity;
         RestTemplate restTemplate = new RestTemplate();
@@ -46,7 +46,7 @@ public class MovieServiceImpl implements MovieService {
         boolean hasMorePages = true;
 
         while (hasMorePages) {
-            String url = String.format(urlTemplate, page, today.minusDays(6).toString(), today.plusDays(7).toString());
+            String url = String.format(urlTemplate, page, today.minusDays(6).toString());
 
             headers.setAccept(Collections.singletonList(MediaType.APPLICATION_JSON));
             headers.setBearerAuth(apiKey);
