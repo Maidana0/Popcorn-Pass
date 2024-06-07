@@ -60,12 +60,18 @@ const FormRegister = () => {
             <Divider sx={{ bgcolor: "var(--gray-color)", margin: "12px 0" }} />
 
             {message &&
-                <Typography color="var(--yellow)" textAlign="center" variant="h5" children={message} />}
+                <Typography color="var(--yellow)" textAlign="center" variant="h5">
+                    {message}
+                </Typography>}
 
-            <Button type="submit" variant="contained" color="warning" children="Registrarme" />
+            <Button type="submit" variant="contained" color="warning">
+                Registrarme
+            </Button>
 
             <Button type="button" LinkComponent={Link} href={"/usuario/iniciar-sesion"} variant="contained"
-                children="Iniciar Sesión" color="info" sx={{ bgcolor: "var(--black)" }} />
+                color="info" sx={{ bgcolor: "var(--black)" }}>
+                Iniciar Sesión
+            </Button>
 
         </Box>
     )

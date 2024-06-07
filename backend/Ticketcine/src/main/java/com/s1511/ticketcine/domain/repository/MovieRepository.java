@@ -5,6 +5,7 @@ import org.springframework.stereotype.Repository;
 
 import com.s1511.ticketcine.domain.entities.Movie;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
@@ -16,7 +17,7 @@ public interface MovieRepository extends JpaRepository<Movie,String> {
 
     Optional<Movie> findByTitleAndActive(String title, Boolean active);
 
-    List<Movie> findByReleaseDateAndActive(LocalDateTime time, Boolean active);
+    List<Movie> findByReleaseDateAndActive(LocalDate time, Boolean active);
 
     //List<Movie> findByGenreAndActive(String genre, Boolean active);
 

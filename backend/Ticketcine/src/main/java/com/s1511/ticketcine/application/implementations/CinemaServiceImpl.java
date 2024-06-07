@@ -52,7 +52,7 @@ public class CinemaServiceImpl implements CinemaService {
         List<Screen> cinemaScreens = screenRepository.findByCinemaId(cinemaId);
         List<String> allCinemaMoviesId = new ArrayList();
         for (Screen screen : cinemaScreens){
-           var funtionDetails = functionDetailsRepository.findByScreenId(screen.getId());
+           var funtionDetails = functionDetailsRepository.findByScreenIdAndActive(screen.getId(),true);
            for (FunctionDetails functionDetail : funtionDetails){
                allCinemaMoviesId.add(functionDetail.getMovieId());
            }

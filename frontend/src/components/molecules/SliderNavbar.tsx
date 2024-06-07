@@ -7,13 +7,16 @@ import BoxButtonSvg from "@/components/atoms/BoxButtonSvg";
 import routes from "@/data/routesData";
 import isLinkActive from "@/utils/isLinkActive";
 import { Fragment } from "react";
+import { usePathname } from "next/navigation";
+
 
 
 const Navbar = () => {
     const theme = useTheme()
     const isMatch = useMediaQuery(theme.breakpoints.down("md"))
+    const pathName = usePathname()
+    const isActive = isLinkActive(pathName)
 
-    const isActive = isLinkActive()
 
     const { isSideMenuOpen, openSideMenu, closeSideMenu, layoutBackgroundColor } = useMenuState(state => ({
         isSideMenuOpen: state.isSideMenuOpen,
