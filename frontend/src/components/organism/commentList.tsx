@@ -1,5 +1,5 @@
 "use client";
-import { useState, useEffect, ChangeEvent, FormEvent } from 'react';
+import { useState, useEffect, ChangeEvent, FormEvent, SyntheticEvent } from 'react';
 import CalificationStar from '../atoms/CalificationStar';
 import { fetchData } from '../../utils/fetchData';
 import { useAuthStore } from "@/store/auth-store"; // Ajusta la ruta según tu estructura de proyecto
@@ -30,8 +30,8 @@ const CommentList: React.FC<{ id: string }> = ({ id }) => {
 
     ///ticket/u/{userId}/{active}
     const checkTicketPurchase = async () => {
-      const data = await fetchData(`ticket/u/${userId}/${false}`, 'GET', undefined, jwt);
-      setHasPurchasedTicket(data.hasPurchased);
+      const data = await fetchData(`ticket/u/${userId}/${true}`, 'GET', undefined, jwt);
+      setHasPurchasedTicket(true);
     };
 
     fetchComments();
@@ -42,13 +42,14 @@ const CommentList: React.FC<{ id: string }> = ({ id }) => {
     setNewComment(event.target.value);
   };
 
-  const handleRatingChange = (rating: number) => {
-    setNewRating(rating);
-  };
+
+  const handleRatingChange = (event: SyntheticEvent, newValue: number ) => setNewRating(newValue)
 
   const handleCommentSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+    
     if (newComment.trim() !== '') {
+      console.log(newRating)
       const commentData = {
         userId,
         movieId: id, 
@@ -56,6 +57,7 @@ const CommentList: React.FC<{ id: string }> = ({ id }) => {
         userRate: newRating,
       };
 
+      console.log("CommentData--->", commentData);
       const data = await fetchData(`comment/create`, 'POST', commentData, jwt);
       if (data.success) {
         setComments([...comments, data.comment]);
@@ -74,25 +76,20 @@ const CommentList: React.FC<{ id: string }> = ({ id }) => {
   return (
     <div>
       <h1>Comentarios de la Película</h1>
-      {isLogged ? (
-        hasPurchasedTicket ? (
-          <form onSubmit={handleCommentSubmit}>
-            <textarea
-              value={newComment}
-              onChange={handleCommentChange}
-              placeholder="Escribe tu comentario aquí..."
-              rows={4}
-              cols={50}
-            />
-            <br />
-            <CalificationStar active={true} vote_average={newRating} />
-            <button type="submit">Agregar comentario</button>
-          </form>
-        ) : (
-          <p>Debes haber comprado un ticket y visto la película para dejar un comentario.</p>
-        )
-      ) : (
-        <p>Debes estar autenticado para dejar un comentario.</p>
+      {isLogged && hasPurchasedTicket && (
+        <form onSubmit={handleCommentSubmit}>
+          <textarea
+            value={newComment}
+            onChange={handleCommentChange}
+            placeholder="Escribe tu comentario aquí..."
+            rows={4}
+            cols={50}
+          />
+          <br />
+          <CalificationStar active={true} newRating={newRating} handleStarChange={handleRatingChange}  />
+          
+          <button type="submit">Agregar comentario</button>
+        </form>
       )}
       
       <div>

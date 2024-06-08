@@ -66,7 +66,7 @@ const AboutUs: React.FC = () => {
           <h2 style={sectionTitleStyle}>Contáctanos</h2>
           <p style={paragraphStyle}>
             Si tienes alguna pregunta o deseas saber más sobre nuestros
-            servicios, no dudes en contactarnos en contacto@ticketera.com.
+            servicios, no dudes en contactarnos en peladoGuille@peladoGuille.com.
           </p>
         </section>
       </main>

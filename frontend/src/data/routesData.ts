@@ -18,7 +18,7 @@ const routes: ReadonlyArray<IRoute> = Object.freeze([
     },
     {
         name: "nosotros",
-        path: "/#"
+        path: "/nosotros"
     },
 ]);
 
