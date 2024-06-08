@@ -1,35 +1,46 @@
 "use client"
 import IFunctionDetail from '@/common/interface-functionDetail'
-// import { useCinemaStore } from '@/store/cinema-store'
-// import { fetchData } from '@/utils/fetchData'
 import { Button, Container, Typography, Grow, Grid, Box } from '@mui/material'
 import { FC, useEffect, useState } from 'react'
 import GridOption from '../atoms/GridOption'
+import { UseMoviefunction } from '@/store/movie-function-store'
+import { shallow } from 'zustand/shallow'
+import { useRouter, usePathname } from 'next/navigation'
 
-// HORA = {functionDate.toLocaleTimeString("es-ES", { hour: "2-digit", minute: "2-digit" })}
 
-
-const SelectRom: FC<{ functionDetail: IFunctionDetail[] }> = ({ functionDetail }) => {
-    // const { currentCinema } = useCinemaStore(state => ({ currentCinema: state.currentCinema }))
+const SelectRom: FC<{ listFunctionDetail: IFunctionDetail[] }> = ({ listFunctionDetail }) => {
+    const router = useRouter()
+    const currentPath = usePathname()
     const [isSelectingRoom, setIsSelectingRoom] = useState(false)
-    const [listDay, setListDay] = useState<string[]>([])
-    // movieId: "0651d3e4-fd14-41b9-8e29-28517a052934"
-    // schedule: "2024-06-10T21:00:00"
-    // screenId: "1"
+    const [groupedByDay, setGroupedByDay] = useState<Record<string, IFunctionDetail[]>>({})
+    const { setMovieFunctionDetail } = UseMoviefunction(state => ({
+        setMovieFunctionDetail: state.setMovieFunctionDetail
+    }), shallow)
+
+    const handleSelectState = () => setIsSelectingRoom(!isSelectingRoom)
+    const handleClickOnFunction = (functionDetail: IFunctionDetail) => {
+        setMovieFunctionDetail(functionDetail);
+        router.push(currentPath + "/comprar")
+    }
+
 
     useEffect(() => {
-        const days = new Set<string>();
-        functionDetail.forEach((data) => {
+        const grouped: Record<string, IFunctionDetail[]> = {};
+        listFunctionDetail.forEach((data) => {
             const functionDate = new Date(data.schedule);
-            const functionDay = functionDate.toLocaleDateString("es-ES", { weekday: "long" });
-            days.add(functionDay);
+            const functionDay = functionDate.toLocaleDateString("es-ES", { weekday: 'long', day: 'numeric', month: 'long' });
+            if (!grouped[functionDay]) {
+                grouped[functionDay] = [];
+            }
+            grouped[functionDay].push(data);
         });
-        setListDay(Array.from(days));
-    }, [])
+        setGroupedByDay(grouped);
+    }, [listFunctionDetail]);
 
+    return <Container sx={{ mt: 2, mb: 5, textAlign: "center" }}>
 
-    return (
-        <Container sx={{ mt: 2, mb: 5, textAlign: "center" }}>
+        <Box sx={{ display: isSelectingRoom ? "flex" : "none", flexDirection: "column" }}>
+
             <Grow in={isSelectingRoom}>
                 <Typography variant="h4" component="h1" p={3}>
                     Horarios
@@ -38,7 +49,7 @@ const SelectRom: FC<{ functionDetail: IFunctionDetail[] }> = ({ functionDetail }
 
             <Grow in={isSelectingRoom} style={{ transformOrigin: '0 0 0' }}  {...(isSelectingRoom ? { timeout: 1000 } : {})}  >
                 <Box sx={{ display: "flex", flexWrap: "wrap", justifyContent: { sm: "center", md: "space-between" } }}>
-                    {listDay.map(day =>
+                    {Object.entries(groupedByDay).map(([day, data]) =>
                         <Box key={day}
                             flexDirection="column"
                             borderRadius={3}
@@ -46,42 +57,38 @@ const SelectRom: FC<{ functionDetail: IFunctionDetail[] }> = ({ functionDetail }
                             bgcolor={"var(--lightBlack)"}
                             mb={3}>
                             <Typography
-                                variant="h4"
-                                color={"var(--light-gray-color)"}
-                                textTransform={"uppercase"}
-                                component="h2" p={2} fontWeight={600}>
+                                variant={"h5"}
+                                color={"var(--gray-color)"}
+                                textTransform={"capitalize"}
+                                component="h2" p={3} fontWeight={600}>
                                 {day}
                             </Typography>
                             <Grid container rowSpacing={2} columnSpacing={2} mb={3}
                                 justifyContent={"center"} alignItems={"center"}
                             >
-                                {
-                                    listDay.map((daye) =>
-                                        <GridOption key={daye} state={isSelectingRoom}>
-                                            {daye}
+                                {data.map((functionDetail) => {
+                                    const functionTime: string = new Date(functionDetail.schedule).toLocaleTimeString("es-ES", { hour: "2-digit", minute: "2-digit" });
+                                    return (
+                                        <GridOption key={`${functionDetail.screenId}-${functionDetail.movieId}`}
+                                            state={isSelectingRoom}
+                                            handleClick={() => handleClickOnFunction(functionDetail)}
+                                        >
+                                            {functionTime}
                                         </GridOption>
                                     )
-                                }
+                                })}
                             </Grid>
                         </Box>)}
                 </Box>
             </Grow>
 
+        </Box>
 
-            <Button variant="contained" color={isSelectingRoom ? "error" : "warning"}
-                size="large" type="button" onClick={
-                    () => setIsSelectingRoom(!isSelectingRoom)
-                }>
-                {isSelectingRoom ? "Cancelar" : "Comprar Entrada"}
-            </Button>
-
-
-        </Container >
-    )
+        <Button variant="contained" color={isSelectingRoom ? "error" : "warning"}
+            size="large" type="button" onClick={handleSelectState}>
+            {isSelectingRoom ? "Cancelar" : "Comprar Entrada"}
+        </Button>
+    </Container>
 }
-
-
-
-
 
 export default SelectRom

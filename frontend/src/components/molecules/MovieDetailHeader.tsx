@@ -1,18 +1,20 @@
 "use client"
-import { IMovieHeaderDetail } from '@/common/interfaces'
+import { IMovieHeaderDetail } from '@/common/interface-movie'
 import { Box, Button, Typography, useMediaQuery, useTheme } from '@mui/material'
 import Image from 'next/image'
 import CalificationStar from '../atoms/CalificationStar'
 
+interface Props extends IMovieHeaderDetail {
+  smallComponent?: boolean
+}
 
-
-const HeaderDetail = ({ title, runtime, releaseDate, vote_average, vote_count, threeD }: IMovieHeaderDetail) => {
+const HeaderDetail = ({ smallComponent, title, runtime, releaseDate, vote_average, vote_count, threeD }: Props) => {
   const theme = useTheme()
   const isMatch = useMediaQuery(theme.breakpoints.down("md"))
 
   return (
     <Box width={"100%"} display="flex" padding="20px 20px 10px" gap="20px"
-      justifyContent={{ md: "space-between" }} flexDirection={{ xs: "column", md: "row" }}
+      justifyContent={{ md: "space-between" }} flexDirection={smallComponent ? "column" : { xs: "column", md: "row" }}
       bgcolor={{ xs: "var(--lightBlack)", sm: "transparent" }} borderRadius={{ xs: "0 0 16px 16px", sm: "0" }} >
 
       <Box overflow={"hidden"}>
@@ -22,7 +24,7 @@ const HeaderDetail = ({ title, runtime, releaseDate, vote_average, vote_count, t
         </Typography>
         <Typography variant="body2" marginTop={1} lineHeight={"21px"} fontSize={16} fontWeight={400}
           color={"var(--light-gray-color)"}>
-          {threeD?? runtime} ● {releaseDate}
+          {threeD ?? runtime} ● {releaseDate}
         </Typography>
       </Box>
 

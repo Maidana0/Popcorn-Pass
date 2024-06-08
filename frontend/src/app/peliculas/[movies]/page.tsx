@@ -5,7 +5,7 @@ import dynamic from "next/dynamic";
 import Loader from "@/components/atoms/Loader";
 import { fetchData } from "@/utils/fetchData";
 import { filteredListComingSoon, filteredListPlayingNow } from "@/utils/fc-movies";
-import { IMovie } from "@/common/interfaces";
+import { IMovie } from "@/common/interface-movie";
 
 const MovieFilters = dynamic(() => import("@/components/organism/MovieFilters"), { ssr: false })
 const MoviePagination = dynamic(() => import("@/components/atoms/MoviePagination"), { ssr: false })
@@ -68,7 +68,7 @@ const Page = async ({ params }: IProps) => {
                         height: "53px", fontWeight: 700, borderRadius: "0 8px 8px 0",
                         color: inComingSoon ? "var(--black)" : "",
                     }}>
-                    proximamente
+                    anticipadas
                 </Button>
             </Box>
         </Box>

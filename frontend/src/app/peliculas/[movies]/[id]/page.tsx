@@ -12,13 +12,13 @@ const SelectCine = dynamic(() => import('@/components/molecules/SelectCine'), { 
 const BackButton = dynamic(() => import('@/components/atoms/BackButton'), { ssr: false })
 const MovieDetail = dynamic(() => import('@/components/organism/MovieDetail'), { ssr: true })
 const SelectRom = dynamic(() => import('@/components/organism/SelectFunction'), { ssr: true })
-type Props = { params: { id: string } }
+export type Props = { params: { id: string, movies: string } }
 
 export const generateMetadata = async (
     { params }: Props): Promise<Metadata> => {
     const { id } = params
-    const { title, releaseDate } = await getData(id)
-    return { title: title + " - " + releaseDate.split("-")[0] }
+    const { title } = await getData(id)
+    return { title: title + " - PopcornPass" }
 }
 export const getData = async (id: string) => await fetchData(`movie/${id}`);
 const getFunctionDetail = async (movieId: string) => await fetchData(`functionDetails/functionDetailsByMovieId/${movieId}`);
@@ -29,7 +29,7 @@ const getFunctionDetail = async (movieId: string) => await fetchData(`functionDe
 
 
 const Movie = async ({ params }: Props) => {
-    const { id } = params
+    const { id, movies } = params
     const cities = await getCities()
     const movie = await getData(id)
     const listFunctionDetail: IFunctionDetail[] = await getFunctionDetail(id)
@@ -54,13 +54,14 @@ const Movie = async ({ params }: Props) => {
         <BackButton />
         <Container sx={{ display: "flex", justifyContent: "space-between", alignItems: "center", flexDirection: { xs: "column", md: "row" }, gap: "1.4rem" }}>
             <Typography variant="h4" component="h1" textAlign={{ xs: "center", md: "left" }}>
-                Consigue tu Entrada
+                ¿Qué esperas para ver {movie.title}?
             </Typography>
             <SelectCine cities={cities} />
         </Container>
         <MovieDetail movie={movie} />
-        <SelectRom listFunctionDetail={listFunctionDetail} />
-
+        {
+            movies == "en-pantalla" && <SelectRom listFunctionDetail={listFunctionDetail} />
+        }
         {/* <CommentList id={id}/> */}
         {/* <SeatSelector seats={seats} /> */}
 
