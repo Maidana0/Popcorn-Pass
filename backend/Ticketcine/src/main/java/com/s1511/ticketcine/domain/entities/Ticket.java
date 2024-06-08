@@ -23,7 +23,7 @@ public class Ticket {
     private String screenName;
     private String movieName;
     private LocalDateTime functionDate;
-    @OneToMany(fetch = FetchType.LAZY)
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "ticket")
     private List<Seat> seatsIds;
     private Boolean active;
 
