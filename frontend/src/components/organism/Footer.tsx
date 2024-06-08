@@ -14,7 +14,12 @@ const Footer = () => {
 
             <Container sx={{ marginTop: "5px" }}>
                 <Typography color="inherit" variant="subtitle2">
-                   NextApp 2024
+                    NextApp 2024
+
+                    {/* <p style={paragraphStyle}>
+                        Si tienes alguna pregunta o deseas saber más sobre nuestros
+                        servicios, no dudes en contactarnos en contacto@ticketera.com.
+                    </p> */}
                 </Typography>
             </Container>
         </Box>

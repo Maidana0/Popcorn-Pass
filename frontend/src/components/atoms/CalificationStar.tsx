@@ -1,26 +1,18 @@
-"use client"
-import { useAuthStore } from "@/store/auth-store";
+
 import { Rating } from "@mui/material";
-import { SyntheticEvent, useState } from "react";
-import { shallow } from "zustand/shallow";
 
-const CalificationStar = ({ vote_average, active}: { vote_average?: number | null, active ?: boolean}) => {
-    const [value, setValue] = useState<number | null>(vote_average || 7)
-
-    const { isLogged } = useAuthStore(state => ({ isLogged: state.isLogged }), shallow)
+const CalificationStar = ({ vote_average, active, handleStarChange, newRating }: { vote_average?: number | null, active?: boolean, handleStarChange?: any, newRating?: number }) => {
 
 
-    const handleChange = (event: SyntheticEvent, newValue: number | null) => setValue(newValue)
-
-    if (isLogged && active) return <Rating
+    if (active) return <Rating
         name="half-rating"
-        value={value}
+        value={newRating}
         size="large"
-        precision={0.5} 
-        onChange={handleChange}
+        precision={0.5}
+        onChange={handleStarChange}
     />
 
-    return <Rating name="half-rating-read" size="large" precision={0.5} value={value} readOnly sx={{
+    return <Rating name="half-rating-read" size="large" precision={0.5} value={vote_average} readOnly sx={{
         '& .MuiRating-iconEmpty': {
             color: "#575757"
         }
