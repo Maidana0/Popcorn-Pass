@@ -1,6 +1,7 @@
 import { createWithEqualityFn } from 'zustand/traditional';
 import IFunctionDetail from '@/common/interface-functionDetail';
 import { IMovie } from '@/common/interface-movie';
+import { persist, createJSONStorage } from 'zustand/middleware'
 
 interface IMovieFunction {
     movieFunctionDetail: false | IFunctionDetail,
@@ -11,12 +12,18 @@ interface IMovieFunction {
 }
 
 export const UseMoviefunction = createWithEqualityFn<IMovieFunction>()(
-    (set) => ({
-        movieFunctionDetail: false,
-        setMovieFunctionDetail: (newFunction) => set(() => ({ movieFunctionDetail: newFunction })),
+    persist(
+        (set) => ({
+            movieFunctionDetail: false,
+            setMovieFunctionDetail: (newFunction) => set(() => ({ movieFunctionDetail: newFunction })),
 
 
-        currentMovie: false,
-        setCurrentMovie: (newMovie) => set(() => ({ currentMovie: newMovie }))
-    })
+            currentMovie: false,
+            setCurrentMovie: (newMovie) => set(() => ({ currentMovie: newMovie }))
+        }),
+        {
+            name: "functionDetail",
+            storage: createJSONStorage(() => sessionStorage),
+        },
+    ),
 )

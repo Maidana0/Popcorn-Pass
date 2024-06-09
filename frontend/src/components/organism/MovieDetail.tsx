@@ -4,7 +4,6 @@ import MovieImageDetail from "../atoms/MovieImageDetail"
 import MovieDetailContent from "../molecules/MovieDetailContent"
 import { FC } from "react"
 import { IMovie } from "@/common/interface-movie"
-import MovieDescriptionDetail from "../atoms/MovieDescriptionDetail"
 
 const AVERAGE = 4.5
 

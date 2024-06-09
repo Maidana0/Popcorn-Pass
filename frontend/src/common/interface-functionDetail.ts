@@ -1,21 +1,21 @@
 
 
 export interface ISeat {
-    currentUser: null,
+    currentUser: null | string,
     functionDetailsId: string,
     id: string,
     occupied: boolean,
-    reservationTime: null,
+    reservationTime: null | string,
     seatEnum: string,
     seatNumber: string,
-    ticket: null
+    ticket: null | string
 }
 
 
 
-export default interface IFunctionDetail  {
+export default interface IFunctionDetail {
     movieId: string;
     schedule: string;
     screenId: string;
-    seatList: ISeat[]
+    seatsList: ISeat[]
 }

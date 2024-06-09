@@ -1,7 +1,8 @@
 import { Metadata } from "next"
 import { Props, getData } from "../page"
-import { Container, Typography } from "@mui/material"
+import { Box, Container, Typography } from "@mui/material"
 import dynamic from "next/dynamic"
+import Seats from "@/components/organism/Seats"
 
 const BackButton = dynamic(() => import('@/components/atoms/BackButton'), { ssr: false })
 const MovieDetail = dynamic(() => import('@/components/organism/MovieDetail'), { ssr: true })
@@ -19,16 +20,19 @@ const Comprar = async ({ params }: Props) => {
     return (
         <>
             <BackButton />
-            <Typography variant="h4" component="h1" px={3} textAlign={{ xs: "center", md: "left" }}>
-                Compra tus entradas para ver {movie.title}!
+            <Typography pl={{md:3}} my={1} variant="h4" component="h1" textAlign={{ xs: "center", md: "left" }}>
+                {movie.title}
             </Typography>
 
             <Container sx={{ display: "flex", justifyContent: "space-between", alignItems: "center", flexDirection: { xs: "column", md: "row" }, gap: "1.4rem" }}>
-                - INFORMACION DE LA PELICULA SELECCIONADA
-                - MOSTRAR PRECIO DE ENTRADAS
-                - SELECCIONAR CANTIDAD DE ENTRADAS
-                - CODIGOS DE DESCUENTOS
-                - PROMOCIONES?
+                <Box>
+                    <Seats />
+                    {/* - INFORMACION DE LA PELICULA SELECCIONADA
+                    - MOSTRAR PRECIO DE ENTRADAS
+                    - SELECCIONAR CANTIDAD DE ENTRADAS
+                    - CODIGOS DE DESCUENTOS
+                    - PROMOCIONES? */}
+                </Box>
 
                 <MovieDetail smallComponent movie={movie} />
             </Container>
