@@ -9,7 +9,7 @@ const AVERAGE = 4.5
 
 const MovieDetail: FC<{ movie: IMovie, smallComponent?: boolean }> = ({ movie, smallComponent }) => {
     return (<>
-        <Box margin="1.5rem auto">
+        <Box margin={smallComponent ? 0 : "1.5rem auto"}>
             <Box sx={{
                 width: smallComponent ? "93%" : { xs: "93%", sm: "96%", md: "90%" }, margin: "1rem auto", borderRadius: "16px",
                 display: "flex", bgcolor: { sm: "var(--lightBlack)" },
@@ -28,7 +28,7 @@ const MovieDetail: FC<{ movie: IMovie, smallComponent?: boolean }> = ({ movie, s
                         threeD={movie.threeD ? "3D" : false}
                         vote_average={AVERAGE}
                         vote_count={1.612}
-                        smallComponent={smallComponent} 
+                        smallComponent={smallComponent}
                     />
 
                     {smallComponent ? "" :

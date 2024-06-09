@@ -1,8 +1,9 @@
 import { Metadata } from "next"
 import { Props, getData } from "../page"
-import { Box, Container, Typography } from "@mui/material"
+import { Box, Button, Container, Typography } from "@mui/material"
 import dynamic from "next/dynamic"
 import Seats from "@/components/organism/Seats"
+import GenerateTicket from "@/components/organism/GenerateTicket"
 
 const BackButton = dynamic(() => import('@/components/atoms/BackButton'), { ssr: false })
 const MovieDetail = dynamic(() => import('@/components/organism/MovieDetail'), { ssr: true })
@@ -20,21 +21,21 @@ const Comprar = async ({ params }: Props) => {
     return (
         <>
             <BackButton />
-            <Typography pl={{md:3}} my={1} variant="h4" component="h1" textAlign={{ xs: "center", md: "left" }}>
-                {movie.title}
-            </Typography>
 
-            <Container sx={{ display: "flex", justifyContent: "space-between", alignItems: "center", flexDirection: { xs: "column", md: "row" }, gap: "1.4rem" }}>
-                <Box>
+            <Container sx={{ display: "flex", justifyContent: "space-between", alignItems: "center", flexDirection: { xs: "column", md: "row" }, gap: "1.5rem" }}  >
+
+                <Box display="flex" flexDirection="column" gap="1rem">
+                    <Typography variant="h4" component="h1" textAlign={{ xs: "center", md: "left" }} p={1}>
+                        {movie.title}
+                    </Typography>
                     <Seats />
-                    {/* - INFORMACION DE LA PELICULA SELECCIONADA
-                    - MOSTRAR PRECIO DE ENTRADAS
-                    - SELECCIONAR CANTIDAD DE ENTRADAS
-                    - CODIGOS DE DESCUENTOS
-                    - PROMOCIONES? */}
                 </Box>
 
-                <MovieDetail smallComponent movie={movie} />
+                <Box display="flex" flexDirection="column" gap="1.5rem">
+                    <MovieDetail smallComponent movie={movie} />
+                    <GenerateTicket />
+                </Box>
+
             </Container>
 
         </>
