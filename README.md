@@ -52,7 +52,7 @@ PopcornPass es una aplicación web diseñada para ofrecer a nuestros cines una p
 | Integrantes    | Linkedin | Github |
 |----------------| ------------ | ------------ |
 | Franco Maidana |[![Linkedin](    https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/maidana-franco07)  | [![Github](https://img.shields.io/badge/GitHub-100000?style=for-the-badge&logo=github&logoColor=white)](https://github.com/Maidana0)|
-| Bruno Sosa     | [![Linkedin](    https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/brunos0sa/)  | [![Github](https://img.shields.io/badge/GitHub-100000?style=for-the-badge&logo=github&logoColor=white)](https://github.com/Bruno1084)
+
 
 #### Backend
 | Integrantes       | Linkedin | Github |
