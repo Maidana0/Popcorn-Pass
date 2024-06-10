@@ -68,7 +68,7 @@ const Page = async ({ params }: IProps) => {
                         height: "53px", fontWeight: 700, borderRadius: "0 8px 8px 0",
                         color: inComingSoon ? "var(--black)" : "",
                     }}>
-                    anticipadas
+                    proximamente
                 </Button>
             </Box>
         </Box>

@@ -3,37 +3,43 @@ import IFunctionDetail from '@/common/interface-functionDetail';
 import { IMovie } from '@/common/interface-movie';
 import { persist, createJSONStorage } from 'zustand/middleware'
 
-interface IMovieFunction {
+interface IMovieFcValues {
+    numberSeats: number
+    selectedSeats: string[],
+}
+
+interface IMovieFunction extends IMovieFcValues {
     movieFunctionDetail: false | IFunctionDetail,
+    currentMovie: false | IMovie,
+
     setMovieFunctionDetail: (functionDetail: false | IFunctionDetail) => void,
 
-    currentMovie: false | IMovie,
     setCurrentMovie: (movie: false | IMovie) => void,
 
-    numberSeats: number
     setNumberSeats: (number: number) => void,
 
-    selectedSeats: string[],
     handleSeatClick: (seatNumber: string) => void;
-    removeLastSelectedSeat: () => void;
+    removeLastSelectedSeat: () => void,
+
+    clearStore: () => void,
+}
+
+const initialValues: IMovieFcValues = {
+    numberSeats: 1,
+    selectedSeats: [],
 }
 
 export const UseMoviefunction = createWithEqualityFn<IMovieFunction>()(
     persist(
         (set) => ({
+            ...initialValues,
             movieFunctionDetail: false,
-            setMovieFunctionDetail: (newFunction) => set(() => ({ movieFunctionDetail: newFunction })),
-
-
             currentMovie: false,
+            setMovieFunctionDetail: (newFunction) => set(() => ({ movieFunctionDetail: newFunction })),
             setCurrentMovie: (newMovie) => set(() => ({ currentMovie: newMovie })),
 
-
-            numberSeats: 1,
             setNumberSeats: (num: number) => set({ numberSeats: num }),
 
-
-            selectedSeats: [],
             handleSeatClick: (seatNumber: string) => {
                 set((state) => {
                     const { selectedSeats, numberSeats } = state;
@@ -51,7 +57,9 @@ export const UseMoviefunction = createWithEqualityFn<IMovieFunction>()(
                     const { selectedSeats } = state;
                     return { selectedSeats: selectedSeats.slice(0, -1) };
                 });
-            }
+            },
+
+            clearStore: () => set({ ...initialValues }),
         }),
         {
             name: "functionDetail",

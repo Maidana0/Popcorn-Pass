@@ -1,6 +1,6 @@
 import { Metadata } from "next"
 import { Props, getData } from "../page"
-import { Box, Button, Container, Typography } from "@mui/material"
+import { Box, Container, Typography } from "@mui/material"
 import dynamic from "next/dynamic"
 import Seats from "@/components/organism/Seats"
 import GenerateTicket from "@/components/organism/GenerateTicket"
@@ -33,7 +33,7 @@ const Comprar = async ({ params }: Props) => {
 
                 <Box display="flex" flexDirection="column" gap="1.5rem">
                     <MovieDetail smallComponent movie={movie} />
-                    <GenerateTicket />
+                    <GenerateTicket movie={movie}/>
                 </Box>
 
             </Container>

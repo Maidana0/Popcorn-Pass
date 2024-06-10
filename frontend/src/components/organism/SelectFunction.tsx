@@ -13,12 +13,14 @@ const SelectRom: FC<{ listFunctionDetail: IFunctionDetail[] }> = ({ listFunction
     const currentPath = usePathname()
     const [isSelectingRoom, setIsSelectingRoom] = useState(false)
     const [groupedByDay, setGroupedByDay] = useState<Record<string, IFunctionDetail[]>>({})
-    const { setMovieFunctionDetail } = UseMoviefunction(state => ({
-        setMovieFunctionDetail: state.setMovieFunctionDetail
+    const { setMovieFunctionDetail, clearStore } = UseMoviefunction(state => ({
+        setMovieFunctionDetail: state.setMovieFunctionDetail,
+        clearStore: state.clearStore
     }), shallow)
 
     const handleSelectState = () => setIsSelectingRoom(!isSelectingRoom)
     const handleClickOnFunction = (functionDetail: IFunctionDetail) => {
+        clearStore()
         setMovieFunctionDetail(functionDetail);
         router.push(currentPath + "/comprar")
     }

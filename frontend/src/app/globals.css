@@ -25,6 +25,10 @@ body {
   justify-content: space-between;
 }
 
+main{
+  margin: 0.25rem auto 2rem;
+}
+
 a {
   text-decoration: none;
   color: inherit;

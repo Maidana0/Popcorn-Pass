@@ -1,12 +1,9 @@
 "use client"
-import { useForm } from "react-hook-form"
 import { Container, SxProps } from "@mui/material"
 import FilterModal from "../atoms/FilterModal"
-import { IOptionsValue } from "../atoms/InputSelected"
-import { useEffect, useState } from "react"
+import { useEffect } from "react"
 import { fetchData } from "@/utils/fetchData"
 import { useCinemaStore } from "@/store/cinema-store"
-import CineSelected from "../molecules/SelectCine"
 import SelectCine from "../molecules/SelectCine"
 
 
