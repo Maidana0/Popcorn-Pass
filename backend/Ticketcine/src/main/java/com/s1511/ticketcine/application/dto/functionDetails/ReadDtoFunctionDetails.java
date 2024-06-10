@@ -5,6 +5,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 public record ReadDtoFunctionDetails(
+        String id,
         LocalDateTime schedule,
         String movieId,
         String screenId,

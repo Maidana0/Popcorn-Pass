@@ -22,14 +22,6 @@ public class MovieController {
 
     private final MovieService movieService;
 
-    @GetMapping("/saveLastestMovies")
-    public  ResponseEntity<?> saveLastestMovies(){
-        return ResponseEntity.ok(movieService.saveLastestMovies());
-    }
-
-
-    //metodos fuera del guardar las movies en la base de datos
-
     @GetMapping("/list")
     public ResponseEntity<?> activeMovieList(){
         return ResponseEntity.ok(movieService.getActiveMovieList());
