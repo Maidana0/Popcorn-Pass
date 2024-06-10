@@ -5,7 +5,8 @@ const Loading = () => {
     return (
         <Typography
             textAlign={"center"}
-            mx={"auto"}
+            alignContent={"center"}
+            m={"auto"}
             variant="h4"
             component="p"
             color={"var(--light-gray-color)"}
@@ -16,7 +17,7 @@ const Loading = () => {
                 whiteSpace: "nowrap",
                 borderRight: "4px solid var(--light-gray-color)",
                 width: "13ch",
-                animation: "typing .8s steps(11) infinite, blink 0.8s infinite step-end",
+                animation: "typing 1s steps(11) infinite, blink 0.8s infinite step-end",
                 overflow: "hidden",
                 "@keyframes typing": {
                     "0%": { width: 0 },

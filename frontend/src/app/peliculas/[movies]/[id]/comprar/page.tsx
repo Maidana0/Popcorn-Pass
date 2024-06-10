@@ -5,7 +5,6 @@ import dynamic from "next/dynamic"
 import Seats from "@/components/organism/Seats"
 import GenerateTicket from "@/components/organism/GenerateTicket"
 
-const BackButton = dynamic(() => import('@/components/atoms/BackButton'), { ssr: false })
 const MovieDetail = dynamic(() => import('@/components/organism/MovieDetail'), { ssr: true })
 
 export const generateMetadata = async (
@@ -19,26 +18,21 @@ export const generateMetadata = async (
 const Comprar = async ({ params }: Props) => {
     const movie = await getData(params.id)
     return (
-        <>
-            <BackButton />
+        <Container sx={{ display: "flex", justifyContent: "space-between", alignItems: "center", flexDirection: { xs: "column", md: "row" }, gap: "1.5rem" }}  >
 
-            <Container sx={{ display: "flex", justifyContent: "space-between", alignItems: "center", flexDirection: { xs: "column", md: "row" }, gap: "1.5rem" }}  >
+            <Box display="flex" flexDirection="column" gap="1rem">
+                <Typography variant="h4" component="h1" textAlign={{ xs: "center", md: "left" }} p={1}>
+                    {movie.title}
+                </Typography>
+                <Seats />
+            </Box>
 
-                <Box display="flex" flexDirection="column" gap="1rem">
-                    <Typography variant="h4" component="h1" textAlign={{ xs: "center", md: "left" }} p={1}>
-                        {movie.title}
-                    </Typography>
-                    <Seats />
-                </Box>
+            <Box display="flex" flexDirection="column" gap="1.5rem">
+                <MovieDetail smallComponent movie={movie} />
+                <GenerateTicket movie={movie} />
+            </Box>
 
-                <Box display="flex" flexDirection="column" gap="1.5rem">
-                    <MovieDetail smallComponent movie={movie} />
-                    <GenerateTicket movie={movie}/>
-                </Box>
-
-            </Container>
-
-        </>
+        </Container>
     )
 }
 

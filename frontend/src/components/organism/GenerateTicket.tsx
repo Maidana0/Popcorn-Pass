@@ -2,9 +2,12 @@
 import { IMovie } from '@/common/interface-movie'
 import { useCinemaStore } from '@/store/cinema-store'
 import { UseMoviefunction } from '@/store/movie-function-store'
-import { Box, Button } from '@mui/material'
+import { Box, Button, Typography } from '@mui/material'
 import { useEffect, useState } from 'react'
 import { shallow } from 'zustand/shallow'
+import { useRouter } from "next/navigation"
+import BuyTicketModal, { InfoItem } from '../molecules/BuyTicketModal'
+import { priceFormat } from '@/utils/utils'
 
 /*
 /mp/create
@@ -20,59 +23,75 @@ import { shallow } from 'zustand/shallow'
   "unitPrice": 0
 }
 */
-const GenerateTicket = ({ movie }: { movie: IMovie }) => {
-    const [info, setInfo] = useState([])
 
-    const { movieFunctionDetail, selectedSeats, currentMovie, setCurrentMovie } = UseMoviefunction(state => ({
+const GenerateTicket = ({ movie }: { movie: IMovie }) => {
+    const router = useRouter()
+    const [open, setOpen] = useState(false)
+    const [info, setInfo] = useState<InfoItem[]>([])
+    const { movieFunctionDetail, selectedSeats, numberSeats } = UseMoviefunction(state => ({
         movieFunctionDetail: state.movieFunctionDetail,
-        selectedSeats: state.selectedSeats,
-        currentMovie: state.currentMovie,
-        setCurrentMovie: state.setCurrentMovie
+        selectedSeats: state.selectedSeats, numberSeats: state.numberSeats
     }), shallow)
 
-    const { currentCity, currentCinema } = useCinemaStore(state => ({
+    const { currentCity, currentCinema } = useCinemaStore((state) => ({
         currentCity: state.currentCity,
         currentCinema: state.currentCinema
     }))
 
-    useEffect(() => {
-        if (movieFunctionDetail) {
-            const { screenId, schedule } = movieFunctionDetail
-            const date = new Date(schedule)
-            const formattedDate = `${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()}`
 
+    const dateFunction = movieFunctionDetail && new Date(movieFunctionDetail.schedule)
+    const formattedDate = dateFunction ? `${dateFunction.getDate()}/${dateFunction.getMonth() + 1}/${dateFunction.getFullYear()}` : ""
+    const hours = dateFunction && dateFunction.getHours()
+    const minutes = dateFunction && (dateFunction.getMinutes() < 10 ? `0${dateFunction.getMinutes()}` : dateFunction.getMinutes())
+    const formattedTime = `${hours}:${minutes}hs.`
+
+    useEffect(() => {
+        if (movieFunctionDetail && currentCinema) {
             setInfo([
                 { name: "ciudad", value: currentCity },
-                { name: "cine", value: currentCinema },
+                { name: "cine", value: currentCinema.name },
+                { name: "dirección", value: currentCinema.direction },
                 { name: "pelicula", value: movie.title },
-                { name: "sala", value: screenId },
+                { name: "sala", value: movieFunctionDetail.screenId },
                 { name: "día", value: formattedDate },
-                { name: "hora", value: date.getHours() },
+                { name: "hora", value: formattedTime },
                 { name: "butacas", value: (selectedSeats.map(seat => seat).join(", ") + ".") },
+                { name: "precio total", value: priceFormat(numberSeats * 4400) },
             ])
         }
 
     }, [selectedSeats])
 
-    useEffect(() => {
-        setCurrentMovie(movie)
-    }, [])
-
-
     return (
         <>
-            <Box>
-                - Cine
-                - Día
-                - Hora
-                - Sala
-                - Butacas
-            </Box>
-            <Box>
-                <Button variant="contained" fullWidth sx={{ mb: 1.5, fontWeight: 600, color: "var(--light-white-color)" }}>comprar</Button>
-                <Button variant="contained" fullWidth color="error" sx={{ fontWeight: 600, color: "var(--light-white-color)" }}>cancelar</Button>
+            {currentCinema && <Box display={"flex"} justifyContent={"space-between"}>
+                <Typography>
+                    {currentCinema.name}
+                </Typography>
+                -
+                <Typography>
+                    {currentCinema.direction}
+                </Typography>
+            </Box>}
+            <Box display={"flex"} justifyContent={"space-between"}>
+                <Typography>
+                    {formattedDate}
+                </Typography>
+                -
+                <Typography>
+                    {formattedTime}
+                </Typography>
             </Box>
 
+            <Box>
+                <Button variant="contained" fullWidth onClick={() => setOpen(true)}
+                    sx={{ mb: 2, fontWeight: 600, color: "var(--light-white-color)" }}>
+                    comprar
+                </Button>
+                <Button variant="contained" fullWidth color="error" sx={{ fontWeight: 600, color: "var(--light-white-color)" }} onClick={() => router.back()}>cancelar</Button>
+            </Box>
+
+            <BuyTicketModal open={open} setOpen={setOpen} info={info} />
         </>
     )
 }

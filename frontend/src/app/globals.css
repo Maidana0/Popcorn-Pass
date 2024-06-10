@@ -26,7 +26,10 @@ body {
 }
 
 main{
-  margin: 0.25rem auto 2rem;
+  margin: 2rem auto 4rem;
+  min-height: 80vh;
+  max-width: 100%;
+  align-content: center;
 }
 
 a {

@@ -10,11 +10,8 @@ interface IMovieFcValues {
 
 interface IMovieFunction extends IMovieFcValues {
     movieFunctionDetail: false | IFunctionDetail,
-    currentMovie: false | IMovie,
 
     setMovieFunctionDetail: (functionDetail: false | IFunctionDetail) => void,
-
-    setCurrentMovie: (movie: false | IMovie) => void,
 
     setNumberSeats: (number: number) => void,
 
@@ -34,9 +31,7 @@ export const UseMoviefunction = createWithEqualityFn<IMovieFunction>()(
         (set) => ({
             ...initialValues,
             movieFunctionDetail: false,
-            currentMovie: false,
             setMovieFunctionDetail: (newFunction) => set(() => ({ movieFunctionDetail: newFunction })),
-            setCurrentMovie: (newMovie) => set(() => ({ currentMovie: newMovie })),
 
             setNumberSeats: (num: number) => set({ numberSeats: num }),
 

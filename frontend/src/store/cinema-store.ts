@@ -2,16 +2,23 @@ import { createWithEqualityFn } from 'zustand/traditional';
 import { persist, createJSONStorage } from 'zustand/middleware'
 import { IMovie } from '@/common/interface-movie';
 
+export interface ICinema {
+    city: string;
+    direction: string;
+    id: string;
+    name: string;
+    state: string;
+}
 
 interface ICinemaState {
     currentCity: string;
     setCurrentCity: (newValue: string) => void;
 
-    currentCinema: string;
-    setCurrentCinema: (newValue: string) => void,
+    currentCinema: false | ICinema;
+    setCurrentCinema: (newValue: ICinema | false) => void,
 
     moviesByCinema: false | IMovie[],
-    setMoviesByCinema: (newValue: IMovie[]) => void
+    setMoviesByCinema: (newValue: IMovie[] | false) => void
 }
 
 
@@ -25,7 +32,7 @@ export const useCinemaStore = createWithEqualityFn<ICinemaState>()(
                 set(() => ({ currentCity: newValue }))
             },
 
-            currentCinema: "empty",
+            currentCinema: false,
             setCurrentCinema: (newValue) => {
 
                 const { currentCinema } = get()

@@ -16,21 +16,29 @@ const styleContainer: SxProps = {
   flexWrap: "wrap",
 }
 
-const moviesByCinema = async (cinemaId: string) => {
-  // const moviesList = await fetchData(`cinema/moviesByCine/${cinemaId}`)
-  console.log("ID DEL CINE: " + cinemaId);
-  console.log("LISTA DE PELICULAS: ");
-  // console.log(moviesList);
+const getMoviesByCinema = async (cinemaId: string) => {
+  const movies = await fetchData(`cinema/moviesByCine/${cinemaId}`)
+  if (movies.error) return false
+  return movies
 }
 
 const MovieFilters = ({ cities }: { cities: string[] }) => {
-  const { currentCinema } = useCinemaStore(state => ({
-    currentCinema: state.currentCinema
+  const { currentCinema, setMoviesByCinema } = useCinemaStore(state => ({
+    currentCinema: state.currentCinema,
+    setMoviesByCinema: state.setMoviesByCinema
   }))
+
   useEffect(() => {
-    if (currentCinema == "empty" || !currentCinema) return
-    // CAMBIAR UN ESTADO GLOBAL EN EL QUE ESTARÁN LAS PELICULAS SEGÚN EL CINE SELECCIONADO
-    moviesByCinema(currentCinema)
+    if (!currentCinema) return
+    getMoviesByCinema(currentCinema.id)
+      .then(data => {
+        console.log(data);
+        
+        data.lenght > 0
+          ? setMoviesByCinema(data)
+          : setMoviesByCinema(false)
+      })
+      .catch(err => console.log(err))
   }, [currentCinema])
 
   return (
