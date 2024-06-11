@@ -29,22 +29,7 @@ export const generateMetadata = async (
 const Movie = async ({ params }: Props) => {
     const { id } = params
     const movie = await getData(id)
-    // const seats: Seat[] = [
-    //     { id: 1, seatNumber: "asd", status: SeatStatus.Available },
-    //     { id: 2, seatNumber: "asd", status: SeatStatus.Available },
-    //     { id: 3, seatNumber: "asd", status: SeatStatus.Occupied },
-    //     { id: 4, seatNumber: "asd", status: SeatStatus.Available },
-    //     { id: 5, seatNumber: "asd", status: SeatStatus.Available },
-    //     { id: 6, seatNumber: "asd", status: SeatStatus.Available },
-    //     { id: 7, seatNumber: "asd", status: SeatStatus.Available },
-    //     { id: 8, seatNumber: "asd", status: SeatStatus.Occupied },
-    //     { id: 9, seatNumber: "asd", status: SeatStatus.Available },
-    //     { id: 15, seatNumber: "asd", status: SeatStatus.Available },
-    //     { id: 11, seatNumber: "asd", status: SeatStatus.Available },
-    //     { id: 12, seatNumber: "asd", status: SeatStatus.Available },
-    //     { id: 13, seatNumber: "asd", status: SeatStatus.Occupied },
-    //     { id: 14, seatNumber: "asd", status: SeatStatus.Available },
-    //     { id: 25, seatNumber: "asd", status: SeatStatus.Available }];
+
     return <>
         <BackButton />
 
