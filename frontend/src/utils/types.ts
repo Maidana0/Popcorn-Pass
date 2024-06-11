@@ -1,11 +1,11 @@
 export enum SeatStatus {
-    Available = "Available",
-    Occupied = "Occupied"
+    Available = "False",
+    Occupied = "True"
   }
   
   export interface Seat {
     id: number;
-    status: SeatStatus;
+    occupied: SeatStatus;
     seatNumber: string;
   }
   
