@@ -58,16 +58,27 @@ const buttonStyle: React.CSSProperties = {
 
 const ReturnSeatsPopup: React.FC<ReturnSeatsPopupProps> = ({ ticket, onClose }) => {
   const [selectedSeats, setSelectedSeats] = useState<string[]>([]);
-  const [showNotification, setShowNotification] = useState(false);
-
+  const { jwt, isLogged, userId } = useAuthStore(state => ({
+    jwt: state.jwt,
+    isLogged: state.isLogged,
+    userId: state.id
+  }));
   const handleSeatSelection = (seat: string) => {
     setSelectedSeats((prev) =>
       prev.includes(seat) ? prev.filter(s => s !== seat) : [...prev, seat]
     );
   };
-  const handleRedirect = () => {
-    window.location.href = '/peliculas/en-pantalla';
-    setShowNotification(true); // Mostrar notificación después de redirigir
+
+  const handleReturnSeats = async () => {
+    const response = await fetchData(`seat/return/${ticket.id}`, 'POST', {
+      seatIds: selectedSeats
+    }, jwt);
+    if (!response.error) {
+      console.log('Asientos devueltos:', response);
+      onClose();
+    } else {
+      console.error(response.message);
+    }
   };
 
   return (
@@ -89,14 +100,9 @@ const ReturnSeatsPopup: React.FC<ReturnSeatsPopupProps> = ({ ticket, onClose }) 
         ))}
       </ul>
       <div>
-      <button style={buttonStyle} onClick={handleRedirect}>Devolver</button>
-      <button style={{ ...buttonStyle, marginRight: 0 }} onClick={onClose}>Cerrar</button>
+        <button style={buttonStyle} onClick={handleReturnSeats}>Devolver</button>
+        <button style={{ ...buttonStyle, marginRight: 0 }} onClick={onClose}>Cerrar</button>
       </div>
-      {showNotification && (
-        <div style={{ background: 'green', color: 'white', padding: '10px', marginTop: '20px' }}>
-          ¡Notificación de devolución de asientos!
-        </div>
-      )}
     </div>
   );
 };
