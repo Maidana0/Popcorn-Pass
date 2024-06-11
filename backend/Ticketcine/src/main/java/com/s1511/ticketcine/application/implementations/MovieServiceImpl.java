@@ -3,8 +3,6 @@ package com.s1511.ticketcine.application.implementations;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.http.*;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
@@ -14,7 +12,6 @@ import com.s1511.ticketcine.application.dto.movie.CreateDtoMovie;
 import com.s1511.ticketcine.application.dto.movie.ReadDtoMovie;
 import com.s1511.ticketcine.application.dto.movie.ReadMovieApiData;
 import com.s1511.ticketcine.application.mapper.MovieMapper;
-import com.s1511.ticketcine.application.security.AppConfig;
 import com.s1511.ticketcine.domain.entities.Movie;
 import com.s1511.ticketcine.domain.repository.MovieRepository;
 import com.s1511.ticketcine.domain.services.MovieService;
@@ -34,7 +31,8 @@ public class MovieServiceImpl implements MovieService {
     @Scheduled(cron = "0 0 0 * * *")
     public ResponseEntity<?> saveLastestMovies() {
         String today = LocalDate.now().plusDays(7).toString();
-        String urlTemplate = "https://api.themoviedb.org/3/discover/movie?page=%d&primary_release_date.gte="+today+"&primary_release_date.lte="+today+"&sort_by=primary_release_date.asc";
+        String urlTemplate = "https://api.themoviedb.org/3/discover/movie?page=%d&primary_release_date.gte=" + today + "&primary_release_date.lte=" + today + "&sort_by=primary_release_date.asc";
+
         HttpHeaders headers = new HttpHeaders();
         HttpEntity<String> entity;
         RestTemplate restTemplate = new RestTemplate();
@@ -67,10 +65,10 @@ public class MovieServiceImpl implements MovieService {
         for (CreateDtoMovie dto : movieDtos) {
             if ((dto.original_language().equals("en") || dto.original_language().equals("es")) &&
                     dto.overview() != null && !dto.overview().isEmpty() &&
-                    dto.poster_path() != null && !dto.poster_path().isEmpty() && dto.popularity()>19.0) {
+                    dto.poster_path() != null && !dto.poster_path().isEmpty() && dto.popularity() > 19.0) {
 
                 Movie movie = new Movie();
-                movie.setImage("https://image.tmdb.org/t/p/w220_and_h330_face"+dto.poster_path());
+                movie.setImage("https://image.tmdb.org/t/p/w220_and_h330_face" + dto.poster_path());
                 movie.setTitle(dto.title());
                 movie.setDescription(dto.overview());
                 movie.setAdult(dto.adult());
@@ -86,7 +84,7 @@ public class MovieServiceImpl implements MovieService {
                 movie.setRate(null);
                 movie.setGenre(assignGenre(dto.genre_ids()));
 
-            movies.add(movie);
+                movies.add(movie);
             }
         }
 
@@ -149,15 +147,15 @@ public class MovieServiceImpl implements MovieService {
 
         GenreCombert[] genreEnum = GenreCombert.values();
         if (genreEnum != null) {
-            for (var genre : genreEnum){
-                for(var genreId : genresId ){
-                    if(genre.getId() == genreId){
-                     movieGenres.add(genre.name());
+            for (var genre : genreEnum) {
+                for (var genreId : genresId) {
+                    if (genre.getId() == genreId) {
+                        movieGenres.add(genre.name());
                     }
+                }
             }
-        }
 
-    }
+        }
         return movieGenres;
     }
 
@@ -176,7 +174,7 @@ public class MovieServiceImpl implements MovieService {
         for (int i = 0; i < calificationList.size(); i++) {
             addition = calificationList.get(i) + addition;
         }
-        Double avgRate = addition/calificationList.size();
+        Double avgRate = addition / calificationList.size();
 
         return avgRate;
     }
@@ -188,21 +186,21 @@ public class MovieServiceImpl implements MovieService {
         if (allMovies.isEmpty()) {
             throw new RuntimeException("No movies found in the database");
         }
-        if(i == 2) {
-            for(Movie movie: allMovies) {
-                if(movie.getReleaseDate().isBefore(LocalDate.now())){
+        if (i == 2) {
+            for (Movie movie : allMovies) {
+                if (movie.getReleaseDate().isBefore(LocalDate.now())) {
                     sellectedMovies.add(movie);
                 }
             }
-        }else if(i == 1) {
-            for(Movie movie: allMovies) {
-                if(movie.getReleaseDate().isAfter(LocalDate.now())){
+        } else if (i == 1) {
+            for (Movie movie : allMovies) {
+                if (movie.getReleaseDate().isAfter(LocalDate.now())) {
                     sellectedMovies.add(movie);
                 }
             }
-        } else if(i == 0){
-            for(Movie movie: allMovies) {
-                if(movie.getReleaseDate().isAfter(LocalDate.now().plusDays(6))){
+        } else if (i == 0) {
+            for (Movie movie : allMovies) {
+                if (movie.getReleaseDate().isAfter(LocalDate.now().plusDays(6))) {
                     sellectedMovies.add(movie);
                 }
             }
@@ -220,10 +218,10 @@ public class MovieServiceImpl implements MovieService {
         List<Movie> allMovies = movieRepository.findAll();
         LocalDate expirationDay = LocalDate.now().minusDays(13);
 
-        for (Movie movie: allMovies){
-            if(movie.getReleaseDate().isBefore(expirationDay)){
-            movie.setActive(false);
-            movieRepository.save(movie);
+        for (Movie movie : allMovies) {
+            if (movie.getReleaseDate().isBefore(expirationDay)) {
+                movie.setActive(false);
+                movieRepository.save(movie);
             }
         }
     }
