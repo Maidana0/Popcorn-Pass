@@ -1,12 +1,12 @@
 
 <h1 align="center">
-PopcornPass
+      PopcornPass
 </h1>
 
 
 PopcornPass es una aplicación web diseñada para ofrecer a nuestros cines una plataforma moderna y eficiente para exhibir y gestionar sus películas, horarios y boletos. Además, brinda a los usuarios una experiencia mejorada al permitirles explorar la cartelera, comprar boletos en línea y recibir recomendaciones personalizadas. Con PopcornPass, los cines pueden mostrar su oferta de películas, actualizar horarios y gestionar la disponibilidad de boletos de manera sencilla. Los usuarios pueden descubrir nuevas películas, reservar sus asientos favoritos con facilidad y recibir notificaciones sobre próximos estrenos y promociones especiales. Con una interfaz intuitiva y funcionalidades avanzadas, PopcornPass optimiza la experiencia tanto para los cines como para los cinéfilos, garantizando una gestión y una experiencia de visualización de películas eficiente y satisfactoria.
 <div align='center'>
-   <a href="https:///" target="_blank">
+   <a href="https://popcorn-pass-maidana07-projects.vercel.app/peliculas/en-pantalla" target="_blank">
       <img src="https://img.shields.io/badge/VER_DEMO-EE9B01?style=for-the-badge&logo=heroku&logoColor=purple"/>
   </a>
    <a href="https://" target="_blank">
