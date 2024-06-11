@@ -11,7 +11,7 @@ import { priceFormat } from '@/utils/utils'
 
 /*
 /mp/create
-
+FALTÓ CONECTARLO CON BACKEND POR CUESTIONES DE TIEMPO...
 {
   "userId": "string",
   "movieName": "string",
@@ -64,16 +64,16 @@ const GenerateTicket = ({ movie }: { movie: IMovie }) => {
 
     return (
         <>
-            {currentCinema && <Box display={"flex"} justifyContent={"space-between"}>
+            {currentCinema && <Box display={"flex"} justifyContent={"space-between"} flexWrap={"wrap"}>
                 <Typography>
-                    {currentCinema.name}
+                    -  {currentCinema.name}
                 </Typography>
-                -
+
                 <Typography>
-                    {currentCinema.direction}
+                    -  {currentCinema.direction}
                 </Typography>
             </Box>}
-            <Box display={"flex"} justifyContent={"space-between"}>
+            <Box display={"flex"} justifyContent={"space-between"} >
                 <Typography>
                     {formattedDate}
                 </Typography>
@@ -84,7 +84,9 @@ const GenerateTicket = ({ movie }: { movie: IMovie }) => {
             </Box>
 
             <Box>
-                <Button variant="contained" fullWidth onClick={() => setOpen(true)}
+                <Button variant="contained" fullWidth onClick={() => {
+                    if (selectedSeats.length > 0) setOpen(true)
+                }}
                     sx={{ mb: 2, fontWeight: 600, color: "var(--light-white-color)" }}>
                     comprar
                 </Button>

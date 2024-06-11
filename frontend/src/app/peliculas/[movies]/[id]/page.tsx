@@ -2,11 +2,9 @@ import { fetchData } from '@/utils/fetchData'
 import { Container, Typography } from '@mui/material'
 import type { Metadata } from 'next'
 import dynamic from 'next/dynamic'
-import CommentList from '@/components/organism/commentList'
-import SeatSelector from '@/components/molecules/SeatSelector'
-import { Seat, SeatStatus } from '@/utils/types'
 import { getCities } from '@/app/peliculas/[movies]/page'
 import IFunctionDetail from '@/common/interface-functionDetail'
+import ComentariosFicticios from '@/components/organism/ComentariosFicticios'
 
 const SelectCine = dynamic(() => import('@/components/molecules/SelectCine'), { ssr: false })
 const BackButton = dynamic(() => import('@/components/atoms/BackButton'), { ssr: false })
@@ -22,9 +20,6 @@ export const generateMetadata = async (
 }
 export const getData = async (id: string) => await fetchData(`movie/${id}`);
 const getFunctionDetail = async (movieId: string) => await fetchData(`functionDetails/functionDetailsByMovieId/${movieId}`);
-// /functionDetails/functionDetailsByMovieId/{movieId}
-// /functionDetails/functionDetailsByCinemaIdAndMovieId/{cinemaId}/{movieId}           
-
 
 
 const Movie = async ({ params }: Props) => {
@@ -44,7 +39,7 @@ const Movie = async ({ params }: Props) => {
         {
             movies == "en-pantalla" && <SelectRom listFunctionDetail={listFunctionDetail} />
         }
-        {/* <CommentList id={id}/> */}
+        <ComentariosFicticios />
     </>
 }
 

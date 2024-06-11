@@ -4,7 +4,6 @@ import { Inter } from "next/font/google";
 import Header from "@/components/organism/Header";
 import Footer from "@/components/organism/Footer";
 import { Suspense } from "react";
-import Loading from "./loading";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
@@ -15,7 +14,7 @@ export const metadata: Metadata = {
   keywords: "popcorn pass, PopcornPass, cines, cine, cartelera, estrenos, estreno, horarios, horario, preventas, próximos estrenos, proximos estrenos, eventos, compra online, compra candy online, candy, concesión, cine fan, complejos, argentina, PREMIUM, COMFORT, 2D, 3D, 4D, XD, DBOX",
   authors: [{ name: "Maidana Franco" }, { name: "Nordinelli Franco" }],
   openGraph: {
-    images: ["/favicon.ico", "/popcorn-icon.png"],
+    images: '/favicon.ico',
   }
 };
 

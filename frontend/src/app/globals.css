@@ -25,10 +25,10 @@ body {
   justify-content: space-between;
 }
 
-main{
+main {
   margin: 2rem auto 4rem;
   min-height: 80vh;
-  max-width: 100%;
+  min-width: 100%;
   align-content: center;
 }
 

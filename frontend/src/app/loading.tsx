@@ -17,7 +17,7 @@ const Loading = () => {
                 whiteSpace: "nowrap",
                 borderRight: "4px solid var(--light-gray-color)",
                 width: "13ch",
-                animation: "typing 1s steps(11) infinite, blink 0.8s infinite step-end",
+                animation: "typing 1.3s steps(11) infinite, blink 0.8s infinite step-end",
                 overflow: "hidden",
                 "@keyframes typing": {
                     "0%": { width: 0 },

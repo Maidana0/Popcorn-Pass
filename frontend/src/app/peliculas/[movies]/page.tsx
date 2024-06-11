@@ -14,7 +14,8 @@ const PlayingNow = dynamic(() => import("@/components/organism/PlayingNow"), { s
 const ComingSoon = dynamic(() => import("@/components/organism/ComingSoon"), { ssr: false, loading: () => <Loader /> })
 
 export const metadata: Metadata = {
-    title: "Peliculas"
+    title: "Peliculas - PopcornPass",
+    description: "Peliculas en cartelera y proximos estrenos",
 };
 
 export const revalidate = 3600 * 24
@@ -74,7 +75,7 @@ const Page = async ({ params }: IProps) => {
         </Box>
 
         {!inComingSoon && <MovieFilters cities={cities || ["empty"]} />}
-        <Box sx={{ display: "flex", flexWrap: "wrap", gap: { xs: "20px 0", sm: "16px" }, justifyContent: "space-evenly" }} mb="3.5rem" >
+        <Box sx={{ display: "flex", flexWrap: "wrap", gap: { xs: "20px 0", sm: "16px" }, justifyContent: "space-evenly" }} mb="3.5rem">
             {inComingSoon
                 ? <ComingSoon movies={data.inComingSoon} />
                 : <PlayingNow movies={data.playingNow} />}
