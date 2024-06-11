@@ -3,6 +3,7 @@ import { getData } from '../page'
 import { Container } from '@mui/material'
 import { getCities } from '@/app/peliculas/[movies]/page'
 import dynamic from 'next/dynamic'
+import TicketList from '@/components/molecules/TicketList'
 const BackButton = dynamic(() => import('@/components/atoms/BackButton'), { ssr: false })
 const SelectCine = dynamic(() => import('@/components/molecules/SelectCine'), { ssr: false })
 
