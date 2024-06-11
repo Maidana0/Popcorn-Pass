@@ -13,11 +13,6 @@ const MoviePagination = dynamic(() => import("@/components/atoms/MoviePagination
 const PlayingNow = dynamic(() => import("@/components/organism/PlayingNow"), { ssr: false, loading: () => <Loader /> })
 const ComingSoon = dynamic(() => import("@/components/organism/ComingSoon"), { ssr: false, loading: () => <Loader /> })
 
-export const metadata: Metadata = {
-    title: "Peliculas - PopcornPass",
-    description: "Peliculas en cartelera y proximos estrenos",
-};
-
 export const revalidate = 3600 * 24
 
 interface IProps {

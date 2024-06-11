@@ -5,7 +5,7 @@ import { priceFormat } from "@/utils/utils"
 import { UseMoviefunction } from "@/store/movie-function-store"
 import { shallow } from "zustand/shallow"
 
-const pricePerSeat = 4400
+const pricePerSeat = 3000
 
 const AmountSeats = () => {
     const { numberSeats, setNumberSeats, removeLastSelectedSeat } = UseMoviefunction(state => ({

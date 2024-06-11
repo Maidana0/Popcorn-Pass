@@ -81,7 +81,7 @@ const SelectRom: FC<{ listFunctionDetail: IFunctionDetail[] }> = ({ listFunction
                                 {day}
                             </Typography>
                             <Grid container rowSpacing={2} columnSpacing={2} mb={3}
-                                justifyContent={"center"} alignItems={"center"}
+                               alignItems={"center"}
                             >
                                 {data.map((functionDetail) => {
                                     const functionTime: string = new Date(functionDetail.schedule).toLocaleTimeString("es-ES", { hour: "2-digit", minute: "2-digit" });

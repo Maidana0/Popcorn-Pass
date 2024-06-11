@@ -56,7 +56,7 @@ const GenerateTicket = ({ movie }: { movie: IMovie }) => {
                 { name: "día", value: formattedDate },
                 { name: "hora", value: formattedTime },
                 { name: "butacas", value: (selectedSeats.map(seat => seat).join(", ") + ".") },
-                { name: "precio total", value: priceFormat(numberSeats * 4400) },
+                { name: "precio total", value: priceFormat(numberSeats * 3000) },
             ])
         }
 
