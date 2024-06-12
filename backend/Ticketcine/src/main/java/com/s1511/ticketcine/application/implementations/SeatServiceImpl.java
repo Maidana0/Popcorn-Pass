@@ -125,7 +125,7 @@ public class SeatServiceImpl implements SeatService {
         boolean notPurchased = true;
         for (String returnedId : returned) {
             for (String ticketSeat : ticketSeats) {
-                if (returnedId.equals(ticketSeat)){
+                if (returnedId.equals(seatRepository.findById(ticketSeat).orElse(null).getSeatNumber())){
                     Seat seat = seatRepository.findById(ticketSeat)
                             .orElseThrow(() -> new EntityNotFoundException("El asiento no existe"));
                     seat.setSeatEnum(SeatEnum.AVAILABLE);
@@ -143,7 +143,7 @@ public class SeatServiceImpl implements SeatService {
         var actualSeatIds = ticket.getSeatsIds();
         boolean flag = true;
         for (Seat seat : actualSeatIds){
-            if (!seat.getOccupied()) { flag = false; }
+            if (seat.getOccupied()) { flag = false; }
         }
 
         if (flag) {

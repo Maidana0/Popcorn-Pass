@@ -21,6 +21,7 @@ const TicketList: React.FC = () => {
   const [tickets, setTickets] = useState<Ticket[]>([]);
   const [selectedTicket, setSelectedTicket] = useState<Ticket | null>(null);
   const [showPopup, setShowPopup] = useState(false);
+
   const { jwt, isLogged, userId } = useAuthStore(state => ({
     jwt: state.jwt,
     isLogged: state.isLogged,
@@ -30,6 +31,7 @@ const TicketList: React.FC = () => {
   useEffect(() => {
     const fetchTickets = async () => {
       const response = await fetchData(`ticket/u/${userId}`, 'GET', undefined, jwt);
+
       if (!response.error) {
         setTickets(response);
       } else {
@@ -39,7 +41,7 @@ const TicketList: React.FC = () => {
 
     fetchTickets();
   }, []);
-  
+
 
   const handleSelectTicket = (ticket: Ticket) => {
     setSelectedTicket(ticket);
@@ -110,6 +112,7 @@ const TicketList: React.FC = () => {
         ))}
       </ul>
   
+
       {showPopup && selectedTicket && (
         <ReturnSeatsPopup 
           ticket={selectedTicket} 
@@ -117,10 +120,8 @@ const TicketList: React.FC = () => {
         />
       )}
     </div>
-  );
-  
-  
-  
+  );  
 };
 
 export default TicketList;
+

@@ -6,7 +6,7 @@ export const fetchData = async (path: string, method?: "GET" | "PUT" | "POST" | 
         const options: RequestInit = { method, headers }
         body && method != "GET" && (options.body = JSON.stringify(body))
 
-        const res = await fetch(${process.env.PROD_API_PATH}/${path}, options)
+        const res = await fetch(`${process.env.PROD_API_PATH}/${path}`, options)
 
         return await res.json()
     } catch (error) {
