@@ -60,6 +60,7 @@ const ReturnSeatsPopup: React.FC<ReturnSeatsPopupProps> = ({ ticket, onClose }) 
   const [selectedSeats, setSelectedSeats] = useState<string[]>([]);
   const [showNotification, setShowNotification] = useState(false);
 
+
   const handleSeatSelection = (seat: string) => {
     setSelectedSeats((prev) =>
       prev.includes(seat) ? prev.filter(s => s !== seat) : [...prev, seat]
