@@ -11,7 +11,7 @@ interface SeatProps {
 
 const SeatComponent: React.FC<SeatProps> = ({ seat, onClick, isSelected }) => {
   const getColor = () => {
-    switch (seat.occupied) {
+    switch (seat.status) {
       case SeatStatus.Available:
         return 'green';
       case SeatStatus.Occupied:
