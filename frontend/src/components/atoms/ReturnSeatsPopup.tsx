@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { fetchData } from '../../utils/fetchData';
 import { useAuthStore } from "@/store/auth-store"; // Ajusta la ruta según tu estructura de proyecto
 
+
 interface Ticket {
   id: string;
   userId: string;
@@ -66,6 +67,19 @@ const ReturnSeatsPopup: React.FC<ReturnSeatsPopupProps> = ({ ticket, onClose }) 
       prev.includes(seat) ? prev.filter(s => s !== seat) : [...prev, seat]
     );
   };
+  const handleReturnSeats = async () => {
+    const response = await fetchData('path/to/return', 'POST', {
+      ticketId: ticket.id,
+      seatIds: selectedSeats
+    });
+    if (!response.error) {
+      console.log('Asientos devueltos:', response);
+      onClose();
+    } else {
+      console.error(response.message);
+    }
+  };
+
   const handleRedirect = () => {
     window.location.href = '/peliculas/en-pantalla';
     setShowNotification(true); // Mostrar notificación después de redirigir
@@ -89,6 +103,7 @@ const ReturnSeatsPopup: React.FC<ReturnSeatsPopupProps> = ({ ticket, onClose }) 
           </li>
         ))}
       </ul>
+
       <div>
       <button style={buttonStyle} onClick={handleRedirect}>Devolver</button>
       <button style={{ ...buttonStyle, marginRight: 0 }} onClick={onClose}>Cerrar</button>
