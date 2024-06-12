@@ -43,7 +43,13 @@ const AccountMenu = () => {
     const handleClose = () => setAnchorEl(null);
 
 
-    const { firstName, lastName, logOut, isLogged } = useAuthStore(state => ({ logOut: state.logOut, firstName: state.firstName, lastName: state.lastName, isLogged: state.isLogged }), shallow)
+    const { firstName, lastName, id, logOut, isLogged } = useAuthStore(state => ({
+        logOut: state.logOut,
+        firstName: state.firstName,
+        lastName: state.lastName,
+        id: state.id,
+        isLogged: state.isLogged
+    }), shallow)
 
     return (
         <>
@@ -97,11 +103,12 @@ const AccountMenu = () => {
 
                 {
                     isLogged &&
-                    [<Divider key={0} />
-                        , <MenuItems key={1}
-                            handleClose={handleClose}
-                            logOut={logOut}
-                            firstName={firstName || "P"}
+                    [<Divider />
+                        , <MenuItems
+                        id={id ?? "no-logueado"}
+                        handleClose={handleClose}
+                        logOut={logOut}
+                        firstName={firstName || "U"}
                     />]
                 }
             </Menu>

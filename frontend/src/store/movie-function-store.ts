@@ -1,6 +1,5 @@
 import { createWithEqualityFn } from 'zustand/traditional';
 import IFunctionDetail from '@/common/interface-functionDetail';
-import { IMovie } from '@/common/interface-movie';
 import { persist, createJSONStorage } from 'zustand/middleware'
 
 interface IMovieFcValues {

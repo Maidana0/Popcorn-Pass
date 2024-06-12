@@ -1,37 +1,37 @@
+import { itemsMenu } from '@/data/routesData'
 import { Avatar, Divider, ListItemIcon, MenuItem } from '@mui/material'
 import Image from 'next/image'
 import { FC, Fragment } from 'react'
+import { useRouter } from 'next/navigation'
 
 interface Props {
     handleClose: VoidFunction,
     logOut: VoidFunction,
     firstName: string,
+    id: string,
 }
 
-interface Item {
-    name: string
-    path: string
-    icon: string
-}
+const MenuItems: FC<Props> = ({ handleClose, id, firstName, logOut }) => {
+    const router = useRouter()
 
-const items: Item[] = [
-    { name: "Mis Tickets", path: "#", icon: "ticket-icon" },
-    { name: "Mis Comentarios", path: "#", icon: "comment-icon" },
-    { name: "Mis Beneficios", path: "#", icon: "gift-icon" },
-]
-
-const MenuItems: FC<Props> = ({ handleClose, firstName, logOut }) => {
     return (
         <Fragment>
-            <MenuItem onClick={handleClose}>
+            <MenuItem onClick={() => {
+                handleClose()
+                router.push(`/usuario/perfil/${id}`)
+            }}>
                 <Avatar sx={{ bgcolor: "var(--black)", color: "var(--gray-color)" }}>
                     {firstName.charAt(0)}
                 </Avatar>
                 Editar Perfil
             </MenuItem>
 
-            {items.map(item => (
-                <MenuItem onClick={handleClose} key={item.icon}>
+            {itemsMenu.map(item => (
+                <MenuItem key={item.icon}
+                    onClick={() => {
+                        handleClose()
+                        router.push(`/usuario/perfil/${id}/${item.path}`)
+                    }}>
                     <ListItemIcon>
                         <Image src={`/images/header/${item.icon}.svg`} alt={item.icon} width={22} height={22} />
                     </ListItemIcon>
