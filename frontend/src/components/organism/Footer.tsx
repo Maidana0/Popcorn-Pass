@@ -81,7 +81,7 @@ const Footer = () => {
             </Box>
 
 
-            <Typography variant="body2" color={"var(--light-gray-color)"} component="span">
+            <Typography variant="caption" p={2} color={"var(--light-gray-color)"} component="span">
                 Si tienes alguna pregunta o deseas saber más sobre nuestros
                 servicios, no dudes en contactarnos en contacto@ticketera.com.
             </Typography>

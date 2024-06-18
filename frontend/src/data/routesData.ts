@@ -10,15 +10,15 @@ const routes: ReadonlyArray<IRoute> = Object.freeze([
     },
     {
         name: "puntos",
-        path: "/#"
+        path: "/puntos"
     },
     {
         name: "promociones",
-        path: "/#"
+        path: "/promociones"
     },
     {
         name: "cines",
-        path: "/#"
+        path: "/cines"
     },
     {
         name: "nosotros",

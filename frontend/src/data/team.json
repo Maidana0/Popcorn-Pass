@@ -1,0 +1,38 @@
+[
+    {
+        "name": "Guillermo",
+        "lastname": "Diván",
+        "role": "Backend",
+         "image":"guillermo"
+    },
+    {
+        "name": "David ",
+        "lastname": "Frías",
+        "role": "Backend",
+         "image":"david"
+    },
+    {
+        "name": "Facundo ",
+        "lastname": "La Bionda",
+        "role": "Backend",
+        "image":"facundo"
+    },
+    {
+        "name": "Franco",
+        "lastname": "Maidana",
+        "role": "Frontend",
+        "image":"maidana"
+    },
+    {
+        "name": "Luciana",
+        "lastname": "Mazur",
+        "role": "Backend",
+        "image":"luciana"
+    },
+    {
+        "name": "Franco",
+        "lastname": "Nordinelli",
+        "role": "Backend",
+        "image":"nordinelli"
+    }
+]
