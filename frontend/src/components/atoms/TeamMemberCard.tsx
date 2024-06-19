@@ -15,7 +15,9 @@ const TeamMemberCard: FC<Props> = ({ name, lastname, role, image }) => {
                 backgroundImage: `url(/images/team/${image}.jfif)`,
                 backgroundPosition: "center",
                 backgroundSize: "cover",
-                cursor: "pointer"
+                cursor: "pointer",
+                transition: "box-shadow .3s ease-in-out",
+                "&:hover": { boxShadow: "3px 3px 12px 1px var(--yellow)" }
             }}
             position="relative" overflow="hidden"
         >
@@ -26,7 +28,7 @@ const TeamMemberCard: FC<Props> = ({ name, lastname, role, image }) => {
                 sx={{
                     backgroundColor: "rgba(0, 0, 0, 0.65)",
                     opacity: 0,
-                    transition: "opacity 0.3s ease-in-out",
+                    transition: "opacity .3s ease-in-out",
                     "&:hover": { opacity: 1 }
                 }} >
                 <Typography variant="subtitle1" px={1.5} component="h5" color="var(--white)" fontWeight={600}>

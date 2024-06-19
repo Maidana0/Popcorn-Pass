@@ -1,0 +1,58 @@
+[
+    {
+        "ID": 1,
+        "NOMBRE": "Cinemacenter",
+        "CIUDAD": "San Fernando del Valle de Catamarca",
+        "DIRECCION": "Intendente Mamerto Medina 220",
+        "PROVINCIA": "Catamarca",
+        "DESCRIPCION": "El cine más moderno de la ciudad, con pantallas 3D y sonido Dolby Surround."
+    },
+    {
+        "ID": 2,
+        "NOMBRE": "Centro Cultural San Agustín",
+        "CIUDAD": "Santa Maria",
+        "DIRECCION": "San Martin 173",
+        "PROVINCIA": "Catamarca",
+        "DESCRIPCION": "Un lugar cultural donde además de películas se realizan obras de teatro y exposiciones."
+    },
+    {
+        "ID": 3,
+        "NOMBRE": "Los Cines De La Costa",
+        "CIUDAD": "Resistencia",
+        "DIRECCION": "Av. Sarmiento 2600",
+        "PROVINCIA": "Chaco",
+        "DESCRIPCION": "Con una vista increíble al río, este cine ofrece una experiencia única para los amantes del séptimo arte."
+    },
+    {
+        "ID": 4,
+        "NOMBRE": "Deborah Jones De Williams",
+        "CIUDAD": "Sarmiento",
+        "DIRECCION": "Reg. Inf. Mec. 25 Esquina 20 De Junio",
+        "PROVINCIA": "Chubut",
+        "DESCRIPCION": "Un cine histórico con una arquitectura impresionante, ideal para disfrutar de películas clásicas y contemporáneas."
+    },
+    {
+        "ID": 5,
+        "NOMBRE": "Fantasio",
+        "CIUDAD": "Bella Vista",
+        "DIRECCION": "Reg. Inf. Mec. 25 Esquina 20 De Junio",
+        "PROVINCIA": "Corrientes",
+        "DESCRIPCION": "Un cine familiar con una gran variedad de películas para todos los gustos."
+    },
+    {
+        "ID": 6,
+        "NOMBRE": "Luna De Avellaneda",
+        "CIUDAD": "General Obligado",
+        "DIRECCION": "Av.Santa Fe 1290",
+        "PROVINCIA": "Santa Fe",
+        "DESCRIPCION": "Conocido por sus cómodas butacas y excelente servicio, es el lugar perfecto para una noche de cine."
+    },
+    {
+        "ID": 7,
+        "NOMBRE": "Hoyts",
+        "CIUDAD": "San Isidro",
+        "DIRECCION": "Perez Reverte 555",
+        "PROVINCIA": "Buenos Aires",
+        "DESCRIPCION": "Un cine moderno con las últimas tecnologías en proyección y sonido, además de una gran oferta gastronómica."
+    }
+]

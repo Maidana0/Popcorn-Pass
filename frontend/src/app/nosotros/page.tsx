@@ -1,5 +1,5 @@
 import TeamMemberCard from '@/components/atoms/TeamMemberCard';
-import { Box, SxProps, Typography } from '@mui/material';
+import { Box, Divider, SxProps, Typography } from '@mui/material';
 import React from 'react';
 import teamData from '@/data/team.json'
 
@@ -17,9 +17,9 @@ const mainStyle: React.CSSProperties = {
 };
 
 const sectionStyled: SxProps = {
-  margin: '1.5rem 0',
+  margin: '1.3rem 0',
   padding: '2rem',
-  boxShadow: '1px 1px 5px var(--light-gray-color)',
+  boxShadow: '1px 1px 5px var(--yellow)',
   borderRadius: '10px',
   maxWidth: '800px',
   textAlign: 'center',
@@ -46,8 +46,9 @@ const paragraphStyle: React.CSSProperties = {
 
 const AboutUs: React.FC = () => {
   return (
-    <>
-      <Box sx={{ ...mainStyle, width: { xs: "85%", sm: "70%", md: "650px" }, margin: "auto" }}>
+    <Box display={"flex"} justifyContent={"space-evenly"}
+      flexDirection={{ xs: "column", sm: "column", md: "row" }}>
+      <Box sx={{ ...mainStyle, maxWidth: { xs: "85%", sm: "70%", md: "55%" }, margin: "auto" }}>
         <Typography variant="h3" lineHeight={1.15} component="h1" textAlign={"center"}>
           Sobre Nosotros
         </Typography>
@@ -80,18 +81,26 @@ const AboutUs: React.FC = () => {
 
       </Box>
 
-      <Typography variant="h3" px={2} lineHeight={1.15} my={"3rem"} component="h2" textAlign={"center"}>
-        Nuestro Equipo
-      </Typography>
+      <Box height={{xs:"1px", sm:"1px", md:"100vh"}} width={{xs:"90%", sm:"90%", md:"2px"}}
+       borderRadius={5} margin={{xs:"2rem auto", sm:"2rem auto", md:"auto"}}
+        sx={{bgcolor:"var(--lightBlack)"}} boxShadow={"0 0 5px var(--yellow)"}></Box>
+
+      <Box maxWidth={{ md: "30%" }} display={"flex"} flexDirection={"column"}
+        gap={5}>
+        <Typography variant="h3" px={2} lineHeight={1.15} component="h2" textAlign={"center"}>
+          Equipo
+        </Typography>
 
 
-      <Box display={"flex"} margin={"2rem auto"} justifyContent={"space-evenly"} alignItems={"center"} flexWrap={"wrap"} gap={"1.5rem 0"}>
 
-        {teamData.map(data => (
-          <TeamMemberCard key={data.lastname} name={data.name} lastname={data.lastname} role={data.role} image={data.image} />
-        ))}
+        <Box display={"flex"} minHeight={"85%"} margin={"2rem auto"} justifyContent={"space-evenly"} alignItems={"center"} flexWrap={"wrap"} gap={"1.5rem 0"}>
+
+          {teamData.map(data => (
+            <TeamMemberCard key={data.lastname} name={data.name} lastname={data.lastname} role={data.role} image={data.image} />
+          ))}
+        </Box>
       </Box>
-    </>
+    </Box>
   );
 };
 

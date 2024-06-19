@@ -103,8 +103,9 @@ const AccountMenu = () => {
 
                 {
                     isLogged &&
-                    [<Divider />
+                    [<Divider key={"DIVIDER"}/>
                         , <MenuItems
+                        key={"menu-Logout"}
                         id={id ?? "no-logueado"}
                         handleClose={handleClose}
                         logOut={logOut}

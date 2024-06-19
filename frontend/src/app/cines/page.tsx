@@ -1,4 +1,6 @@
 import { Box, Typography } from "@mui/material"
+import cinemaData from '@/data/cinemas.json'
+import CinemaList from "@/components/molecules/CinemaList"
 
 export const metadata = {
     title: "Cines - PopcornPass",
@@ -8,9 +10,11 @@ export const metadata = {
 const page = () => {
     return (
         <Box>
-            <Typography variant="h3" component="h1" textAlign={{ xs: "center", md: "left" }}>
+            <Typography variant="h3" component="h1" p={2}  textAlign={{ xs: "center", md: "left" }}>
                 Cines Asociados
             </Typography>
+
+            <CinemaList cinemas={cinemaData} />
         </Box>
     )
 }

@@ -1,3 +1,4 @@
+"use client"
 import * as React from "react";
 import { SelectChangeEvent } from "@mui/material/Select";
 import { MenuItem, FormControl, Select, useTheme } from "@mui/material";
@@ -16,7 +17,9 @@ const InputSelected: any = ({ register, currentValue, valueAndName, optionsValue
     const [selectedValue, setSelectedValue] = React.useState("empty")
     const { palette } = useTheme()
     const handleChange = (event: SelectChangeEvent) => setSelectedValue(event.target.value);
-    React.useEffect(() => currentValue && setSelectedValue(currentValue))
+    React.useEffect(() => {
+        currentValue &&  setSelectedValue(currentValue);
+      }, [currentValue]);
     return (
         <FormControl sx={{
             width: 280, textTransform: "uppercase",

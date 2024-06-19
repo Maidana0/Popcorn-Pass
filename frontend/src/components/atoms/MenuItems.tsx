@@ -26,8 +26,8 @@ const MenuItems: FC<Props> = ({ handleClose, id, firstName, logOut }) => {
                 Editar Perfil
             </MenuItem>
 
-            {itemsMenu.map(item => (
-                <MenuItem key={item.icon}
+            {itemsMenu.map((item, index) => (
+                <MenuItem key={`${item.icon}-${index}`} itemID={item.icon}
                     onClick={() => {
                         handleClose()
                         router.push(`/usuario/perfil/${id}/${item.path}`)

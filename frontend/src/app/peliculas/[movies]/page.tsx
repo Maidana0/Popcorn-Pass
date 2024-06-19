@@ -1,5 +1,4 @@
 import { Box, Button, Typography } from "@mui/material";
-import type { Metadata } from "next";
 import Link from "next/link";
 import dynamic from "next/dynamic";
 import Loader from "@/components/atoms/Loader";
