@@ -10,32 +10,20 @@ PopcornPass es una aplicación web diseñada para ofrecer a nuestros cines una p
       <img src="https://img.shields.io/badge/VER_DEMO-EE9B01?style=for-the-badge&logo=heroku&logoColor=purple"/>
   </a>
    <a href="https://" target="_blank">
-      <img  src="https://img.shields.io/badge/VER_API-EE9B01?style=for-the-badge&logo=heroku&logoColor=purple"/>
   </a>
 </div>
 
 <br/>
 
-### 🔧 Tecnologías Usadas
+## **Tecnologías utilizadas**
 
-#### Frontend
-![React](https://img.shields.io/badge/react-%2320232a.svg?style=for-the-badge&logo=react&logoColor=%2361DAFB)
-![Next JS](https://img.shields.io/badge/Next-black?style=for-the-badge&logo=next.js&logoColor=white)
-![TypeScript](https://img.shields.io/badge/typescript-%23007ACC.svg?style=for-the-badge&logo=typescript&logoColor=white)
-![MUI](https://img.shields.io/badge/MUI-%230081CB.svg?style=for-the-badge&logo=mui&logoColor=white)
-![React Hook Form](https://img.shields.io/badge/React%20Hook%20Form-%23EC5990.svg?style=for-the-badge&logo=reacthookform&logoColor=white)
-![Vercel](https://img.shields.io/badge/vercel-%23000000.svg?style=for-the-badge&logo=vercel&logoColor=white)
-![Zustand](https://img.shields.io/badge/zustand-%232023a.svg?style=for-the-badge&logo)
+- **Back End**
 
+<img src="https://private-user-images.githubusercontent.com/83563006/341110013-325a686e-9409-424c-bb9b-9108195689fa.jpg?jwt=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJnaXRodWIuY29tIiwiYXVkIjoicmF3LmdpdGh1YnVzZXJjb250ZW50LmNvbSIsImtleSI6ImtleTUiLCJleHAiOjE3MTg4MTE2MDQsIm5iZiI6MTcxODgxMTMwNCwicGF0aCI6Ii84MzU2MzAwNi8zNDExMTAwMTMtMzI1YTY4NmUtOTQwOS00MjRjLWJiOWItOTEwODE5NTY4OWZhLmpwZz9YLUFtei1BbGdvcml0aG09QVdTNC1ITUFDLVNIQTI1NiZYLUFtei1DcmVkZW50aWFsPUFLSUFWQ09EWUxTQTUzUFFLNFpBJTJGMjAyNDA2MTklMkZ1cy1lYXN0LTElMkZzMyUyRmF3czRfcmVxdWVzdCZYLUFtei1EYXRlPTIwMjQwNjE5VDE1MzUwNFomWC1BbXotRXhwaXJlcz0zMDAmWC1BbXotU2lnbmF0dXJlPWQ3MGUwNDM5Mzc2NjNlNjM4ZWMxYzFmNjU1Njk2ZGMyMGZmZTg3MjAyZjZhMTRhYmRkYTU0ZmRkYWExYzhjM2YmWC1BbXotU2lnbmVkSGVhZGVycz1ob3N0JmFjdG9yX2lkPTAma2V5X2lkPTAmcmVwb19pZD0wIn0._D42wu8Qb2xK9aAsWMkggqLZUNg5QHLFerllZbFW8I4">
 
-#### Backend
-![Java](https://img.shields.io/badge/java-%23ED8B00.svg?style=for-the-badge&logo=openjdk&logoColor=white)
-![Spring](https://img.shields.io/badge/spring-%236DB33F.svg?style=for-the-badge&logo=spring&logoColor=white)
-![Hibernate](https://img.shields.io/badge/Hibernate-59666C?style=for-the-badge&logo=Hibernate&logoColor=white)
-![JWT](https://img.shields.io/badge/JWT-black?style=for-the-badge&logo=JSON%20web%20tokens)
-![Swagger](https://img.shields.io/badge/-Swagger-%23Clojure?style=for-the-badge&logo=swagger&logoColor=white)
-![Postman](https://img.shields.io/badge/Postman-FF6C37?style=for-the-badge&logo=postman&logoColor=white)
-![MySQL](https://img.shields.io/badge/mysql-%2300f.svg?style=for-the-badge&logo=mysql&logoColor=white)
+ - **Front End**
+   
+<img src="https://private-user-images.githubusercontent.com/83563006/341110020-3a19855d-bd8d-4789-9d73-19fb37761f09.jpg?jwt=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJnaXRodWIuY29tIiwiYXVkIjoicmF3LmdpdGh1YnVzZXJjb250ZW50LmNvbSIsImtleSI6ImtleTUiLCJleHAiOjE3MTg4MTE2MDQsIm5iZiI6MTcxODgxMTMwNCwicGF0aCI6Ii84MzU2MzAwNi8zNDExMTAwMjAtM2ExOTg1NWQtYmQ4ZC00Nzg5LTlkNzMtMTlmYjM3NzYxZjA5LmpwZz9YLUFtei1BbGdvcml0aG09QVdTNC1ITUFDLVNIQTI1NiZYLUFtei1DcmVkZW50aWFsPUFLSUFWQ09EWUxTQTUzUFFLNFpBJTJGMjAyNDA2MTklMkZ1cy1lYXN0LTElMkZzMyUyRmF3czRfcmVxdWVzdCZYLUFtei1EYXRlPTIwMjQwNjE5VDE1MzUwNFomWC1BbXotRXhwaXJlcz0zMDAmWC1BbXotU2lnbmF0dXJlPTFkZWRkNTY2ODkxNzJkNWQ2OTJjMjE2ZmNhMThhMmM0YTdkOGQxNTgzNmE0OGMzMGQ1OGEyMTM5YzhlZmFiN2QmWC1BbXotU2lnbmVkSGVhZGVycz1ob3N0JmFjdG9yX2lkPTAma2V5X2lkPTAmcmVwb19pZD0wIn0.B1Cm5fcIfqBu4XMS0Qv91ryDlL-gC-lgukdM-Z-uf_8">
 
 
 #### Organización
