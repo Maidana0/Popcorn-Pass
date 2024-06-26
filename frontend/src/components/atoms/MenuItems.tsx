@@ -1,7 +1,7 @@
 import { itemsMenu } from '@/data/routesData'
 import { Avatar, Divider, ListItemIcon, MenuItem } from '@mui/material'
 import Image from 'next/image'
-import { FC, Fragment } from 'react'
+import { FC } from 'react'
 import { useRouter } from 'next/navigation'
 
 interface Props {
@@ -15,7 +15,7 @@ const MenuItems: FC<Props> = ({ handleClose, id, firstName, logOut }) => {
     const router = useRouter()
 
     return (
-        <Fragment>
+        <>
             <MenuItem onClick={() => {
                 handleClose()
                 router.push(`/usuario/perfil/${id}`)
@@ -50,7 +50,7 @@ const MenuItems: FC<Props> = ({ handleClose, id, firstName, logOut }) => {
                 </ListItemIcon>
                 Cerrar sesión
             </MenuItem>
-        </Fragment>
+        </>
     )
 }
 

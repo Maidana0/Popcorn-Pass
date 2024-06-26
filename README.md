@@ -10,32 +10,21 @@ PopcornPass es una aplicación web diseñada para ofrecer a nuestros cines una p
       <img src="https://img.shields.io/badge/VER_DEMO-EE9B01?style=for-the-badge&logo=heroku&logoColor=purple"/>
   </a>
    <a href="https://" target="_blank">
-      <img  src="https://img.shields.io/badge/VER_API-EE9B01?style=for-the-badge&logo=heroku&logoColor=purple"/>
   </a>
 </div>
 
 <br/>
 
-### 🔧 Tecnologías Usadas
+## **Tecnologías utilizadas**
 
-#### Frontend
-![React](https://img.shields.io/badge/react-%2320232a.svg?style=for-the-badge&logo=react&logoColor=%2361DAFB)
-![Next JS](https://img.shields.io/badge/Next-black?style=for-the-badge&logo=next.js&logoColor=white)
-![TypeScript](https://img.shields.io/badge/typescript-%23007ACC.svg?style=for-the-badge&logo=typescript&logoColor=white)
-![MUI](https://img.shields.io/badge/MUI-%230081CB.svg?style=for-the-badge&logo=mui&logoColor=white)
-![React Hook Form](https://img.shields.io/badge/React%20Hook%20Form-%23EC5990.svg?style=for-the-badge&logo=reacthookform&logoColor=white)
-![Vercel](https://img.shields.io/badge/vercel-%23000000.svg?style=for-the-badge&logo=vercel&logoColor=white)
-![Zustand](https://img.shields.io/badge/zustand-%232023a.svg?style=for-the-badge&logo)
+- **Back End**
+
+![BACKEND_pdf_page-0001](https://github.com/GuillermoDivan/s15-11-m-java-react/assets/83563006/325a686e-9409-424c-bb9b-9108195689fa)
 
 
-#### Backend
-![Java](https://img.shields.io/badge/java-%23ED8B00.svg?style=for-the-badge&logo=openjdk&logoColor=white)
-![Spring](https://img.shields.io/badge/spring-%236DB33F.svg?style=for-the-badge&logo=spring&logoColor=white)
-![Hibernate](https://img.shields.io/badge/Hibernate-59666C?style=for-the-badge&logo=Hibernate&logoColor=white)
-![JWT](https://img.shields.io/badge/JWT-black?style=for-the-badge&logo=JSON%20web%20tokens)
-![Swagger](https://img.shields.io/badge/-Swagger-%23Clojure?style=for-the-badge&logo=swagger&logoColor=white)
-![Postman](https://img.shields.io/badge/Postman-FF6C37?style=for-the-badge&logo=postman&logoColor=white)
-![MySQL](https://img.shields.io/badge/mysql-%2300f.svg?style=for-the-badge&logo=mysql&logoColor=white)
+ - **Front End**
+   
+![FRONTEND_PDF_page-0001](https://github.com/GuillermoDivan/s15-11-m-java-react/assets/83563006/3a19855d-bd8d-4789-9d73-19fb37761f09)
 
 
 #### Organización
