@@ -94,7 +94,9 @@ const Page = async ({ params }: IProps) => {
                 : <PlayingNow movies={data.playingNow} />} */}
 
             {
-                JSON.stringify(data.inComingSoon)
+                inComingSoon
+                    ? JSON.stringify(data.inComingSoon)
+                    : JSON.stringify(data.playingNow)
             }
 
         </Box>
