@@ -12,7 +12,7 @@ const MoviePagination = dynamic(() => import("@/components/atoms/MoviePagination
 const PlayingNow = dynamic(() => import("@/components/organism/PlayingNow"), { ssr: false, loading: () => <Loader /> })
 const ComingSoon = dynamic(() => import("@/components/organism/ComingSoon"), { ssr: false, loading: () => <Loader /> })
 
-export const revalidate = 3600 * 24
+export const revalidate = 3600 * 24 * 7
 
 interface IProps {
     params: {
@@ -24,11 +24,29 @@ interface IProps {
 }
 
 const getData = async (): Promise<{ inComingSoon: IMovie[], playingNow: IMovie[] }> => {
-    const res = await fetchData("movie/list")
-    return {
-        inComingSoon: filteredListComingSoon(res),
-        playingNow: filteredListPlayingNow(res)
+    if (process.env.MODE != "only-front") {
+        const res = await fetchData("movie/list")
+        return {
+            inComingSoon: filteredListComingSoon(res.results),
+            playingNow: filteredListPlayingNow(res.results)
+        }
+    } else {
+        const date = new Date()
+        const currentDate = date.toISOString().split('T')[0];
+        const gte = new Date(date.getTime() - 1000 * 60 * 60 * 24 * 7).toISOString().split('T')[0];
+        const lte = new Date(date.getTime() + 1000 * 60 * 60 * 24 * 14).toISOString().split('T')[0];
+
+        const regionAndLanguage = "page=1&region=AR&language=es-AR"
+        const movies_inComingsoon = await fetchData(`discover/movie?include_adult=true&include_video=false&${regionAndLanguage}&primary_release_date.gte=${currentDate}&primary_release_date.lte=${lte}&sort_by=popularity.desc`)
+
+        const movies_playingNow = await fetchData(`discover/movie?include_adult=true&include_video=false&${regionAndLanguage}&primary_release_date.gte=${gte}&primary_release_date.lte=${currentDate}&sort_by=popularity.desc&vote_average.gte=6`)
+
+        return {
+            inComingSoon: filteredListComingSoon(movies_inComingsoon.results),
+            playingNow: filteredListPlayingNow(movies_playingNow.results)
+        }
     }
+
 }
 
 export const getCities = async (): Promise<string[]> => await fetchData("cinema/cities", "GET");
@@ -38,6 +56,7 @@ const Page = async ({ params }: IProps) => {
     const inComingSoon = movies == "en-estreno"
     const cities = !inComingSoon && await getCities()
     const data = await getData()
+
 
     if (movies != "en-pantalla" && !inComingSoon) return <h1 style={{ margin: "auto", textAlign: "center" }}>404 - Not Found</h1>
 
@@ -68,11 +87,16 @@ const Page = async ({ params }: IProps) => {
             </Box>
         </Box>
 
-        {!inComingSoon && <MovieFilters cities={cities || ["empty"]} />}
+        {/* {!inComingSoon && <MovieFilters cities={cities || ["empty"]} />} */}
         <Box sx={{ display: "flex", flexWrap: "wrap", gap: { xs: "20px 0", sm: "16px" }, justifyContent: "space-evenly" }} mb="3.5rem">
-            {inComingSoon
+            {/* {inComingSoon
                 ? <ComingSoon movies={data.inComingSoon} />
-                : <PlayingNow movies={data.playingNow} />}
+                : <PlayingNow movies={data.playingNow} />} */}
+
+            {
+                JSON.stringify(data.inComingSoon)
+            }
+
         </Box>
 
         <MoviePagination />
