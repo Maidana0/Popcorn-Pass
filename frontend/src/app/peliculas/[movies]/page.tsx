@@ -5,6 +5,7 @@ import Loader from "@/components/atoms/Loader";
 import { fetchData } from "@/utils/fetchData";
 import { filteredListComingSoon, filteredListPlayingNow } from "@/utils/fc-movies";
 import { IMovie } from "@/common/interface-movie";
+import transformMoviesList from "@/utils/THMDB_DTO";
 
 const MovieFilters = dynamic(() => import("@/components/organism/MovieFilters"), { ssr: false })
 const MoviePagination = dynamic(() => import("@/components/atoms/MoviePagination"), { ssr: false })
@@ -33,17 +34,20 @@ const getData = async (): Promise<{ inComingSoon: IMovie[], playingNow: IMovie[]
     } else {
         const date = new Date()
         const currentDate = date.toISOString().split('T')[0];
-        const gte = new Date(date.getTime() - 1000 * 60 * 60 * 24 * 7).toISOString().split('T')[0];
-        const lte = new Date(date.getTime() + 1000 * 60 * 60 * 24 * 14).toISOString().split('T')[0];
+        const gte = new Date(date.getTime() - 1000 * 60 * 60 * 24 * 14).toISOString().split('T')[0];
+        const lte = new Date(date.getTime() + 1000 * 60 * 60 * 24 * 30).toISOString().split('T')[0];
 
         const regionAndLanguage = "page=1&region=AR&language=es-AR"
-        const movies_inComingsoon = await fetchData(`discover/movie?include_adult=true&include_video=false&${regionAndLanguage}&primary_release_date.gte=${currentDate}&primary_release_date.lte=${lte}&sort_by=popularity.desc`)
+        let movies_inComingsoon = await fetchData(`discover/movie?include_adult=true&include_video=false&${regionAndLanguage}&primary_release_date.gte=${currentDate}&primary_release_date.lte=${lte}&sort_by=popularity.desc`)
 
-        const movies_playingNow = await fetchData(`discover/movie?include_adult=true&include_video=false&${regionAndLanguage}&primary_release_date.gte=${gte}&primary_release_date.lte=${currentDate}&sort_by=popularity.desc&vote_average.gte=6`)
+        let movies_playingNow = await fetchData(`discover/movie?include_adult=true&include_video=false&${regionAndLanguage}&primary_release_date.gte=${gte}&primary_release_date.lte=${currentDate}&sort_by=popularity.desc&vote_average.gte=6`)
+
+        movies_inComingsoon = filteredListComingSoon(movies_inComingsoon.results)
+        movies_playingNow = filteredListPlayingNow(movies_playingNow.results)
 
         return {
-            inComingSoon: filteredListComingSoon(movies_inComingsoon.results),
-            playingNow: filteredListPlayingNow(movies_playingNow.results)
+            inComingSoon: transformMoviesList(movies_inComingsoon),
+            playingNow: transformMoviesList(movies_playingNow)
         }
     }
 
@@ -89,16 +93,11 @@ const Page = async ({ params }: IProps) => {
 
         {/* {!inComingSoon && <MovieFilters cities={cities || ["empty"]} />} */}
         <Box sx={{ display: "flex", flexWrap: "wrap", gap: { xs: "20px 0", sm: "16px" }, justifyContent: "space-evenly" }} mb="3.5rem">
-            {/* {inComingSoon
-                ? <ComingSoon movies={data.inComingSoon} />
-                : <PlayingNow movies={data.playingNow} />} */}
-
             {
                 inComingSoon
-                    ? JSON.stringify(data.inComingSoon)
-                    : JSON.stringify(data.playingNow)
+                    ? <ComingSoon movies={data.inComingSoon} />
+                    : <PlayingNow movies={data.playingNow} />
             }
-
         </Box>
 
         <MoviePagination />
