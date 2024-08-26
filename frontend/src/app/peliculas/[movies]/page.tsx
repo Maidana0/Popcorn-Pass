@@ -24,7 +24,7 @@ interface IProps {
     }
 }
 
-const getData = async (): Promise<{ inComingSoon: IMovie[], playingNow: IMovie[] }> => {
+export const getData = async (): Promise<{ inComingSoon: IMovie[], playingNow: IMovie[] }> => {
     if (process.env.MODE != "only-front") {
         const res = await fetchData("movie/list")
         return {
@@ -34,17 +34,18 @@ const getData = async (): Promise<{ inComingSoon: IMovie[], playingNow: IMovie[]
     } else {
         const date = new Date()
         const currentDate = date.toISOString().split('T')[0];
-        const gte = new Date(date.getTime() - 1000 * 60 * 60 * 24 * 14).toISOString().split('T')[0];
+        const gte = new Date(date.getTime() - 1000 * 60 * 60 * 24 * 30).toISOString().split('T')[0];
         const lte = new Date(date.getTime() + 1000 * 60 * 60 * 24 * 30).toISOString().split('T')[0];
 
         const regionAndLanguage = "page=1&region=AR&language=es-AR"
         let movies_inComingsoon = await fetchData(`discover/movie?include_adult=true&include_video=false&${regionAndLanguage}&primary_release_date.gte=${currentDate}&primary_release_date.lte=${lte}&sort_by=popularity.desc`)
 
-        let movies_playingNow = await fetchData(`discover/movie?include_adult=true&include_video=false&${regionAndLanguage}&primary_release_date.gte=${gte}&primary_release_date.lte=${currentDate}&sort_by=popularity.desc&vote_average.gte=6`)
+        let movies_playingNow = await fetchData(`discover/movie?include_adult=true&include_video=false&${regionAndLanguage}&primary_release_date.gte=${gte}&primary_release_date.lte=${currentDate}&sort_by=popularity.desc`)
 
         movies_inComingsoon = filteredListComingSoon(movies_inComingsoon.results)
         movies_playingNow = filteredListPlayingNow(movies_playingNow.results)
-
+        // console.log("PIDIENDO DATOS ");
+        
         return {
             inComingSoon: transformMoviesList(movies_inComingsoon),
             playingNow: transformMoviesList(movies_playingNow)
