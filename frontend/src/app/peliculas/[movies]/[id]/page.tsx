@@ -3,7 +3,7 @@ import { Container, Typography } from '@mui/material'
 import type { Metadata } from 'next'
 import dynamic from 'next/dynamic'
 import { getCities, getData as getAllDataMovies } from '@/app/peliculas/[movies]/page'
-import IFunctionDetail from '@/common/interface-functionDetail'
+// import IFunctionDetail from '@/common/interface-functionDetail'
 import ComentariosFicticios from '@/components/organism/ComentariosFicticios'
 
 const SelectCine = dynamic(() => import('@/components/molecules/SelectCine'), { ssr: false })
@@ -28,7 +28,7 @@ export const getData = async (id: string, movies?: string) => {
         return data.inComingSoon.find(movie => movie.id == id)
     }
 };
-const getFunctionDetail = async (movieId: string) => await fetchData(`functionDetails/functionDetailsByMovieId/${movieId}`);
+// const getFunctionDetail = async (movieId: string) => await fetchData(`functionDetails/functionDetailsByMovieId/${movieId}`);
 
 
 const Movie = async ({ params }: Props) => {

@@ -19,7 +19,14 @@ const nextConfig = {
                 hostname: "image.tmdb.org",
                 port: "",
                 pathname: "/t/p/**"
-            }],
+            },
+            {
+                protocol: "https",
+                hostname: "w7.pngwing.com",
+                port: "",
+                pathname: "/pngs/476/886/png-transparent-man-holding-wrench-preventive-maintenance-total-productive-maintenance-predictive-maintenance-planned-maintenance-repair-service-hand-people-thumbnail.png"
+            }
+        ],
     },
     env: {
         DEV_API_PATH: "http://localhost:8080",

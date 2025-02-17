@@ -1,11 +1,16 @@
 import BackButton from '@/components/atoms/BackButton'
 import React from 'react'
+import MaintenancePage from '@/components/atoms/MaintenancePage'
+import { Typography } from '@mui/material'
 
 const page = () => {
   return (
     <div>
       <BackButton />
-      <h1>Mis Beneficios!</h1>
+      <Typography variant="h3" component="h1" px={3}>
+        Mis Beneficios!
+      </Typography>
+      <MaintenancePage />
     </div>
   )
 }

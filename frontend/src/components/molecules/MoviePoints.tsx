@@ -85,18 +85,18 @@ const rewards = [
 const MoviePoints = () => {
 
     return (
-        <Box sx={{flexGrow:1, padding:2}}>
+        <Box sx={{ flexGrow: 1, padding: 2 }}>
             <Grid container spacing={3}>
                 {rewards.map((reward) => (
                     <Grid item xs={12} sm={6} md={4} key={reward.id}>
-                        <Card className={"classes.card"} sx={{bgcolor:"var(--white)"}}>
+                        <Card sx={{ bgcolor: "var(--light-white-color)" }}>
                             <CardMedia
-                                className={"classes.media"}
-                                sx={{ height: 400 }}
+
+                                sx={{ height: 325 }}
                                 image={`/images/moviepoints/${reward.id}.jfif`}
                                 title={reward.name}
                             />
-                            <CardContent className={"classes.content"} sx={{
+                            <CardContent sx={{
                                 height: "180px",
                                 display: "flex",
                                 flexDirection: "column",
@@ -104,16 +104,16 @@ const MoviePoints = () => {
                                 padding: "12px!important",
 
                             }}>
-                                <Typography variant="h5" component="div"  noWrap={true}>
+                                <Typography variant="h5" component="div" noWrap={true}>
                                     {reward.name}
                                 </Typography>
-                                <Typography className={"classes.pos"} color="textSecondary">
+                                <Typography color="textSecondary">
                                     {reward.description}
                                 </Typography>
                                 <Typography variant="body2">
                                     Puntos necesarios: {reward.points}
                                 </Typography>
-                                <Button variant='contained' color="warning" className={"classes.button"}>
+                                <Button variant='contained' color="warning" >
                                     Canjear
                                 </Button>
                             </CardContent>

@@ -20,7 +20,7 @@ interface IInputMuiProps {
 const InputMui: FC<IInputMuiProps> = ({ value, inputVariant, inputHelperText, inputError, inputRequired, inputRegister, inputName, inputType, inputLabel, inputSx }) => {
   return (
     <TextField
-      value={value ?? value}
+      defaultValue={value ?? value}
       {...inputRegister}
       required={inputRequired ?? false}
       error={inputError}
