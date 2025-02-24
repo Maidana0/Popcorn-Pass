@@ -2,9 +2,10 @@ import { fetchData } from '@/utils/fetchData'
 import { Container, Typography } from '@mui/material'
 import type { Metadata } from 'next'
 import dynamic from 'next/dynamic'
-import { getCities, getData as getAllDataMovies } from '@/app/peliculas/[movies]/page'
+import { getData as getAllDataMovies } from '@/app/peliculas/[movies]/page'
 // import IFunctionDetail from '@/common/interface-functionDetail'
 import ComentariosFicticios from '@/components/organism/ComentariosFicticios'
+import { getCities } from '@/data/getCinemas'
 
 const SelectCine = dynamic(() => import('@/components/molecules/SelectCine'), { ssr: false })
 const BackButton = dynamic(() => import('@/components/atoms/BackButton'), { ssr: false })
@@ -33,7 +34,7 @@ export const getData = async (id: string, movies?: string) => {
 
 const Movie = async ({ params }: Props) => {
     const { id, movies } = params
-    // const cities = await getCities()
+    const cities = await getCities()
     const movie = await getData(id, movies)
     // const listFunctionDetail: IFunctionDetail[] = await getFunctionDetail(id)
     return <>
@@ -42,7 +43,7 @@ const Movie = async ({ params }: Props) => {
             <Typography variant="h4" component="h1" textAlign={{ xs: "center", md: "left" }}>
                 ¿Qué esperas para ver {movie.title}?
             </Typography>
-            {/* <SelectCine cities={cities} /> */}
+            <SelectCine cities={cities} />
         </Container>
         <MovieDetail movie={movie} />
         {/* {

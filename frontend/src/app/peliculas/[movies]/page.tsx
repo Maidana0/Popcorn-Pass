@@ -6,6 +6,7 @@ import { fetchData } from "@/utils/fetchData";
 import { filteredListComingSoon, filteredListPlayingNow } from "@/utils/fc-movies";
 import { IMovie } from "@/common/interface-movie";
 import transformMoviesList from "@/utils/THMDB_DTO";
+import { getCities } from "@/data/getCinemas";
 
 const MovieFilters = dynamic(() => import("@/components/organism/MovieFilters"), { ssr: false })
 const MoviePagination = dynamic(() => import("@/components/atoms/MoviePagination"), { ssr: false })
@@ -35,7 +36,7 @@ export const getData = async (): Promise<{ inComingSoon: IMovie[], playingNow: I
         const date = new Date()
         const currentDate = date.toISOString().split('T')[0];
         const gte = new Date(date.getTime() - 1000 * 60 * 60 * 24 * 30).toISOString().split('T')[0];
-        const lte = new Date(date.getTime() + 1000 * 60 * 60 * 24 * 30).toISOString().split('T')[0];
+        const lte = new Date(date.getTime() + 1000 * 60 * 60 * 24 * 40).toISOString().split('T')[0];
 
         const regionAndLanguage = "page=1&region=AR&language=es-AR"
         let movies_inComingsoon = await fetchData(`discover/movie?include_adult=true&include_video=false&${regionAndLanguage}&primary_release_date.gte=${currentDate}&primary_release_date.lte=${lte}&sort_by=popularity.desc`)
@@ -45,7 +46,7 @@ export const getData = async (): Promise<{ inComingSoon: IMovie[], playingNow: I
         movies_inComingsoon = filteredListComingSoon(movies_inComingsoon.results)
         movies_playingNow = filteredListPlayingNow(movies_playingNow.results)
         // console.log("PIDIENDO DATOS ");
-        
+
         return {
             inComingSoon: transformMoviesList(movies_inComingsoon),
             playingNow: transformMoviesList(movies_playingNow)
@@ -54,7 +55,6 @@ export const getData = async (): Promise<{ inComingSoon: IMovie[], playingNow: I
 
 }
 
-export const getCities = async (): Promise<string[]> => await fetchData("cinema/cities", "GET");
 
 const Page = async ({ params }: IProps) => {
     const { movies } = params
@@ -92,7 +92,7 @@ const Page = async ({ params }: IProps) => {
             </Box>
         </Box>
 
-        {/* {!inComingSoon && <MovieFilters cities={cities || ["empty"]} />} */}
+        {!inComingSoon && <MovieFilters cities={cities || ["empty"]} />}
         <Box sx={{ display: "flex", flexWrap: "wrap", gap: { xs: "20px 0", sm: "16px" }, justifyContent: "space-evenly" }} mb="3.5rem">
             {
                 inComingSoon
