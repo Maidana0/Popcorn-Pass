@@ -16,7 +16,7 @@ export const getCities = async (): Promise<string[]> => {
 export const getCinemaListByCity = async (currentCity: string, city: string, setCinemaList:
     (cineList: ICinema[] | false) => void): Promise<any> => {
 
-    if (currentCity && !city) {
+    if (currentCity && currentCity != "empty" && !city) {
         //  PEDIR LISTA DE CINES DEPENDIENDO DE LA CIUDAD SELECCIONADA
         let res;
         if (process.env.MODE == "only-front") {

@@ -40,7 +40,6 @@ const SelectCine = ({ cities }: { cities: string[] }) => {
             setCurrentCity(city)
             setCurrentCinema(false)
         }
-
         getCinemaListByCity(currentCity, city, setCinemaList)
     }, [city])
 
