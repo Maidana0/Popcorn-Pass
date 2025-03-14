@@ -1,14 +1,16 @@
 "use client";
 
 import { Container, Card, CardContent, Typography, Button } from "@mui/material";
+import Image from "next/image";
 
 const MaintenancePage = () => {
   return (
     <Container maxWidth="sm" sx={{ display: "flex", justifyContent: "center", height: "auto", my: 10 }}>
       <Card sx={{ textAlign: "center", p: 3, boxShadow: 3, borderRadius: 2 }}>
-        <img
+        <Image
           src="https://w7.pngwing.com/pngs/476/886/png-transparent-man-holding-wrench-preventive-maintenance-total-productive-maintenance-predictive-maintenance-planned-maintenance-repair-service-hand-people-thumbnail.png"
           alt="Sitio en mantenimiento"
+          width={100}
           style={{ width: "100px", margin: "0 auto 16px" }}
         />
         <CardContent>
