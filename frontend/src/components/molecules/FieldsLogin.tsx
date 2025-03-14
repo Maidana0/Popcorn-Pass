@@ -17,13 +17,15 @@ const FieldsLogin: FC<IFieldsLoginProps> = ({ register, errors, children }) => <
         inputName="email" inputType="text" inputLabel="Ingresa tu correo electronico"
         inputHelperText={String(errors.email?.message)}
         inputError={errors.email ? true : false}
+        value={process.env.MODE == "only-front" ? "user@test.com" : undefined}
     />
 
     <Box display="flex" gap="1rem" sx={{ flexDirection: { xs: "column", md: "row" } }}>
-        <InputMui inputSx={!children ? {width:"100%"} : {}} inputRegister={register("password", passwordValidation)}
+        <InputMui inputSx={!children ? { width: "100%" } : {}} inputRegister={register("password", passwordValidation)}
             inputName="password" inputLabel="Ingresa tu contraseña"
             inputHelperText={String(errors.password?.message)}
             inputError={errors.password ? true : false}
+            value={process.env.MODE == "only-front" ? "userTest#" : undefined}
         />
         {children}
     </Box>

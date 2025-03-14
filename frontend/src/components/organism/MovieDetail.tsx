@@ -26,8 +26,8 @@ const MovieDetail: FC<{ movie: IMovie, smallComponent?: boolean }> = ({ movie, s
                         title={movie.title || "Deadpool And Wolverine"}
                         runtime="1h30m"
                         threeD={movie.threeD ? "3D" : false}
-                        vote_average={AVERAGE}
-                        vote_count={1.612}
+                        vote_average={Number(movie.vote_average && movie.vote_average > 5 ? (movie.vote_average / 2).toPrecision(2) ?? movie.vote_average : movie.vote_average)}
+                        vote_count={movie.vote_count}
                         smallComponent={smallComponent}
                     />
 

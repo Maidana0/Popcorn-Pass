@@ -5,6 +5,8 @@ import Loader from "@/components/atoms/Loader";
 import { fetchData } from "@/utils/fetchData";
 import { filteredListComingSoon, filteredListPlayingNow } from "@/utils/fc-movies";
 import { IMovie } from "@/common/interface-movie";
+import transformMoviesList from "@/utils/THMDB_DTO";
+import { getCities } from "@/data/getCinemas";
 
 const MovieFilters = dynamic(() => import("@/components/organism/MovieFilters"), { ssr: false })
 const MoviePagination = dynamic(() => import("@/components/atoms/MoviePagination"), { ssr: false })
@@ -12,7 +14,7 @@ const MoviePagination = dynamic(() => import("@/components/atoms/MoviePagination
 const PlayingNow = dynamic(() => import("@/components/organism/PlayingNow"), { ssr: false, loading: () => <Loader /> })
 const ComingSoon = dynamic(() => import("@/components/organism/ComingSoon"), { ssr: false, loading: () => <Loader /> })
 
-export const revalidate = 3600 * 24
+export const revalidate = 3600 * 24 * 7
 
 interface IProps {
     params: {
@@ -23,21 +25,43 @@ interface IProps {
     }
 }
 
-const getData = async (): Promise<{ inComingSoon: IMovie[], playingNow: IMovie[] }> => {
-    const res = await fetchData("movie/list")
-    return {
-        inComingSoon: filteredListComingSoon(res),
-        playingNow: filteredListPlayingNow(res)
+export const getData = async (): Promise<{ inComingSoon: IMovie[], playingNow: IMovie[] }> => {
+    if (process.env.MODE != "only-front") {
+        const res = await fetchData("movie/list")
+        return {
+            inComingSoon: filteredListComingSoon(res.results),
+            playingNow: filteredListPlayingNow(res.results)
+        }
+    } else {
+        const date = new Date()
+        const currentDate = date.toISOString().split('T')[0];
+        const gte = new Date(date.getTime() - 1000 * 60 * 60 * 24 * 30).toISOString().split('T')[0];
+        const lte = new Date(date.getTime() + 1000 * 60 * 60 * 24 * 40).toISOString().split('T')[0];
+
+        const regionAndLanguage = "page=1&region=AR&language=es-AR"
+        let movies_inComingsoon = await fetchData(`discover/movie?include_adult=true&include_video=false&${regionAndLanguage}&primary_release_date.gte=${currentDate}&primary_release_date.lte=${lte}&sort_by=popularity.desc`)
+
+        let movies_playingNow = await fetchData(`discover/movie?include_adult=true&include_video=false&${regionAndLanguage}&primary_release_date.gte=${gte}&primary_release_date.lte=${currentDate}&sort_by=popularity.desc`)
+
+        movies_inComingsoon = filteredListComingSoon(movies_inComingsoon.results)
+        movies_playingNow = filteredListPlayingNow(movies_playingNow.results)
+        // console.log("PIDIENDO DATOS ");
+
+        return {
+            inComingSoon: transformMoviesList(movies_inComingsoon),
+            playingNow: transformMoviesList(movies_playingNow)
+        }
     }
+
 }
 
-export const getCities = async (): Promise<string[]> => await fetchData("cinema/cities", "GET");
 
 const Page = async ({ params }: IProps) => {
     const { movies } = params
     const inComingSoon = movies == "en-estreno"
     const cities = !inComingSoon && await getCities()
     const data = await getData()
+
 
     if (movies != "en-pantalla" && !inComingSoon) return <h1 style={{ margin: "auto", textAlign: "center" }}>404 - Not Found</h1>
 
@@ -70,9 +94,11 @@ const Page = async ({ params }: IProps) => {
 
         {!inComingSoon && <MovieFilters cities={cities || ["empty"]} />}
         <Box sx={{ display: "flex", flexWrap: "wrap", gap: { xs: "20px 0", sm: "16px" }, justifyContent: "space-evenly" }} mb="3.5rem">
-            {inComingSoon
-                ? <ComingSoon movies={data.inComingSoon} />
-                : <PlayingNow movies={data.playingNow} />}
+            {
+                inComingSoon
+                    ? <ComingSoon movies={data.inComingSoon} />
+                    : <PlayingNow movies={data.playingNow} />
+            }
         </Box>
 
         <MoviePagination />

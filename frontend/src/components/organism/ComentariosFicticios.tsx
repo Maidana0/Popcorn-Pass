@@ -14,18 +14,18 @@ const ComentariosFicticios = () => {
         </Typography>
 
         {lista.map(({ puntaje, usuario, comentario, fecha }) => (
-            <Box key={usuario} width={"80%"} margin={"1rem auto 2rem"} bgcolor={"var(--lightBlack)"} boxShadow={"0 0 5px var(--yellow)"} p={2}
+            <Box key={usuario} width={"80%"} margin={"1rem auto 2rem"} bgcolor={"var(--lightBlack)"} boxShadow={"0 0 5px var(--yellow)"} px={2} pt={2} pb={1}
                 borderRadius={3}
             >
                 <Box display="flex" justifyContent={"space-between"} alignItems={"center"}>
-                    <Typography color={"var(--yellow)"} textAlign={"center"} variant={"h5"} component={"h5"} mb={1}>
+                    <Typography color={"var(--yellow)"} textAlign={"center"} variant={"h6"} component={"h5"}>
                         {usuario}
                     </Typography>
 
                     <CalificationStar vote_average={puntaje} />
                 </Box>
 
-                <Typography component={"p"} py={1} pl={2} fontSize={"18px"}>
+                <Typography component={"p"} py={1} pl={2} fontSize={"16px"}>
                     {comentario}
                 </Typography>
 

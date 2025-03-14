@@ -72,7 +72,9 @@ const Navbar = () => {
                                 <ListItemText
                                     primary={name}
                                     primaryTypographyProps={{
-                                        color: isActive == i ? "#fff" : "inherit",
+                                        color: isActive == i ? "var(--yellow)" : "inherit",
+                                        borderLeft: isActive == i ? "1px solid var(--yellow)" : "none",
+                                        borderRight: isActive == i ? "1px solid var(--yellow)" : "none",
                                         textTransform: "capitalize", fontSize: "1.33rem", textAlign: 'center'
                                     }}
                                 />

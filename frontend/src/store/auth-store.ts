@@ -45,6 +45,7 @@ export const useAuthStore = createWithEqualityFn<IAuthStore & Actions>(set => {
                 id: user.id,
                 firstName: user.firstName,
                 lastName: user.lastName,
+                moviePoints: user.moviePoints ?? 0,
                 isLogged: true,
             }
 

@@ -9,14 +9,16 @@ const MovieDetail = dynamic(() => import('@/components/organism/MovieDetail'), {
 
 export const generateMetadata = async (
     { params }: Props): Promise<Metadata> => {
-    const { id } = params
-    const { title } = await getData(id)
+    const { id, movies } = params
+    const { title } = await getData(id, movies)
     return { title: title + " - Compra tu entrada en PopcornPass" }
 }
 
 
 const Comprar = async ({ params }: Props) => {
-    const movie = await getData(params.id)
+    const { id, movies } = params
+    const movie = await getData(id, movies)
+
     return (
         <Container sx={{ display: "flex", justifyContent: "space-between", alignItems: "center", flexDirection: { xs: "column", md: "row" }, gap: "1.5rem" }}  >
 

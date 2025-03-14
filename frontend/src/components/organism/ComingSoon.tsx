@@ -9,8 +9,6 @@ import { IMovie } from "@/common/interface-movie";
 
 
 const ComingSoon: FC<{ movies: IMovie[] }> = ({ movies }) => {
-    console.log(movies);
-
     const router = useRouter();
     const { page, setTotalPages, setPage } = useMoviesPagination(state => (
         { page: state.page, setTotalPages: state.setTotalPages, setPage: state.setPage }

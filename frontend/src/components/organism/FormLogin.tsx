@@ -9,6 +9,7 @@ import { ILoginUser, useAuthStore } from "@/store/auth-store"
 import { useRouter } from "next/navigation"
 import { shallow } from "zustand/shallow"
 import { useEffect } from "react"
+import fakeUser from "@/data/only-front/fakeUser"
 
 const FormLogin = () => {
     const router = useRouter()
@@ -22,8 +23,15 @@ const FormLogin = () => {
     }), shallow)
 
     const onSubmit = handleSubmit(async (data): Promise<void> => {
-        const res: ILoginUser = await fetchData("login", "POST", data)
-        res.jwt ? logIn(res) : setMessage("Usuario y/o contraseña incorrecto.")
+        if (process.env.MODE != "only-front") {
+            const res: ILoginUser = await fetchData("login", "POST", data)
+            res.jwt ? logIn(res) : setMessage("Usuario y/o contraseña incorrecto.")
+        } else {
+            setMessage("No se encuentra conectado a ninguna base de datos. El usuario será ficticio.")
+            setTimeout(() => {
+                logIn(fakeUser)
+            }, 2000);
+        }
     })
 
     // REDIRIGIR AL USUARIO PARA QUE CONTINUE SU PROCESO DE SELECCIÓN

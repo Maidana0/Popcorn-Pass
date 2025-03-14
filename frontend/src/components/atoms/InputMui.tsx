@@ -5,6 +5,7 @@ import { Theme } from "@emotion/react";
 
 import { SxProps } from "@mui/material"
 interface IInputMuiProps {
+  value?: string;
   inputName: string;
   inputType?: React.InputHTMLAttributes<unknown>['type'];
   inputLabel?: string;
@@ -16,9 +17,10 @@ interface IInputMuiProps {
   inputVariant?: "outlined" | "standard";
 }
 
-const InputMui: FC<IInputMuiProps> = ({ inputVariant, inputHelperText, inputError, inputRequired, inputRegister, inputName, inputType, inputLabel, inputSx }) => {
+const InputMui: FC<IInputMuiProps> = ({ value, inputVariant, inputHelperText, inputError, inputRequired, inputRegister, inputName, inputType, inputLabel, inputSx }) => {
   return (
     <TextField
+      defaultValue={value ?? value}
       {...inputRegister}
       required={inputRequired ?? false}
       error={inputError}

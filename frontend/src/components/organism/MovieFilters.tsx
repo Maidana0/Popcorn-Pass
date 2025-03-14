@@ -17,9 +17,14 @@ const styleContainer: SxProps = {
 }
 
 const getMoviesByCinema = async (cinemaId: string) => {
-  const movies = await fetchData(`cinema/moviesByCine/${cinemaId}`)
-  if (movies.error) return false
-  return movies
+  if (process.env.MODE != "only-front") {
+    const movies = await fetchData(`cinema/moviesByCine/${cinemaId}`)
+    if (movies.error) {
+      throw new Error(`No se puede obtener las películas del cine (con id ${cinemaId}). ${movies.error}`)
+    }
+    return movies
+  }
+  throw new Error(`No se puede obtener las películas del cine (con id ${cinemaId}). No se encuentra conectado al backend.`)
 }
 
 const MovieFilters = ({ cities }: { cities: string[] }) => {
@@ -33,12 +38,12 @@ const MovieFilters = ({ cities }: { cities: string[] }) => {
     getMoviesByCinema(currentCinema.id)
       .then(data => {
         console.log(data);
-        
+
         data.lenght > 0
           ? setMoviesByCinema(data)
           : setMoviesByCinema(false)
       })
-      .catch(err => console.log(err))
+      .catch(err => console.log(err.message))
   }, [currentCinema])
 
   return (

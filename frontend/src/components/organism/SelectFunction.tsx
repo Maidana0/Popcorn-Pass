@@ -43,14 +43,18 @@ const SelectRom: FC<{ listFunctionDetail: IFunctionDetail[] }> = ({ listFunction
 
     useEffect(() => {
         const grouped: Record<string, IFunctionDetail[]> = {};
-        listFunctionDetail.forEach((data) => {
-            const functionDate = new Date(data.schedule);
-            const functionDay = functionDate.toLocaleDateString("es-ES", { weekday: 'long', day: 'numeric', month: 'long' });
-            if (!grouped[functionDay]) {
-                grouped[functionDay] = [];
-            }
-            grouped[functionDay].push(data);
-        });
+        const now = new Date();
+
+        listFunctionDetail
+            .filter(data => new Date(data.schedule) > now) // Filtrar funciones anteriores al horario actual
+            .forEach((data) => {
+                const functionDate = new Date(data.schedule);
+                const functionDay = functionDate.toLocaleDateString("es-ES", { weekday: 'long', day: 'numeric', month: 'long' });
+                if (!grouped[functionDay]) {
+                    grouped[functionDay] = [];
+                }
+                grouped[functionDay].push(data);
+            });
         setGroupedByDay(grouped);
     }, [listFunctionDetail]);
 
@@ -81,7 +85,7 @@ const SelectRom: FC<{ listFunctionDetail: IFunctionDetail[] }> = ({ listFunction
                                 {day}
                             </Typography>
                             <Grid container rowSpacing={2} columnSpacing={2} mb={3}
-                               alignItems={"center"}
+                                alignItems={"center"}
                             >
                                 {data.map((functionDetail) => {
                                     const functionTime: string = new Date(functionDetail.schedule).toLocaleTimeString("es-ES", { hour: "2-digit", minute: "2-digit" });
