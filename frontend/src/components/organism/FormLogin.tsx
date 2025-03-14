@@ -9,7 +9,7 @@ import { ILoginUser, useAuthStore } from "@/store/auth-store"
 import { useRouter } from "next/navigation"
 import { shallow } from "zustand/shallow"
 import { useEffect } from "react"
-import fakeUser from "@/data/fakeUser"
+import fakeUser from "@/data/only-front/fakeUser"
 
 const FormLogin = () => {
     const router = useRouter()

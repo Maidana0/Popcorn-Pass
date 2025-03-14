@@ -9,7 +9,7 @@ import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import Loading from '@/app/loading';
 
-const style : SxProps = {
+const style: SxProps = {
     position: 'absolute' as 'absolute',
     top: '50%',
     left: '50%',
@@ -20,7 +20,7 @@ const style : SxProps = {
     boxShadow: 24,
     px: 2,
     py: 3,
-    bgcolor:"var(--lightBlack)" 
+    bgcolor: "var(--lightBlack)"
 };
 
 export interface InfoItem {
@@ -41,9 +41,12 @@ const BuyTicketModal: FC<Props> = ({ open, setOpen, info }) => {
 
     const handleClose = () => {
         setOpen(false);
-        setIsChecked(false);
-        if(!isChecked){return}
-        router.push("/peliculas/en-pantalla");
+
+        setTimeout(() => {
+            setIsChecked(false);
+            router.push("/peliculas/en-pantalla");
+        }, 1000);
+
     };
 
     const handleSubmitCheck = () => {
@@ -51,7 +54,7 @@ const BuyTicketModal: FC<Props> = ({ open, setOpen, info }) => {
         setTimeout(() => {
             setIsLoading(false);
             setIsChecked(true);
-        }, 2000);
+        }, 1450);
     };
 
     return (
@@ -108,7 +111,7 @@ const BuyTicketModal: FC<Props> = ({ open, setOpen, info }) => {
                                 </Box>
                             ))}
 
-                            <hr style={{margin:"1rem 0"}} />
+                            <hr style={{ margin: "1rem 0" }} />
 
                             <Box width={"95%"} margin="1rem auto 0">
                                 <Typography variant={"h5"} color={"var(--light-white-color)"} textAlign={"center"} sx={{ mb: 2 }}>

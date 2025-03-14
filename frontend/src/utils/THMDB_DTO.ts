@@ -1,5 +1,5 @@
 import { IMovie, IMovieFromTHMDB } from "@/common/interface-movie";
-import genres from "@/data/genres.json"
+import genres from "@/data/only-front/genres.json"
 
 
 function getGenres(genreIds: number[]): string[] {
