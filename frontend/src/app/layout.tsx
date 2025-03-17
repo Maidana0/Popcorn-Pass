@@ -13,17 +13,40 @@ export const metadata: Metadata = {
   description: "Plataforma para exhibir y gestionar películas, horarios y boletos de los cines adheridos en nuestro sitio. Buscamos facilitar la elección del cliente para seleccionar su película y su cine.",
   keywords: "popcorn pass, PopcornPass, cines, cine, cartelera, estrenos, estreno, horarios, horario, preventas, próximos estrenos, proximos estrenos, eventos, compra online, compra candy online, candy, concesión, cine fan, complejos, argentina, PREMIUM, COMFORT, 2D, 3D, 4D, XD, DBOX",
   authors: [{ name: "Maidana Franco" }, { name: "Nordinelli Franco" }],
-  icons: ["/popcorn-icon.png", "/favicon.ico"],
-  openGraph: {
-    images: '/popcorn-icon.png',
-    title: 'PopcornPass',
-    description: 'Plataforma para exhibir y gestionar películas, horarios y boletos de los cines adheridos en nuestro sitio. Buscamos facilitar la elección del cliente para seleccionar su película y su cine.',
-    url: 'https://popcorn-pass-maidana07-projects.vercel.app/peliculas/en-pantalla',
-    siteName: 'PopcornPass',
-    locale: 'es_AR',
-    type: 'website',
+  icons: {
+    icon: "/favicon.ico",
+    apple: "/popcorn-icon.png",
   },
-
+  openGraph: {
+    title: "PopcornPass",
+    description: "Plataforma para exhibir y gestionar películas, horarios y boletos de los cines adheridos en nuestro sitio. Buscamos facilitar la elección del cliente para seleccionar su película y su cine.",
+    url: "https://popcorn-pass-maidana07-projects.vercel.app/peliculas/en-pantalla",
+    siteName: "PopcornPass",
+    locale: "es_AR",
+    type: "website",
+    images: [
+      {
+        url: "/popcorn-icon.png",
+        width: 800,
+        height: 600,
+        alt: "PopcornPass Icon",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    site: "@PopcornPass",
+    title: "PopcornPass",
+    description: "Plataforma para exhibir y gestionar películas, horarios y boletos de los cines adheridos en nuestro sitio. Buscamos facilitar la elección del cliente para seleccionar su película y su cine.",
+    images: [
+      {
+        url: "/popcorn-icon.png",
+        width: 800,
+        height: 600,
+        alt: "PopcornPass Icon",
+      },
+    ],
+  },
 };
 
 export const viewport = { themeColor: '#FCC434' }

@@ -6,14 +6,15 @@ import Image from "next/image";
 const MaintenancePage = () => {
   return (
     <Container maxWidth="sm" sx={{ display: "flex", justifyContent: "center", height: "auto", my: 10 }}>
-      <Card sx={{ textAlign: "center", p: 3, boxShadow: 3, borderRadius: 2 }}>
+      <Card sx={{ textAlign: "center", boxShadow: 3, borderRadius: 2 }}>
         <Image
-          src="https://w7.pngwing.com/pngs/476/886/png-transparent-man-holding-wrench-preventive-maintenance-total-productive-maintenance-predictive-maintenance-planned-maintenance-repair-service-hand-people-thumbnail.png"
+          src="/images/cinemas/5.jpg"
           alt="Sitio en mantenimiento"
-          width={100}
-          style={{ width: "100px", margin: "0 auto 16px" }}
+          width={300}
+          height={280}
+          style={{ width: "100%", height: "280px", objectFit: "cover", margin: "auto", color: "gray" }}
         />
-        <CardContent>
+        <CardContent sx={{ p: 3 }}>
           <Typography variant="h5" fontWeight="bold">
             🚧 Sitio en mantenimiento 🚧
           </Typography>
